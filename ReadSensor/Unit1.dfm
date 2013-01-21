@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 207
   Top = 124
   Width = 854
-  Height = 685
+  Height = 256
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
   Caption = 'Form1'
@@ -160,16 +160,6 @@ object Form1: TForm1
       #1044#1083#1080#1085#1072' '#1090#1088#1091#1073#1099' : ')
     ParentFont = False
     TabOrder = 2
-  end
-  object Memo2: TMemo
-    Left = 72
-    Top = 264
-    Width = 593
-    Height = 369
-    Lines.Strings = (
-      'Memo2')
-    ScrollBars = ssVertical
-    TabOrder = 3
   end
   object ADOConnection1: TADOConnection
     ConnectionString = 

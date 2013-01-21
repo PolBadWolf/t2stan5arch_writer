@@ -291,7 +291,7 @@ void __fastcall WriteFlTreeComp(int p,
                  break;
         case 2 : sstring = "\t\t"                    + day;
                  break;
-        case 3 : sstring = "\t\t\tСмена "            + smena;
+        case 3 : sstring = "\t\t\t"                  + smena;
                  break;
         case 4 : sstring = "\t\t\t\tПлавка№ "        + melt;
                  break;
@@ -303,8 +303,22 @@ void __fastcall WriteFlTreeComp(int p,
                     sstring = "\t\t\t\t\t\tТруба № " + IntToStr(tube);
                  break;
     }
-    // sstring = sstring + "\r\n";
-    Form1->Memo2->Lines->Add(sstring);
+    TFileStream *pFileTree = NULL;
+    AnsiString nam = "Structnew.txt";
+    try
+    {
+        pFileTree = new TFileStream(nam.c_str(), fmOpenWrite + fmShareDenyNone);
+        pFileTree->Seek(pFileTree->Size,1);
+    }
+    catch(...)
+    {
+        pFileTree = new TFileStream(nam.c_str(), fmCreate);
+    }
+     sstring = sstring + "\r\n";
+    //Form1->Memo2->Lines->Add(sstring);
+    pFileTree->Write(sstring.c_str(), sstring.Length());
+    delete pFileTree;
+    pFileTree = NULL;
 }
 void __fastcall WriteFlTree(TADOConnection *connect)
 {

@@ -36,7 +36,6 @@ __published:	// IDE-managed Components
     TLabel *Label_dTube;
     TMemo *Memo1;
     TShape *Shape_SENSOR_AT;
-    TMemo *Memo2;
         void __fastcall FormCloseQuery(TObject *Sender, bool &CanClose);
         void __fastcall TimerStartTimer(TObject *Sender);
 private:	// User declarations
