@@ -71,15 +71,18 @@ __fastcall TForm1::TForm1(TComponent* Owner)
         // длина трубы замеренной
         dTube = -1;
         //
+        // ====================================================
+        // поиск последнего новера трубы
         ADOConnection1->GetTableNames(ListBox1->Items, false);
         ADOQuery1->Active = false;
         ADOQuery1->SQL->Clear();
         ADOQuery1->SQL->Add("SELECT *");
-        ADOQuery1->SQL->Add("FROM `viewmelt`");
+        ADOQuery1->SQL->Add("FROM `view_lastnumertube`");
 //        ADOQuery1->SQL->Add("ORDER BY IndexData DESC");
-//        ADOQuery1->SQL->Add("LIMIT 1");
+        ADOQuery1->SQL->Add("LIMIT 1");
         ADOQuery1->Open();
 
+        ADOQuery1->RecordCount;
         int np = ADOQuery1->Fields->Count;
         MassFields->n = np;
         AnsiString fName;
