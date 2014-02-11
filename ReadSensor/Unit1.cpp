@@ -8,6 +8,7 @@
 #include "WriteFl.h"
 #include "ViewKoleso.h"
 #include "PapkaName.h"
+#include "UserFunction1.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -73,10 +74,10 @@ __fastcall TForm1::TForm1(TComponent* Owner)
         ADOConnection1->GetTableNames(ListBox1->Items, false);
         ADOQuery1->Active = false;
         ADOQuery1->SQL->Clear();
-        ADOQuery1->SQL->Add("Select *");
-        ADOQuery1->SQL->Add("FROM defectsdata");
-        ADOQuery1->SQL->Add("ORDER BY IndexData DESC");
-        ADOQuery1->SQL->Add("LIMIT 1");
+        ADOQuery1->SQL->Add("SELECT *");
+        ADOQuery1->SQL->Add("FROM `viewmelt`");
+//        ADOQuery1->SQL->Add("ORDER BY IndexData DESC");
+//        ADOQuery1->SQL->Add("LIMIT 1");
         ADOQuery1->Open();
 
         int np = ADOQuery1->Fields->Count;

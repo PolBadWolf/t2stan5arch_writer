@@ -6,7 +6,7 @@
     <PROJECT value="ReadSensor.exe"/>
     <OBJFILES value="ReadSensor.obj Unit1.obj CommPort\ComPort.obj crc\crc8.obj ShablBuff.obj 
       WriteFl.obj MShape.obj ViewKoleso.obj WriteTubeFile.obj 
-      WriteCalibrFile.obj PapkaName.obj BoxRead1.obj"/>
+      WriteCalibrFile.obj PapkaName.obj BoxRead1.obj UserFunction1.obj"/>
     <RESFILES value="ReadSensor.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
@@ -69,6 +69,7 @@
       <FILE FILENAME="WriteCalibrFile.cpp" FORMNAME="" UNITNAME="WriteCalibrFile" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="PapkaName.cpp" FORMNAME="" UNITNAME="PapkaName" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="BoxRead1.cpp" FORMNAME="" UNITNAME="BoxRead1" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="UserFunction1.cpp" FORMNAME="" UNITNAME="UserFunction1" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
   </BUILDTOOLS>
