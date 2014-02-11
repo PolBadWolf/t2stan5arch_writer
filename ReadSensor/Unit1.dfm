@@ -1,5 +1,5 @@
 object Form1: TForm1
-  Left = -1271
+  Left = -1263
   Top = 10
   Width = 854
   Height = 652
@@ -14,7 +14,6 @@ object Form1: TForm1
   Font.Style = []
   OldCreateOrder = False
   OnCloseQuery = FormCloseQuery
-  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Shape_KEY_BACK: TShape
@@ -375,5 +374,10 @@ object Form1: TForm1
     Parameters = <>
     Left = 672
     Top = 64
+  end
+  object TimerStart: TTimer
+    OnTimer = TimerStartTimer
+    Left = 8
+    Top = 224
   end
 end

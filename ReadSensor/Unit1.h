@@ -50,8 +50,9 @@ __published:	// IDE-managed Components
         TADOQuery *ADOQuery1;
         TListBox *ListBox2;
         TComboBox *ComboBox1;
-        void __fastcall FormCreate(TObject *Sender);
+        TTimer *TimerStart;
         void __fastcall FormCloseQuery(TObject *Sender, bool &CanClose);
+        void __fastcall TimerStartTimer(TObject *Sender);
 private:	// User declarations
         bool FlNewTube;
         void __fastcall Img_ClearAll(TImage *Img);

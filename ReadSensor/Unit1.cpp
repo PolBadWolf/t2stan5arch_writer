@@ -105,43 +105,6 @@ __fastcall TForm1::TForm1(TComponent* Owner)
         ADOConnection1->Connected = false;
 }
 //---------------------------------------------------------------------------
-void __fastcall TForm1::FormCreate(TObject *Sender)
-{
-        LampDat[0] = Shape_KEY_BACK;
-        LampDat[1] = Shape_KEY_FORWARD;
-        LampDat[2] = Shape_TUBE_HERE_L;
-        LampDat[3] = Shape_TUBE_HERE_R;
-        LampDat[4] = Shape5;
-        LampDat[5] = Shape6;
-        LampDat[6] = Shape_WELD_DEFECT;
-        LampDat[7] = Shape_MODE_CALIBROVKA;
-        LampDat[8] = Shape_SENSOR_AT_TOP;
-        LampDat[9] = Shape_SENSOR_AT_BOTTOM;
-        //LampDat[10] = Shape11;
-        //LampDat[11] = Shape12;
-        BoxRead = new TNBoxRead;
-        // въезд в начале, начало дефектоскопии
-        BoxRead->EvTubeHereBeginUp = TubeBegin;
-        BoxRead->EvTubeHereBeginDn;
-        BoxRead->EvTubeHereEndUp;
-        // cъезд в конце, конец дефектоскопии
-        BoxRead->EvTubeHereEndDn   = TubeEnd;
-        // положение головки дефектоскопа ( lvl : 0 - на трубе, 1 - над трубой )
-        BoxRead->EvSensorAt        = EvaSensorAt;
-        // событие сработка колеса
-        BoxRead->EvCircle          = EvaCircle;
-        // общее - изменение состояния датчика
-        BoxRead->EvSensor          = EvaSensor;
-        // общее - изменение состояния датчика колеса
-        BoxRead->EvCircleSensor    = EvaCircleSensor;
-        // изменение состояния датчика дефектов
-        BoxRead->EvWeldDefect      = EvaWeldDefect;
-        // изменение состояния ключа калибровка
-        BoxRead->EvModeCalibrovka  = EvaModeCalibrovka;
-        // пуск
-        BoxRead->Resume();
-}
-//---------------------------------------------------------------------------
 void __fastcall TForm1::FormCloseQuery(TObject *Sender, bool &CanClose)
 {
         if (BoxRead)
@@ -403,5 +366,46 @@ void __fastcall TForm1::Img_Setka(TImage *Img, int nX, int nY, int eX, int eY, i
 //---------------------------------------------------------------------------
 
 
+
+
+void __fastcall TForm1::TimerStartTimer(TObject *Sender)
+{
+        ((TTimer*)Sender)->Enabled = false;
+        LampDat[0] = Shape_KEY_BACK;
+        LampDat[1] = Shape_KEY_FORWARD;
+        LampDat[2] = Shape_TUBE_HERE_L;
+        LampDat[3] = Shape_TUBE_HERE_R;
+        LampDat[4] = Shape5;
+        LampDat[5] = Shape6;
+        LampDat[6] = Shape_WELD_DEFECT;
+        LampDat[7] = Shape_MODE_CALIBROVKA;
+        LampDat[8] = Shape_SENSOR_AT_TOP;
+        LampDat[9] = Shape_SENSOR_AT_BOTTOM;
+        //LampDat[10] = Shape11;
+        //LampDat[11] = Shape12;
+        BoxRead = new TNBoxRead;
+        // въезд в начале, начало дефектоскопии
+        BoxRead->EvTubeHereBeginUp = TubeBegin;
+        BoxRead->EvTubeHereBeginDn;
+        BoxRead->EvTubeHereEndUp;
+        // cъезд в конце, конец дефектоскопии
+        BoxRead->EvTubeHereEndDn   = TubeEnd;
+        // положение головки дефектоскопа ( lvl : 0 - на трубе, 1 - над трубой )
+        BoxRead->EvSensorAt        = EvaSensorAt;
+        // событие сработка колеса
+        BoxRead->EvCircle          = EvaCircle;
+        // общее - изменение состояния датчика
+        BoxRead->EvSensor          = EvaSensor;
+        // общее - изменение состояния датчика колеса
+        BoxRead->EvCircleSensor    = EvaCircleSensor;
+        // изменение состояния датчика дефектов
+        BoxRead->EvWeldDefect      = EvaWeldDefect;
+        // изменение состояния ключа калибровка
+        BoxRead->EvModeCalibrovka  = EvaModeCalibrovka;
+        // пуск
+        BoxRead->Resume();
+        delete ((TTimer*)Sender);
+}
+//---------------------------------------------------------------------------
 
 

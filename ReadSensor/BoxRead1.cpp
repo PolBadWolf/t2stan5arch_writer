@@ -79,9 +79,6 @@ void __fastcall TNBoxRead::ErrOpenPort()
 void __fastcall TNBoxRead::Execute()
 {
         // ---------------------------------------------------------------------
-        // при выходе автоматически удалять все объекты
-        FreeOnTerminate = true;
-        // ---------------------------------------------------------------------
         //        переменные
         int             stat;           // статус
         unsigned char   vbyte[BoxRead_MassPackLen];     // принятый байт
