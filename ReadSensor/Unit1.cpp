@@ -48,7 +48,7 @@ __fastcall TMShape::TMShape(Classes::TComponent* AOwner)
 __fastcall TForm1::TForm1(TComponent* Owner)
         : TForm(Owner)
 {
-        Caption = "версия от 2013.11.11";
+        Caption = "версия от 2014.02.12";
         ViewKoleso = new TViewKoleso(Shape_Circle);
         FlNewTube = false;
         Img_ClearAll(ImageVisual);
@@ -72,17 +72,21 @@ __fastcall TForm1::TForm1(TComponent* Owner)
         dTube = -1;
         //
         // ====================================================
-        // поиск последнего новера трубы
+        // find last number tube
+        // поиск последнего номера трубы
         ADOConnection1->GetTableNames(ListBox1->Items, false);
         ADOQuery1->Active = false;
         ADOQuery1->SQL->Clear();
         ADOQuery1->SQL->Add("SELECT *");
         ADOQuery1->SQL->Add("FROM `view_lastnumertube`");
-//        ADOQuery1->SQL->Add("ORDER BY IndexData DESC");
+        ADOQuery1->SQL->Add("ORDER BY IndexData DESC");
         ADOQuery1->SQL->Add("LIMIT 1");
         ADOQuery1->Open();
 
-        ADOQuery1->RecordCount;
+        if ( ADOQuery1->RecordCount==0 )
+        {
+                // set variable to default
+        }
         int np = ADOQuery1->Fields->Count;
         MassFields->n = np;
         AnsiString fName;
@@ -214,23 +218,6 @@ void __fastcall TForm1::EvaCircle(int Napravl, int Dlina, int Position, unsigned
         //Label14->Caption = BoxRead->Count;
         //Label14->Caption = (BoxRead->Count-otStep)*Step2mm[Step2mmD];
         Label14->Caption = (Position-otStep)*Step2mm[Step2mmD];
-        /*
-        char m[256], p[256];
-        for(int i=otStep+1;i<Dlina;i++)
-        {
-                if (MassDefect[i]==255) m[i-(otStep+1)] = '8';
-                else
-                {
-                        m[i-(otStep+1)] = MassDefect[i]+'0';
-                }
-                p[i-(otStep+1)]=' ';
-        }
-        m[Dlina-(otStep+1)] = 0;
-        p[Position-1-(otStep+1)] = 'I';
-        p[Dlina-(otStep+1)] = 0;
-        Label15->Caption = (char*)m;
-        Label16->Caption = (char*)p;
-        */
         // рисование
         int nX,  nY,  eX,  eY;
         int nX1, nY1, eX1, eY1;
@@ -363,11 +350,6 @@ void __fastcall TForm1::Img_Setka(TImage *Img, int nX, int nY, int eX, int eY, i
         ImageVisual->Canvas->Unlock();
 }
 //---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
-
-
-
-
 void __fastcall TForm1::TimerStartTimer(TObject *Sender)
 {
         ((TTimer*)Sender)->Enabled = false;
