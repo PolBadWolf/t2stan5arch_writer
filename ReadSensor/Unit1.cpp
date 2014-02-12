@@ -55,11 +55,11 @@ __fastcall TForm1::TForm1(TComponent* Owner)
         Img_ClearAll(ImageVisual);
         // ====================================================
         // find last set diametr
-        ADOQuery1->Active = false;
+        ADOQuery1->Close();
         ADOQuery1->SQL->Clear();
         ADOQuery1->SQL->Add("SELECT *");
-        ADOQuery1->SQL->Add("FROM `defectsdata`");
-        ADOQuery1->SQL->Add("ORDER BY IndexData DESC");
+        ADOQuery1->SQL->Add("FROM `view-defectdata_tube_size`");
+        ADOQuery1->SQL->Add("ORDER BY `IndexData` DESC");
         ADOQuery1->SQL->Add("LIMIT 1");
         ADOQuery1->Open();
         if ( ADOQuery1->RecordCount==0 )
@@ -70,11 +70,21 @@ __fastcall TForm1::TForm1(TComponent* Owner)
         else
         {
                 // set diametr tube
-                ADOQuery1->FindField("")
-                CurentDiametrTube = 168;
+                CurentDiametrTube = ADOQuery1->FindField("SizeTube")->Value;
         }
+        ADOQuery1->Close();
         // ====================================================
-        // find last number tube
+        // find last number tube ( no sample )
+        ADOQuery1->SQL->Clear();
+        ADOQuery1->SQL->Add("SELECT *");
+        ADOQuery1->SQL->Add("FROM `view-defectdata_tube_size`");
+        // sample mark : NumberTube=0 ; if NumberTube<>0
+        ADOQuery1->SQL->Add("WHERE `view-defectdata_tube_size`.`NumberTube` <>  0");
+        ADOQuery1->SQL->Add("ORDER BY `IndexData` DESC");
+        ADOQuery1->SQL->Add("LIMIT 1");
+        ADOQuery1->Open();
+
+
         int np = ADOQuery1->Fields->Count;
         MassFields->n = np;
         AnsiString fName;
