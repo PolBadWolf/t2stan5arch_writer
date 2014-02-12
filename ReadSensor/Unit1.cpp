@@ -52,41 +52,28 @@ __fastcall TForm1::TForm1(TComponent* Owner)
         ViewKoleso = new TViewKoleso(Shape_Circle);
         FlNewTube = false;
         Img_ClearAll(ImageVisual);
-        // Step2mm[0] = 91.381076;         //245
-        Step2mm[0] = 90;
-        Step2mm[1] = 93.509505;         //273
-        Step2mm[2] = 97.829195;         //325
-        Step2mm[3] = 100.326761;        //355.6
-        Step2mm[4] = 104.681794;        //406.4
-        Step2mm[5] = 106.103365;        //426
-        Step2mm[6] = 113.332955;        //508
-        Step2mm[7] = 115.060831;        //530
-        Step2mmD = 0; // 245
-        // отступ в мм от левого датчика
-        otLmm = 365;
-        // расчитанный отступ в шагах
-        otStep = otLmm/Step2mm[Step2mmD];
-        // счетчик окончания замера после отключения левого датчика
-        otCount = 0;
-        // длина трубы замеренной
-        dTube = -1;
-        //
         // ====================================================
-        // find last number tube
-        // поиск последнего номера трубы
-        ADOConnection1->GetTableNames(ListBox1->Items, false);
+        // find last set diametr
         ADOQuery1->Active = false;
         ADOQuery1->SQL->Clear();
         ADOQuery1->SQL->Add("SELECT *");
-        ADOQuery1->SQL->Add("FROM `view_lastnumertube`");
+        ADOQuery1->SQL->Add("FROM `defectsdata`");
         ADOQuery1->SQL->Add("ORDER BY IndexData DESC");
         ADOQuery1->SQL->Add("LIMIT 1");
         ADOQuery1->Open();
-
         if ( ADOQuery1->RecordCount==0 )
         {
-                // set variable to default
+                // set default diametr tube
+                CurentDiametrTube = 168;
         }
+        else
+        {
+                // set diametr tube
+                ADOQuery1->FindField("")
+                CurentDiametrTube = 168;
+        }
+        // ====================================================
+        // find last number tube
         int np = ADOQuery1->Fields->Count;
         MassFields->n = np;
         AnsiString fName;
@@ -107,6 +94,14 @@ __fastcall TForm1::TForm1(TComponent* Owner)
         ADOQuery1->Fields->FieldByNumber(1)->DataType;
         ADOQuery1->Active = false;
         ADOConnection1->Connected = false;
+        // отступ в мм от левого датчика
+        otLmm = 365;
+        // offset from left sensor tube, unit segment   // расчитанный отступ в шагах
+        otStep = otLmm/FnDiametr2LenSegment(CurentDiametrTube);
+        // счетчик окончания замера после отключения левого датчика
+        otCount = 0;
+        // длина трубы замеренной
+        dTube = -1;
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::FormCloseQuery(TObject *Sender, bool &CanClose)
@@ -158,7 +153,7 @@ void __fastcall TForm1::EvaSensor(int sn, int lvl)
         */
         if (dTube>0)
                 //Label17->Caption = dTube - otStep;
-                Label17->Caption = (dTube-otStep)*Step2mm[Step2mmD];
+                Label17->Caption = (dTube-otStep)*FnDiametr2LenSegment(CurentDiametrTube);
         else
                 Label17->Caption = dTube;
 }
@@ -203,7 +198,7 @@ void __fastcall TForm1::EvaCircle(int Napravl, int Dlina, int Position, unsigned
                         {
                                 dTube = Dlina;
                                 //Label17->Caption = dTube - otStep;
-                                Label17->Caption = (dTube-otStep)*Step2mm[Step2mmD];
+                                Label17->Caption = (dTube-otStep)*FnDiametr2LenSegment(CurentDiametrTube);
                         }
                         else
                         {
@@ -217,7 +212,7 @@ void __fastcall TForm1::EvaCircle(int Napravl, int Dlina, int Position, unsigned
         if (Dlina   <(otStep+1) ) return; // вне зоны датчика
         //Label14->Caption = BoxRead->Count;
         //Label14->Caption = (BoxRead->Count-otStep)*Step2mm[Step2mmD];
-        Label14->Caption = (Position-otStep)*Step2mm[Step2mmD];
+        Label14->Caption = (Position-otStep)*FnDiametr2LenSegment(CurentDiametrTube);
         // рисование
         int nX,  nY,  eX,  eY;
         int nX1, nY1, eX1, eY1;
@@ -233,8 +228,8 @@ void __fastcall TForm1::EvaCircle(int Napravl, int Dlina, int Position, unsigned
         ImageVisual->Canvas->FillRect(Rect(nX, nY, eX, nY+(eY-nY)/10) );
         ImageVisual->Canvas->Unlock();
         // позитция
-        n = Step2mm[Step2mmD]*(Position+0-(otStep+1) );
-        e = Step2mm[Step2mmD]*(Position+1-(otStep+1) );
+        n = FnDiametr2LenSegment(CurentDiametrTube)*(Position+0-(otStep+1) );
+        e = FnDiametr2LenSegment(CurentDiametrTube)*(Position+1-(otStep+1) );
         nY1 = nY;
         eY1 = eY-(eY-nY)/10;
         nX1 = ImgV_TubeMaxPix*n/D_MaxLenTube + D_ImageOffsetX;

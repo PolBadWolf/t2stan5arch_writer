@@ -79,9 +79,8 @@ public:		// User declarations
         // завершение дефектоскопии
         void __fastcall TubeEnd();
         void __fastcall TubeBegin();
-        double Step2mm[10];
-        // number diametra from massive lens segment
-        int Step2mmD;
+        // curent diametr tube
+        double CurentDiametrTube;
         // offset from left sensor tube, unit mm        // отступ в мм от левого датчика
         double otLmm;
         // offset from left sensor tube, unit segment   // расчитанный отступ в шагах
