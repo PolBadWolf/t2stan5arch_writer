@@ -21,6 +21,7 @@ TNBoxRead *BoxRead = NULL;
 
 #define TUBE_HERE1              2       // наличие трубы д1 *
 
+
 bool UnicalFlDefect = false;
 
 class TMassFields
