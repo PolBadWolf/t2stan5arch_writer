@@ -14,7 +14,6 @@ __fastcall TComPort::TComPort()
 {
         COMport = NULL;
         NitWrite = NULL;
-        NitRead = NULL;
         //
         OutxCtsFlow = false;
         OutxDsrFlow = false;
