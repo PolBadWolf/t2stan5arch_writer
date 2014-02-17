@@ -100,7 +100,11 @@ __fastcall TForm1::TForm1(TComponent* Owner)
                 if (fName=="DataSensors")       continue;
                 if (fName=="DatePr")            continue;
                 if (fName=="TimePr")            continue;
-                ListBox2->Items->Add( fName+" : "+ADOQuery1->Fields->FieldByNumber(i+1)->Value);
+                try
+                {
+                        ListBox2->Items->Add( fName+" : "+ADOQuery1->Fields->FieldByNumber(i+1)->Value);
+                }
+                catch(...) {}
         }
         ADOQuery1->Fields->FieldByNumber(1)->DataType;
         ADOQuery1->Active = false;
