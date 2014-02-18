@@ -79,6 +79,8 @@ public:		// User declarations
         // завершение дефектоскопии
         void __fastcall TubeEnd();
         void __fastcall TubeBegin();
+        // curent number tube
+        int     CurentNumberTube;
         // curent diametr tube
         double CurentDiametrTube;
         // offset from left sensor tube, unit mm        // отступ в мм от левого датчика
