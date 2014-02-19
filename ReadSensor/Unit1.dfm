@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = -873
   Top = 358
   Width = 854
-  Height = 652
+  Height = 284
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
   Caption = 'Form1'
@@ -335,31 +335,6 @@ object Form1: TForm1
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object ListBox1: TListBox
-    Left = 520
-    Top = 144
-    Width = 225
-    Height = 97
-    ItemHeight = 13
-    TabOrder = 0
-  end
-  object ListBox2: TListBox
-    Left = 24
-    Top = 248
-    Width = 505
-    Height = 249
-    ItemHeight = 13
-    TabOrder = 1
-  end
-  object ComboBox1: TComboBox
-    Left = 648
-    Top = 264
-    Width = 145
-    Height = 21
-    ItemHeight = 13
-    TabOrder = 2
-    Text = 'ComboBox1'
-  end
   object ADOConnection1: TADOConnection
     ConnectionString = 
       'Provider=MSDASQL.1;Persist Security Info=False;Data Source=T2Sta' +
@@ -377,7 +352,7 @@ object Form1: TForm1
   end
   object TimerStart: TTimer
     OnTimer = TimerStartTimer
-    Left = 8
-    Top = 224
+    Left = 496
+    Top = 144
   end
 end

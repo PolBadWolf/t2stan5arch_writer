@@ -46,10 +46,7 @@ __published:	// IDE-managed Components
         TShape *ShapeCircle2;
         TLabel *Label11;
         TLabel *Label12;
-        TListBox *ListBox1;
         TADOQuery *ADOQuery1;
-        TListBox *ListBox2;
-        TComboBox *ComboBox1;
         TTimer *TimerStart;
         void __fastcall FormCloseQuery(TObject *Sender, bool &CanClose);
         void __fastcall TimerStartTimer(TObject *Sender);

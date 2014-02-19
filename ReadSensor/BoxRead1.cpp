@@ -67,12 +67,14 @@ __fastcall TNBoxRead::TNBoxRead() : TThread(true)
 void __fastcall TNBoxRead::ErrNewPort()
 {
         ShowMessage("Îøèáêà âûäåëåíèå ïàìÿòè íà COM ïîğò");
+        Form1->Close();
         Application->Terminate();
 }
 //---------------------------------------------------------------------------
 void __fastcall TNBoxRead::ErrOpenPort()
 {
         ShowMessage("Îøèáêà îòêğûòèÿ COM ïîğòà");
+        Form1->Close();
         Application->Terminate();
 }
 //---------------------------------------------------------------------------

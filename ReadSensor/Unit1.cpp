@@ -57,6 +57,16 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 //---------------------------------------------------------------------------
 void __fastcall TForm1::FormCloseQuery(TObject *Sender, bool &CanClose)
 {
+        // checked close ADOQuery1
+        if ( ADOQuery1->Active )
+        {       //ADOQuery1 - no terminated
+                ADOQuery1->Close();
+        }
+        // checked close ADOConnection1
+        if ( ADOConnection1->Connected )
+        {
+                ADOConnection1->Close();
+        }
         if (BoxRead)
         {
                 BoxRead->Terminate();
@@ -299,7 +309,8 @@ void __fastcall TForm1::Img_Setka(TImage *Img, int nX, int nY, int eX, int eY, i
 void __fastcall TForm1::TimerStartTimer(TObject *Sender)
 {
         ((TTimer*)Sender)->Enabled = false;
-        // ====================================================
+// ******************************************************************************************
+// *************************** init variable from Data Base *********************************
         // close ado
         ADOQuery1->Close();
         // ====================================================
@@ -319,7 +330,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         if (Pole==NULL)
         {       // Date Base Error
                 Application->MessageBox("Not found field \"NumberTube\" " , "Date Base Error", 0);
-                Application->Terminate();
+                Form1->Close();
         }
         if ( ADOQuery1->RecordCount==0 )
         {       // no records - set number 0
@@ -327,58 +338,12 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         }
         else
         {
-        }
-        /*
-        // find last set diametr
-        ADOQuery1->Close();
-        ADOQuery1->SQL->Clear();
-        ADOQuery1->SQL->Add("SELECT *");
-        ADOQuery1->SQL->Add("FROM `view-defectdata_tube_size`");
-        ADOQuery1->SQL->Add("ORDER BY `IndexData` DESC");
-        ADOQuery1->SQL->Add("LIMIT 1");
-        ADOQuery1->Open();
-        if ( ADOQuery1->RecordCount==0 )
-        {
-                // set default diametr tube
-                CurentDiametrTube = 168;
-        }
-        else
-        {
-                // set diametr tube
-                CurentDiametrTube = ADOQuery1->FindField("SizeTube")->Value;
+                // set number tube
+                CurentNumberTube = Pole->Value;
         }
         ADOQuery1->Close();
-        */
-        ADOQuery1->SQL->Add("SELECT *");
-        ADOQuery1->SQL->Add("FROM `view-defectdata_tube_size`");
-        // sample mark : NumberTube=0 ; if NumberTube<>0
-        ADOQuery1->SQL->Add("WHERE `view-defectdata_tube_size`.`NumberTube` <>  0");
-        ADOQuery1->SQL->Add("ORDER BY `IndexData` DESC");
-        ADOQuery1->SQL->Add("LIMIT 1");
-        ADOQuery1->Open();
-
-        /*
-        int np = ADOQuery1->Fields->Count;
-        MassFields->n = np;
-        AnsiString fName;
-        ListBox2->Items->Clear();
-        ListBox2->Items->Add(np);
-        for (int i=0; i<np; i++)
-        {
-                fName = ADOQuery1->Fields->FieldByNumber(i+1)->FieldName;
-                MassFields[i].Name  = ADOQuery1->Fields->FieldByNumber(i+1)->FieldName;
-                MassFields[i].Type  = ADOQuery1->Fields->FieldByNumber(i+1)->DataType;
-                MassFields[i].Value = ADOQuery1->Fields->FieldByNumber(i+1)->Value;
-                if (fName=="IndexData")         continue;
-                if (fName=="DataSensors")       continue;
-                if (fName=="DatePr")            continue;
-                if (fName=="TimePr")            continue;
-                ListBox2->Items->Add( fName+" : "+ADOQuery1->Fields->FieldByNumber(i+1)->Value);
-        }
-        ADOQuery1->Fields->FieldByNumber(1)->DataType;
-        ADOQuery1->Active = false;
-        ADOConnection1->Connected = false;
-        */
+// ******************************************************************************************
+// *************************** init variable Base Lengh sensors tube ************************
         // отступ в мм от левого датчика
         otLmm = 365;
         // offset from left sensor tube, unit segment   // расчитанный отступ в шагах
@@ -387,7 +352,8 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         otCount = 0;
         // длина трубы замеренной
         dTube = -1;
-
+// ******************************************************************************************
+// *************************** init Massibe indications *************************************
         LampDat[0] = Shape_KEY_BACK;
         LampDat[1] = Shape_KEY_FORWARD;
         LampDat[2] = Shape_TUBE_HERE_L;
@@ -400,6 +366,8 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         LampDat[9] = Shape_SENSOR_AT_BOTTOM;
         //LampDat[10] = Shape11;
         //LampDat[11] = Shape12;
+// ******************************************************************************************
+// *************************** init BoxRead - Read from controller **************************
         BoxRead = new TNBoxRead;
         // въезд в начале, начало дефектоскопии
         BoxRead->EvTubeHereBeginUp = TubeBegin;
@@ -421,6 +389,8 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         BoxRead->EvModeCalibrovka  = EvaModeCalibrovka;
         // пуск
         BoxRead->Resume();
+// ******************************************************************************************
+// *************************** delete starting timer ****************************************
         delete ((TTimer*)Sender);
 }
 //---------------------------------------------------------------------------
