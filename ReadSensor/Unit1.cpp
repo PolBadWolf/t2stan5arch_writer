@@ -245,7 +245,7 @@ void __fastcall TForm1::Img_ClearAll(TImage *Img)
         nY = D_ImageOffsetY + 1;
         eX = ImageVisual->Width -1;
         eY = ImageVisual->Height -1;
-        // clear
+        // clear  
         Img->Canvas->Lock();
         Img->Canvas->Brush->Color = clBlack;
         Img->Canvas->FillRect(Rect(0,0,ImageVisual->Width,ImageVisual->Height));
