@@ -233,6 +233,42 @@ void __fastcall TForm1::TubeEnd()
 //---------------------------------------------------------------------------
 void __fastcall TForm1::TubeBegin()
 {
+        TField *Pole = NULL;
+        // ==============================
+        // curent id melt
+        ADOQuery1->SQL->Clear();
+        ADOQuery1->SQL->Add("SELECT");
+        ADOQuery1->SQL->Add("    `melts`.`Id_Melt`");
+        ADOQuery1->SQL->Add("    ,`parameters`.`Id_Param`");
+        ADOQuery1->SQL->Add("FROM");
+        ADOQuery1->SQL->Add("    `melts`");
+        ADOQuery1->SQL->Add("Inner Join `parameters` ON `parameters`.`Id_Melt` = `melts`.`Id_Melt`");
+        ADOQuery1->SQL->Add("ORDER BY");
+        ADOQuery1->SQL->Add("    `parameters`.`Id_Param` DESC");
+        ADOQuery1->SQL->Add("LIMIT 1");
+        ADOQuery1->Open();
+        Pole = ADOQuery1->FindField("Id_Melt");
+        if (Pole==NULL)
+        {       // Date Base Error
+                Application->MessageBox("Not found field \"Id_Melt\" " , "Date Base Error", 0);
+                Form1->Close();
+                return;
+        }
+        if ( ADOQuery1->RecordCount==0 )
+        {       // нет записей
+                IdMeltCurent = 0;
+                CurentNumberTube = 0;
+        }
+        else
+        {
+                IdMeltCurent = Pole->Value;
+                if ( IdMeltLast!=IdMeltCurent )
+                {   // new Melt
+                    CurentNumberTube = 0;
+                    IdMeltLast = IdMeltCurent;
+                }
+        }
+        // ==============================
         FlNewTube = true;
         // очистка имиджа + сетка
         int nX, nY, eX, eY;
@@ -309,6 +345,7 @@ void __fastcall TForm1::Img_Setka(TImage *Img, int nX, int nY, int eX, int eY, i
 void __fastcall TForm1::TimerStartTimer(TObject *Sender)
 {
         ((TTimer*)Sender)->Enabled = false;
+        TField *Pole = NULL;
 // ******************************************************************************************
 // *************************** init variable from Data Base *********************************
         // close ado
@@ -316,7 +353,6 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         // ====================================================
         // find last number tube ( no sample )
         ADOQuery1->SQL->Clear();
-        // ADOQuery1->SQL->Add("SELECT `NumberTube`");
         ADOQuery1->SQL->Add("SELECT *");
         ADOQuery1->SQL->Add("FROM `defectsdata`");
         ADOQuery1->SQL->Add("WHERE");
@@ -326,11 +362,12 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         ADOQuery1->SQL->Add("LIMIT 1");
         ADOQuery1->Open();
         // find field
-        TField *Pole = ADOQuery1->FindField("NumberTube");
+        Pole = ADOQuery1->FindField("NumberTube");
         if (Pole==NULL)
         {       // Date Base Error
                 Application->MessageBox("Not found field \"NumberTube\" " , "Date Base Error", 0);
                 Form1->Close();
+                return;
         }
         if ( ADOQuery1->RecordCount==0 )
         {       // no records - set number 0
@@ -340,6 +377,33 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         {
                 // set number tube
                 CurentNumberTube = Pole->Value;
+        }
+        ADOQuery1->Close();
+        // ====================================================
+        // find last id last melt
+        ADOQuery1->SQL->Clear();
+        ADOQuery1->SQL->Add("SELECT");
+        ADOQuery1->SQL->Add("    `parameters`.`Id_Melt` AS `Last_ID_Melt`");
+        ADOQuery1->SQL->Add("FROM `defectsdata`");
+        ADOQuery1->SQL->Add("Inner Join `parameters` ON `defectsdata`.`Id_Param` = `parameters`.`Id_Param`");
+        ADOQuery1->SQL->Add("ORDER BY");
+        ADOQuery1->SQL->Add("    `defectsdata`.`IndexData` DESC");
+        ADOQuery1->SQL->Add("LIMIT 1");
+        ADOQuery1->Open();
+        Pole = ADOQuery1->FindField("Last_ID_Melt");
+        if ( Pole==NULL )
+        {       // Date Base Error
+                Application->MessageBox("Not found field \"ID_Melt\" " , "Date Base Error", 0);
+                Form1->Close();
+                return;
+        }
+        if ( ADOQuery1->RecordCount==0 )
+        {
+                IdMeltLast = 0;
+        }
+        else
+        {
+                IdMeltLast = Pole->Value;
         }
         ADOQuery1->Close();
 // ******************************************************************************************

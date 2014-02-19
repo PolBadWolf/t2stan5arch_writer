@@ -76,10 +76,6 @@ public:		// User declarations
         // завершение дефектоскопии
         void __fastcall TubeEnd();
         void __fastcall TubeBegin();
-        // curent number tube
-        int     CurentNumberTube;
-        // curent diametr tube
-        double CurentDiametrTube;
         // offset from left sensor tube, unit mm        // отступ в мм от левого датчика
         double otLmm;
         // offset from left sensor tube, unit segment   // расчитанный отступ в шагах
@@ -88,6 +84,13 @@ public:		// User declarations
         int otCount;
         // len last tube                                // длина трубы замеренной
         int dTube;
+        // curent number tube
+        int     CurentNumberTube;
+        // curent diametr tube
+        double CurentDiametrTube;
+        // id last melt
+        int  IdMeltLast;
+        int  IdMeltCurent;
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TForm1 *Form1;
