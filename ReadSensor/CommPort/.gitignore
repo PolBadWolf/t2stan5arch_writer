@@ -9,5 +9,5 @@
 # User-specific files
 *.~*
 *.obj
-
-
+*.tds
+*.exe
