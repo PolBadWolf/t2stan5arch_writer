@@ -309,8 +309,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         ADOQuery1->SQL->Add("SELECT *");
         ADOQuery1->SQL->Add("FROM `defectsdata`");
         ADOQuery1->SQL->Add("WHERE");
-//        ADOQuery1->SQL->Add("   `NumberTube` <>  '0'");
-        ADOQuery1->SQL->Add("   `NumberTube` =  '545'");
+        ADOQuery1->SQL->Add("   `NumberTube` <>  '0'");
         ADOQuery1->SQL->Add("ORDER BY");
         ADOQuery1->SQL->Add("   `IndexData` DESC");
         ADOQuery1->SQL->Add("LIMIT 1");
