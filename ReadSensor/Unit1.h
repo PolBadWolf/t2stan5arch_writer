@@ -91,6 +91,7 @@ public:		// User declarations
         // id last melt
         int  IdMeltLast;
         int  IdMeltCurent;
+        int  IdParamCurent;
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TForm1 *Form1;

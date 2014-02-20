@@ -220,15 +220,18 @@ void __fastcall TForm1::EvaCircleSensor(int sn)
 // завершение дефектоскопии
 void __fastcall TForm1::TubeEnd()
 {
-        static int Len = 0;
-        int  *Mass = BoxRead->MassDefect;       // массив соправожденных дефектов
-        bool FlObr = BoxRead->FlModeCalibrovka; // флаг калибровки/образца
-        Label14->Caption = "-//-";
-        if (FlNewTube)
-        {
-                FlNewTube = false;
-                Len       = BoxRead->MassDefectLen;    // длина сопровожденной трубы в сегментах
-        }
+    static int Len = 0;
+    int  *Mass = BoxRead->MassDefect;       // массив соправожденных дефектов
+    bool FlObr = BoxRead->FlModeCalibrovka; // флаг калибровки/образца
+    Label14->Caption = "-//-";
+    if (!FlNewTube) return;
+    FlNewTube = false;
+    Len       = BoxRead->MassDefectLen;    // длина сопровожденной трубы в сегментах
+    // no set parametrs
+    if ( (IdParamCurent==0) || (IdMeltCurent==0) ) return;
+    // set
+    TDateTime DtTm = Now();
+    AnsiString vDate = FormatDateTime("yyyy-mm-dd", DtTm);
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::TubeBegin()
@@ -257,6 +260,7 @@ void __fastcall TForm1::TubeBegin()
         if ( ADOQuery1->RecordCount==0 )
         {       // нет записей
                 IdMeltCurent = 0;
+                IdParamCurent = 0;
                 CurentNumberTube = 0;
         }
         else
@@ -266,8 +270,10 @@ void __fastcall TForm1::TubeBegin()
                 {   // new Melt
                     CurentNumberTube = 0;
                     IdMeltLast = IdMeltCurent;
+                    IdParamCurent = ADOQuery1->FindField("Id_Param")->Value;
                 }
         }
+        ADOQuery1->Close();
         // ==============================
         FlNewTube = true;
         // очистка имиджа + сетка
