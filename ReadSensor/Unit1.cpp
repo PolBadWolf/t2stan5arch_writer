@@ -34,7 +34,7 @@ public:
         __fastcall TMassFields()
         {
                 Name  = "";
-                Type  = 0;
+                Type  = ftUnknown;
                 Value = NULL;
         }
 };
@@ -228,7 +228,7 @@ void __fastcall TForm1::TubeEnd()
     FlNewTube = false;
     Len       = BoxRead->MassDefectLen;    // длина сопровожденной трубы в сегментах
     // no set parametrs
-    if ( (IdParamCurent==0) || (IdMeltCurent==0) ) return;
+    if ( (IdParam==0) || (IdMelt==0) ) return;
     // set
     TDateTime DtTm = Now();
     AnsiString vDate = FormatDateTime("yyyy-mm-dd", DtTm);
@@ -236,6 +236,7 @@ void __fastcall TForm1::TubeEnd()
 //---------------------------------------------------------------------------
 void __fastcall TForm1::TubeBegin()
 {
+        /*
         TField *Pole = NULL;
         // ==============================
         // curent id melt
@@ -259,8 +260,8 @@ void __fastcall TForm1::TubeBegin()
         }
         if ( ADOQuery1->RecordCount==0 )
         {       // нет записей
-                IdMeltCurent = 0;
-                IdParamCurent = 0;
+                IdMelt = 0;
+                IdParam = 0;
                 CurentNumberTube = 0;
         }
         else
@@ -274,6 +275,7 @@ void __fastcall TForm1::TubeBegin()
                 }
         }
         ADOQuery1->Close();
+        */
         // ==============================
         FlNewTube = true;
         // очистка имиджа + сетка
@@ -357,61 +359,24 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         // close ado
         ADOQuery1->Close();
         // ====================================================
-        // find last number tube ( no sample )
-        ADOQuery1->SQL->Clear();
-        ADOQuery1->SQL->Add("SELECT *");
-        ADOQuery1->SQL->Add("FROM `defectsdata`");
-        ADOQuery1->SQL->Add("WHERE");
-        ADOQuery1->SQL->Add("   `NumberTube` <>  '0'");
-        ADOQuery1->SQL->Add("ORDER BY");
-        ADOQuery1->SQL->Add("   `IndexData` DESC");
-        ADOQuery1->SQL->Add("LIMIT 1");
-        ADOQuery1->Open();
-        // find field
-        Pole = ADOQuery1->FindField("NumberTube");
-        if (Pole==NULL)
+        // read last number tube ( no sample )
+        CurentNumberTube = ReadFromBDLastNumberTude(ADOQuery1);
+        if (CurentNumberTube<0)
         {       // Date Base Error
                 Application->MessageBox("Not found field \"NumberTube\" " , "Date Base Error", 0);
                 Form1->Close();
                 return;
         }
-        if ( ADOQuery1->RecordCount==0 )
-        {       // no records - set number 0
-                CurentNumberTube = 0;
-        }
-        else
-        {
-                // set number tube
-                CurentNumberTube = Pole->Value;
-        }
-        ADOQuery1->Close();
         // ====================================================
-        // find last id last melt
-        ADOQuery1->SQL->Clear();
-        ADOQuery1->SQL->Add("SELECT");
-        ADOQuery1->SQL->Add("    `parameters`.`Id_Melt` AS `Last_ID_Melt`");
-        ADOQuery1->SQL->Add("FROM `defectsdata`");
-        ADOQuery1->SQL->Add("Inner Join `parameters` ON `defectsdata`.`Id_Param` = `parameters`.`Id_Param`");
-        ADOQuery1->SQL->Add("ORDER BY");
-        ADOQuery1->SQL->Add("    `defectsdata`.`IndexData` DESC");
-        ADOQuery1->SQL->Add("LIMIT 1");
-        ADOQuery1->Open();
-        Pole = ADOQuery1->FindField("Last_ID_Melt");
-        if ( Pole==NULL )
-        {       // Date Base Error
-                Application->MessageBox("Not found field \"ID_Melt\" " , "Date Base Error", 0);
-                Form1->Close();
-                return;
-        }
-        if ( ADOQuery1->RecordCount==0 )
-        {
-                IdMeltLast = 0;
+        // read last parametrs
+        if ( !ReadFromBDLastParametrs(ADOQuery1, &IdParam, &IdMelt, &CodeMelt, &SizeTude) )
+        {   // ok
+            LenSegmentTube = FnDiametr2LenSegment(SizeTude);
         }
         else
-        {
-                IdMeltLast = Pole->Value;
+        {   // no param
+            LenSegmentTube = 1000/8;
         }
-        ADOQuery1->Close();
 // ******************************************************************************************
 // *************************** init variable Base Lengh sensors tube ************************
         // отступ в мм от левого датчика

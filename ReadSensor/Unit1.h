@@ -86,12 +86,17 @@ public:		// User declarations
         int dTube;
         // curent number tube
         int     CurentNumberTube;
+        int  __fastcall ReadFromBDLastNumberTude(TADOQuery *dQuery);
+        // **********
+        int  __fastcall ReadFromBDLastParametrs(TADOQuery *dQuery, int *id_parametr, int *id_melt, AnsiString *CodeMelt, double *SizeTube);
         // curent diametr tube
         double CurentDiametrTube;
         // id last melt
-        int  IdMeltLast;
-        int  IdMeltCurent;
-        int  IdParamCurent;
+        int  IdParam;
+        int  IdMelt;
+        AnsiString CodeMelt;
+        double SizeTude;
+        double LenSegmentTube;
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TForm1 *Form1;
