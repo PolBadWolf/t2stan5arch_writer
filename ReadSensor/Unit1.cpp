@@ -236,6 +236,28 @@ void __fastcall TForm1::TubeEnd()
 //---------------------------------------------------------------------------
 void __fastcall TForm1::TubeBegin()
 {
+        // read last parametrs
+        int         IdParamNew;
+        int         IdMeltNew;
+        AnsiString  CodeMeltNew;
+        double      SizeTudeNew;
+        if ( !ReadFromBDLastParametrs(ADOQuery1, &IdParamNew, &IdMeltNew, &CodeMeltNew, &SizeTudeNew) )
+        {   // ok
+            // new melt ?
+            if ( IdMelt!=IdMeltNew)
+            {   // new melt
+                CurentNumberTube = 0;
+            }
+            IdParam  = IdParamNew;
+            IdMelt   = IdMeltNew;
+            CodeMelt = CodeMeltNew;
+            SizeTude = SizeTudeNew;
+            LenSegmentTube = FnDiametr2LenSegment(SizeTude);
+        }
+        else
+        {   // no param
+            LenSegmentTube = 1000/8;
+        }
         /*
         TField *Pole = NULL;
         // ==============================
