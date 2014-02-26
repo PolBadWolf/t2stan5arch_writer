@@ -397,6 +397,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         {   // no param
             LenSegmentTube = 1000/8;
         }
+        Show_Parametrs(CodeMelt, SizeTude);
 // ******************************************************************************************
 // *************************** init variable Base Lengh sensors tube ************************
         // отступ в мм от левого датчика

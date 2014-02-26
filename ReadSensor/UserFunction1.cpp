@@ -100,8 +100,8 @@ int  __fastcall TForm1::ReadFromBDLastParametrs(TADOQuery *dQuery, int *id_param
         status = 1;
         *id_parametr = 0;
         *id_melt = 0;
-        *CodeMelt = "";
-        *SizeTube = 219;
+        *CodeMelt = "No Melt";
+        *SizeTube = 0;
     }
     else
     {
@@ -135,8 +135,8 @@ int  __fastcall TForm1::ReadFromBDNewParametrs(TADOQuery *dQuery, int *id_parame
         status = 1;
         *id_parametr = 0;
         *id_melt = 0;
-        *CodeMelt = "";
-        *SizeTube = 219;
+        *CodeMelt = "No Melt";
+        *SizeTube = 0;
     }
     else
     {
@@ -157,3 +157,8 @@ void __fastcall Show_NumberTube(int number)
     else
         Form1->Label_temp->Caption = "no tube";
 }
+
+void __fastcall Show_Parametrs(AnsiString CodeMelt, double SizeTube)
+{
+}
+
