@@ -89,6 +89,7 @@ public:		// User declarations
         int  __fastcall ReadFromBDLastNumberTude(TADOQuery *dQuery);
         // **********
         int  __fastcall ReadFromBDLastParametrs(TADOQuery *dQuery, int *id_parametr, int *id_melt, AnsiString *CodeMelt, double *SizeTube);
+        int  __fastcall ReadFromBDNewParametrs (TADOQuery *dQuery, int *id_parametr, int *id_melt, AnsiString *CodeMelt, double *SizeTube);
         // curent diametr tube
         double CurentDiametrTube;
         // id last melt

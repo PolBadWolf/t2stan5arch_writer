@@ -220,18 +220,50 @@ void __fastcall TForm1::EvaCircleSensor(int sn)
 // завершение дефектоскопии
 void __fastcall TForm1::TubeEnd()
 {
-    static int Len = 0;
-    int  *Mass = BoxRead->MassDefect;       // массив соправожденных дефектов
-    bool FlObr = BoxRead->FlModeCalibrovka; // флаг калибровки/образца
-    Label14->Caption = "-//-";
+    // new tube ?
     if (!FlNewTube) return;
-    FlNewTube = false;
-    Len       = BoxRead->MassDefectLen;    // длина сопровожденной трубы в сегментах
-    // no set parametrs
-    if ( (IdParam==0) || (IdMelt==0) ) return;
+    // =========================================================
+    // no parametrs - no record
+    if ( (IdParam==0) || (IdMelt==0) )
+    {
+        FlNewTube = false;
+        return;
+    }
+    // =========================================================
+    // massive dafects
+    int  *Mass;
+    // len massive dafects
+    int  Len = 0;
+    // flag tube defect
+    bool FlagDefectTube = false;
+    // flag Sample
+    bool FlObr;
+    int  nTube;
+    // =========================================================
+    // read status : "it`s sample"
+    FlObr = BoxRead->FlModeCalibrovka;
+    // =========================================================
+    // Number tube +1 if no sample
+    if ( FlObr )
+    {   // sample mark number 0
+        nTube = 0;
+    }
+    else
+    {   // number tube +1
+        CurentNumberTube++;
+        nTube = CurentNumberTube;
+    }
+    // =========================================================
+    // set address massive
+    Mass = BoxRead->MassDefect;
+    Len       = BoxRead->MassDefectLen;
+    // =========================================================
+    Label14->Caption = "-//-";
     // set
     TDateTime DtTm = Now();
     AnsiString vDate = FormatDateTime("yyyy-mm-dd", DtTm);
+    // reset flag new tube
+    FlNewTube = false;
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::TubeBegin()

@@ -79,7 +79,6 @@ Variant __fastcall ReadField(TADOQuery *fQuery, AnsiString FieldName, int *statu
 
 int  __fastcall TForm1::ReadFromBDLastParametrs(TADOQuery *dQuery, int *id_parametr, int *id_melt, AnsiString *CodeMelt, double *SizeTube)
 {
-    TField *Pole = NULL;
     int status = 0;
     dQuery->SQL->Clear();
     dQuery->SQL->Add("SELECT");
@@ -106,17 +105,6 @@ int  __fastcall TForm1::ReadFromBDLastParametrs(TADOQuery *dQuery, int *id_param
     }
     else
     {
-        if ( Pole = dQuery->FindField("id_parametr") )
-            *id_parametr  = Pole->Value;
-        else
-        {
-        }
-        /*
-        *id_parametr = dQuery->FindField("id_parametr")->Value;
-        *id_melt = dQuery->FindField("id_melt")->Value;
-        *CodeMelt = dQuery->FindField("CodeMelt")->Value;
-        *SizeTube = dQuery->FindField("SizeTube")->Value;
-        */
         *id_parametr = ReadField( dQuery, "id_parametr", &status);
         *id_melt     = ReadField( dQuery, "id_melt",     &status);
         *CodeMelt    = ReadField( dQuery, "CodeMelt",    &status);
@@ -126,5 +114,39 @@ int  __fastcall TForm1::ReadFromBDLastParametrs(TADOQuery *dQuery, int *id_param
     return status;
 }
 
+int  __fastcall TForm1::ReadFromBDNewParametrs(TADOQuery *dQuery, int *id_parametr, int *id_melt, AnsiString *CodeMelt, double *SizeTube)
+{
+    int status = 0;
+    dQuery->SQL->Clear();
+    dQuery->SQL->Add("SELECT");
+    dQuery->SQL->Add(" `parameters`.`Id_Melt` AS `id_melt`");
+    dQuery->SQL->Add(",`melts`.`NameMelt` AS `CodeMelt`");
+    dQuery->SQL->Add(",`sizetube`.`SizeTube` AS `SizeTube`");
+    dQuery->SQL->Add("FROM");
+    dQuery->SQL->Add("`parameters`");
+    dQuery->SQL->Add("Inner Join `melts` ON `parameters`.`Id_Melt` = `melts`.`Id_Melt`");
+    dQuery->SQL->Add("Inner Join `sizetube` ON `melts`.`Id_SizeTube` = `sizetube`.`Id_SizeTube`");
+    dQuery->SQL->Add("ORDER BY");
+    dQuery->SQL->Add("`defectsdata`.`IndexData` DESC");
+    dQuery->SQL->Add("LIMIT 1");
+    dQuery->Open();
+    if (dQuery->RecordCount==0)
+    { // no records
+        status = 1;
+        *id_parametr = 0;
+        *id_melt = 0;
+        *CodeMelt = "";
+        *SizeTube = 219;
+    }
+    else
+    {
+        *id_parametr = ReadField( dQuery, "id_parametr", &status);
+        *id_melt     = ReadField( dQuery, "id_melt",     &status);
+        *CodeMelt    = ReadField( dQuery, "CodeMelt",    &status);
+        *SizeTube    = ReadField( dQuery, "SizeTube",    &status);
+    }
+    dQuery->Close();
+    return status;
+}
 
 
