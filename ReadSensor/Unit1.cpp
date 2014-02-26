@@ -224,7 +224,7 @@ void __fastcall TForm1::TubeEnd()
     if (!FlNewTube) return;
     // =========================================================
     // no parametrs - no record
-    if ( (IdParam==0) || (IdMelt==0) )
+    if (!IdParam)
     {
         FlNewTube = false;
         return;
@@ -269,33 +269,33 @@ void __fastcall TForm1::TubeEnd()
 void __fastcall TForm1::TubeBegin()
 {
         // read last parametrs
-        int         IdParamNew;
-        int         IdMeltNew;
-        AnsiString  CodeMeltNew;
-        double      SizeTudeNew;
-        int         status;
-        status = ReadFromBDLastParametrs(ADOQuery1, &IdParamNew, &IdMeltNew, &CodeMeltNew, &SizeTudeNew);
-        if ( status )
+        int         IdParamLast  , IdParamNew;
+        int         IdMeltLast   , IdMeltNew;
+        AnsiString  CodeMeltLast , CodeMeltNew;
+        double      SizeTubeLast , SizeTubeNew;
+        int         statusLast   , statusNew;
+        statusLast = ReadFromBDLastParametrs(ADOQuery1, &IdParamLast, &IdMeltLast, &CodeMeltLast, &SizeTubeLast);
+        statusNew  = ReadFromBDNewParametrs (ADOQuery1, &IdParamNew , &IdMeltNew , &CodeMeltNew , &SizeTubeNew );
+        if ( (statusLast && statusNew) || statusNew )
         {   // error read parametrs
-            IdParam        = 0;
-            IdMelt         = 0;
-            CodeMelt       = "Error Read Parametrs";
-            SizeTude       = 0;
+            IdParam  = 0;
+            CodeMelt = "No melt";
+            SizeTube = 0;
             LenSegmentTube = 1000/8;
         }
         else
         {   // ok
             // new melt ?
-            if ( IdMelt!=IdMeltNew)
+            if ( IdMeltLast!=IdMeltNew)
             {   // new melt
                 CurentNumberTube = 0;
             }
             IdParam  = IdParamNew;
-            IdMelt   = IdMeltNew;
             CodeMelt = CodeMeltNew;
-            SizeTude = SizeTudeNew;
-            LenSegmentTube = FnDiametr2LenSegment(SizeTude);
+            SizeTube = SizeTubeNew;
+            LenSegmentTube = FnDiametr2LenSegment(SizeTube);
         }
+        Show_Parametrs(CodeMelt, SizeTube);
         // ==============================
         FlNewTube = true;
         // очистка имиджа + сетка
@@ -371,7 +371,12 @@ void __fastcall TForm1::Img_Setka(TImage *Img, int nX, int nY, int eX, int eY, i
 void __fastcall TForm1::TimerStartTimer(TObject *Sender)
 {
         ((TTimer*)Sender)->Enabled = false;
-        TField *Pole = NULL;
+        int         IdParamLast  , IdParamNew;
+        int         IdMeltLast   , IdMeltNew;
+        AnsiString  CodeMeltLast , CodeMeltNew;
+        double      SizeTubeLast , SizeTubeNew;
+        int         statusLast   , statusNew;
+
 // ******************************************************************************************
 // *************************** init variable from Data Base *********************************
         // close ado
@@ -389,15 +394,21 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         Show_NumberTube(CurentNumberTube);
         // ====================================================
         // read last parametrs
-        if ( !ReadFromBDLastParametrs(ADOQuery1, &IdParam, &IdMelt, &CodeMelt, &SizeTude) )
+        if ( !ReadFromBDLastParametrs(ADOQuery1, &IdParamLast, &IdMeltLast, &CodeMeltLast, &SizeTubeLast) )
         {   // ok
-            LenSegmentTube = FnDiametr2LenSegment(SizeTude);
+            IdParam   = IdParamLast;
+            CodeMelt  = CodeMeltLast;
+            SizeTube  = SizeTubeLast;
+            LenSegmentTube = FnDiametr2LenSegment(SizeTube);
         }
         else
         {   // no param
+            IdParam   = 0;
+            CodeMelt  = "no melt tube";
+            SizeTube  = 0;
             LenSegmentTube = 1000/8;
         }
-        Show_Parametrs(CodeMelt, SizeTude);
+        Show_Parametrs(CodeMelt, SizeTube);
 // ******************************************************************************************
 // *************************** init variable Base Lengh sensors tube ************************
         // отступ в мм от левого датчика

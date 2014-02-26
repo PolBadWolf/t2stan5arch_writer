@@ -95,9 +95,8 @@ public:		// User declarations
         double CurentDiametrTube;
         // id last melt
         int  IdParam;
-        int  IdMelt;
         AnsiString CodeMelt;
-        double SizeTude;
+        double SizeTube;
         double LenSegmentTube;
 };
 //---------------------------------------------------------------------------
