@@ -119,7 +119,8 @@ int  __fastcall TForm1::ReadFromBDNewParametrs(TADOQuery *dQuery, int *id_parame
     int status = 0;
     dQuery->SQL->Clear();
     dQuery->SQL->Add("SELECT");
-    dQuery->SQL->Add(" `parameters`.`Id_Melt` AS `id_melt`");
+    dQuery->SQL->Add(" `parameters`.`Id_Param` AS `id_parametr`");
+    dQuery->SQL->Add(",`parameters`.`Id_Melt` AS `id_melt`");
     dQuery->SQL->Add(",`melts`.`NameMelt` AS `CodeMelt`");
     dQuery->SQL->Add(",`sizetube`.`SizeTube` AS `SizeTube`");
     dQuery->SQL->Add("FROM");
@@ -127,7 +128,7 @@ int  __fastcall TForm1::ReadFromBDNewParametrs(TADOQuery *dQuery, int *id_parame
     dQuery->SQL->Add("Inner Join `melts` ON `parameters`.`Id_Melt` = `melts`.`Id_Melt`");
     dQuery->SQL->Add("Inner Join `sizetube` ON `melts`.`Id_SizeTube` = `sizetube`.`Id_SizeTube`");
     dQuery->SQL->Add("ORDER BY");
-    dQuery->SQL->Add("`defectsdata`.`IndexData` DESC");
+    dQuery->SQL->Add("`parameters`.`Id_Param` DESC");
     dQuery->SQL->Add("LIMIT 1");
     dQuery->Open();
     if (dQuery->RecordCount==0)
