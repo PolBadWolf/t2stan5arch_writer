@@ -342,6 +342,13 @@ object Form1: TForm1
     Height = 13
     Caption = 'Label_temp'
   end
+  object Label15: TLabel
+    Left = 592
+    Top = 208
+    Width = 38
+    Height = 13
+    Caption = 'Label15'
+  end
   object ADOConnection1: TADOConnection
     ConnectionString = 
       'Provider=MSDASQL.1;Persist Security Info=False;Data Source=T2Sta' +

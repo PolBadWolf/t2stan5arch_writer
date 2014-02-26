@@ -582,12 +582,12 @@ void __fastcall TNBoxRead::DoCirle(int sn, int lv)
                 SetSummDefect();
                 if ( !BoxReadMassSensorsLevel[TUBE_HERE1] || !BoxReadMassSensorsLevel[TUBE_HERE2] )
                 {
-                // событие
-                if (EvCircle && count>0 )
-                {
+                    // событие
+                    if (EvCircle && count>0 )
+                    {
                         // колесо назад/длина трубы в сегментах/ текущая позитция/ массив дефектов
                         EvCircle( 1, count_max, count, MassDefectCur);
-                }
+                    }
                 }
                 return;
         }

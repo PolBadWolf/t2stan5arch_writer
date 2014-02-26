@@ -114,7 +114,7 @@ void __fastcall TForm1::EvaSensor(int sn, int lvl)
         */
         if (dTube>0)
                 //Label17->Caption = dTube - otStep;
-                Label17->Caption = (dTube-otStep)*FnDiametr2LenSegment(CurentDiametrTube);
+                Label17->Caption = (dTube-otStep)*LenSegmentTube;
         else
                 Label17->Caption = dTube;
 }
@@ -138,8 +138,9 @@ void __fastcall TForm1::EvaModeCalibrovka(int lvl, int fl_mod)
 }
 //---------------------------------------------------------------------------
 // сработка колеса
-void __fastcall TForm1::EvaCircle(int Napravl, int Dlina, int Position, unsigned char *MassDefect)
+void __fastcall TForm1::EvaCircle(int Napravl, int Dlina, int Position, int *MassDefect)
 {
+        Label15->Caption = Position;
         // состояние левого датчика
         if (!BoxRead->BoxReadMassSensorsLevel[TUBE_HERE1])
         {
@@ -159,7 +160,8 @@ void __fastcall TForm1::EvaCircle(int Napravl, int Dlina, int Position, unsigned
                         {
                                 dTube = Dlina;
                                 //Label17->Caption = dTube - otStep;
-                                Label17->Caption = (dTube-otStep)*FnDiametr2LenSegment(CurentDiametrTube);
+                                // len tube ?
+                                Label17->Caption = (dTube-otStep)*LenSegmentTube;
                         }
                         else
                         {
@@ -173,7 +175,7 @@ void __fastcall TForm1::EvaCircle(int Napravl, int Dlina, int Position, unsigned
         if (Dlina   <(otStep+1) ) return; // вне зоны датчика
         //Label14->Caption = BoxRead->Count;
         //Label14->Caption = (BoxRead->Count-otStep)*Step2mm[Step2mmD];
-        Label14->Caption = (Position-otStep)*FnDiametr2LenSegment(CurentDiametrTube);
+        Label14->Caption = (Position-otStep)*LenSegmentTube;
         // рисование
         int nX,  nY,  eX,  eY;
         int nX1, nY1, eX1, eY1;
@@ -189,14 +191,14 @@ void __fastcall TForm1::EvaCircle(int Napravl, int Dlina, int Position, unsigned
         ImageVisual->Canvas->FillRect(Rect(nX, nY, eX, nY+(eY-nY)/10) );
         ImageVisual->Canvas->Unlock();
         // позитция
-        n = FnDiametr2LenSegment(CurentDiametrTube)*(Position+0-(otStep+1) );
-        e = FnDiametr2LenSegment(CurentDiametrTube)*(Position+1-(otStep+1) );
+        n = LenSegmentTube*(Position+0-(otStep+1) );
+        e = LenSegmentTube*(Position+1-(otStep+1) );
         nY1 = nY;
         eY1 = eY-(eY-nY)/10;
         nX1 = ImgV_TubeMaxPix*n/D_MaxLenTube + D_ImageOffsetX;
         eX1 = ImgV_TubeMaxPix*e/D_MaxLenTube + D_ImageOffsetX;
         // цвет
-        if (MassDefect[otStep+Position-1-(otStep+1) ]==255)
+        if (MassDefect[otStep+Position-1-(otStep+1) ]==-1)
                 c = clGray;
         if (MassDefect[otStep+Position-1-(otStep+1) ]==0)
                 c = clLime;
@@ -255,13 +257,14 @@ void __fastcall TForm1::TubeEnd()
     }
     // =========================================================
     // set address massive
-    Mass = BoxRead->MassDefect;
-    Len       = BoxRead->MassDefectLen;
+    Mass = BoxRead->MassDefect + otStep;
+    // Len       = BoxRead->MassDefectLen;
+    Len       = dTube - otStep;
     int zn = -1;
     for (int i=0;i<Len;i++)
     {
         zn = Mass[i];
-        if ( (zn!=0) && (zn!=255) )
+        if ( zn>0 )
         {
             FlagDefectTube = FlagDefectTube | true;
         }
@@ -304,6 +307,8 @@ void __fastcall TForm1::TubeBegin()
             SizeTube = SizeTubeNew;
             LenSegmentTube = FnDiametr2LenSegment(SizeTube);
         }
+        // offset from left sensor tube, unit segment   // расчитанный отступ в шагах
+        otStep = otLmm/LenSegmentTube;
         Show_Parametrs(CodeMelt, SizeTube);
         // ==============================
         FlNewTube = true;
@@ -423,7 +428,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         // отступ в мм от левого датчика
         otLmm = 365;
         // offset from left sensor tube, unit segment   // расчитанный отступ в шагах
-        otStep = otLmm/FnDiametr2LenSegment(CurentDiametrTube);
+        otStep = otLmm/LenSegmentTube;
         // счетчик окончания замера после отключения левого датчика
         otCount = 0;
         // длина трубы замеренной

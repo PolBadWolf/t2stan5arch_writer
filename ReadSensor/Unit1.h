@@ -49,6 +49,7 @@ __published:	// IDE-managed Components
         TADOQuery *ADOQuery1;
         TTimer *TimerStart;
     TLabel *Label_temp;
+    TLabel *Label15;
         void __fastcall FormCloseQuery(TObject *Sender, bool &CanClose);
         void __fastcall TimerStartTimer(TObject *Sender);
 private:	// User declarations
@@ -73,7 +74,7 @@ public:		// User declarations
         // 1 - калибровка, 0 - работа
         void __fastcall EvaModeCalibrovka(int lvl, int fl_mod);
         // сработка колеса
-        void __fastcall EvaCircle(int Napravl, int Dlina, int Position, unsigned char *MassDefect);
+        void __fastcall EvaCircle(int Napravl, int Dlina, int Position, int *MassDefect);
         // завершение дефектоскопии
         void __fastcall TubeEnd();
         void __fastcall TubeBegin();

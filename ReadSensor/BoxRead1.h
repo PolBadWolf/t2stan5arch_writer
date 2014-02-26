@@ -58,7 +58,7 @@ protected:
         // счетчик сегментов
         int  count;
         // массив дефектов
-        unsigned char  MassDefectCur[BoxReadMassDefect_MAX];
+        int  MassDefectCur[BoxReadMassDefect_MAX];
         // длина текущей трубы в сегментах
         int  count_max;
         void __fastcall TubeHere(int sn, int lv);
@@ -118,7 +118,7 @@ public:
         // Dlina      - текущая длина трубы в сегментах
         // Position   - текущая позитция дефектоскопа на трубе
         // MassDifect - массив дефектов
-        void __fastcall (__closure *EvCircle)(int Napravl, int Dlina, int Position, unsigned char *MassDefect);
+        void __fastcall (__closure *EvCircle)(int Napravl, int Dlina, int Position, int *MassDefect);
         // изменение состояния датчиков
         // sn - номер датчика
         // lv - уровень : 0 - сработанный, 1 несработанный
