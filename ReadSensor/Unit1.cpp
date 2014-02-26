@@ -241,7 +241,17 @@ void __fastcall TForm1::TubeBegin()
         int         IdMeltNew;
         AnsiString  CodeMeltNew;
         double      SizeTudeNew;
-        if ( !ReadFromBDLastParametrs(ADOQuery1, &IdParamNew, &IdMeltNew, &CodeMeltNew, &SizeTudeNew) )
+        int         status;
+        status = ReadFromBDLastParametrs(ADOQuery1, &IdParamNew, &IdMeltNew, &CodeMeltNew, &SizeTudeNew);
+        if ( status )
+        {   // error read parametrs
+            IdParam        = 0;
+            IdMelt         = 0;
+            CodeMelt       = "Error Read Parametrs";
+            SizeTude       = 0;
+            LenSegmentTube = 1000/8;
+        }
+        else
         {   // ok
             // new melt ?
             if ( IdMelt!=IdMeltNew)
@@ -254,50 +264,6 @@ void __fastcall TForm1::TubeBegin()
             SizeTude = SizeTudeNew;
             LenSegmentTube = FnDiametr2LenSegment(SizeTude);
         }
-        else
-        {   // no param
-            LenSegmentTube = 1000/8;
-        }
-        /*
-        TField *Pole = NULL;
-        // ==============================
-        // curent id melt
-        ADOQuery1->SQL->Clear();
-        ADOQuery1->SQL->Add("SELECT");
-        ADOQuery1->SQL->Add("    `melts`.`Id_Melt`");
-        ADOQuery1->SQL->Add("    ,`parameters`.`Id_Param`");
-        ADOQuery1->SQL->Add("FROM");
-        ADOQuery1->SQL->Add("    `melts`");
-        ADOQuery1->SQL->Add("Inner Join `parameters` ON `parameters`.`Id_Melt` = `melts`.`Id_Melt`");
-        ADOQuery1->SQL->Add("ORDER BY");
-        ADOQuery1->SQL->Add("    `parameters`.`Id_Param` DESC");
-        ADOQuery1->SQL->Add("LIMIT 1");
-        ADOQuery1->Open();
-        Pole = ADOQuery1->FindField("Id_Melt");
-        if (Pole==NULL)
-        {       // Date Base Error
-                Application->MessageBox("Not found field \"Id_Melt\" " , "Date Base Error", 0);
-                Form1->Close();
-                return;
-        }
-        if ( ADOQuery1->RecordCount==0 )
-        {       // нет записей
-                IdMelt = 0;
-                IdParam = 0;
-                CurentNumberTube = 0;
-        }
-        else
-        {
-                IdMeltCurent = Pole->Value;
-                if ( IdMeltLast!=IdMeltCurent )
-                {   // new Melt
-                    CurentNumberTube = 0;
-                    IdMeltLast = IdMeltCurent;
-                    IdParamCurent = ADOQuery1->FindField("Id_Param")->Value;
-                }
-        }
-        ADOQuery1->Close();
-        */
         // ==============================
         FlNewTube = true;
         // очистка имиджа + сетка
@@ -308,8 +274,6 @@ void __fastcall TForm1::TubeBegin()
         eY = ImageVisual->Height -1;
         Img_Clear(ImageVisual, nX, nY, eX, eY, 15);
         Img_Setka(ImageVisual, nX, nY, eX, eY, 15);
-        // =====================================================
-        // чтение индексов 
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Img_ClearAll(TImage *Img)
