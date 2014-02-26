@@ -48,6 +48,7 @@ __published:	// IDE-managed Components
         TLabel *Label12;
         TADOQuery *ADOQuery1;
         TTimer *TimerStart;
+    TLabel *Label_temp;
         void __fastcall FormCloseQuery(TObject *Sender, bool &CanClose);
         void __fastcall TimerStartTimer(TObject *Sender);
 private:	// User declarations

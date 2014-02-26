@@ -54,7 +54,7 @@ int  __fastcall TForm1::ReadFromBDLastNumberTude(TADOQuery *dQuery)
         }
         if ( dQuery->RecordCount==0 )
         {       // no records - set number 0
-                CurentNumberTube = 0;
+                Resultat = 0;
         }
         else
         {
@@ -147,6 +147,13 @@ int  __fastcall TForm1::ReadFromBDNewParametrs(TADOQuery *dQuery, int *id_parame
     }
     dQuery->Close();
     return status;
+
 }
 
-
+void __fastcall Show_NumberTube(int number)
+{
+    if (number)
+        Form1->Label_temp->Caption = number;
+    else
+        Form1->Label_temp->Caption = "no tube";
+}

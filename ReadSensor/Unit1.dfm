@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = -873
-  Top = 358
+  Left = -890
+  Top = 184
   Width = 854
   Height = 284
   HorzScrollBar.Visible = False
@@ -334,6 +334,13 @@ object Form1: TForm1
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
+  end
+  object Label_temp: TLabel
+    Left = 656
+    Top = 152
+    Width = 55
+    Height = 13
+    Caption = 'Label_temp'
   end
   object ADOConnection1: TADOConnection
     ConnectionString = 

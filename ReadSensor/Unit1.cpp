@@ -385,6 +385,8 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
                 Form1->Close();
                 return;
         }
+        // show last number tube
+        Show_NumberTube(CurentNumberTube);
         // ====================================================
         // read last parametrs
         if ( !ReadFromBDLastParametrs(ADOQuery1, &IdParam, &IdMelt, &CodeMelt, &SizeTude) )
