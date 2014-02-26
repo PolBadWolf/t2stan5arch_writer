@@ -257,6 +257,15 @@ void __fastcall TForm1::TubeEnd()
     // set address massive
     Mass = BoxRead->MassDefect;
     Len       = BoxRead->MassDefectLen;
+    int zn = -1;
+    for (int i=0;i<Len;i++)
+    {
+        zn = Mass[i];
+        if ( (zn!=0) && (zn!=255) )
+        {
+            FlagDefectTube = FlagDefectTube | true;
+        }
+    }
     // =========================================================
     Label14->Caption = "-//-";
     // set
