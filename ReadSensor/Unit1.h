@@ -50,6 +50,12 @@ __published:	// IDE-managed Components
         TTimer *TimerStart;
     TLabel *Label_temp;
     TLabel *Label15;
+    TPanel *Panel1;
+    TPanel *Panel2;
+    TLabel *Label_NumberTube;
+    TPanel *Panel3;
+    TPanel *Panel4;
+    TLabel *Label_dTube;
         void __fastcall FormCloseQuery(TObject *Sender, bool &CanClose);
         void __fastcall TimerStartTimer(TObject *Sender);
 private:	// User declarations
@@ -78,6 +84,7 @@ public:		// User declarations
         // завершение дефектоскопии
         void __fastcall TubeEnd();
         void __fastcall TubeBegin();
+        void __fastcall ShowSensorSample(TShape *Lamp, int lvl);
         // offset from left sensor tube, unit mm        // отступ в мм от левого датчика
         double otLmm;
         // offset from left sensor tube, unit segment   // расчитанный отступ в шагах

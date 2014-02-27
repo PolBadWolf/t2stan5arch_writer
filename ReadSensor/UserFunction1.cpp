@@ -118,6 +118,18 @@ int  __fastcall TForm1::ReadFromBDLastParametrs(TADOQuery *dQuery, int *id_param
 int  __fastcall TForm1::ReadFromBDNewParametrs(TADOQuery *dQuery, int *id_parametr, int *id_melt, AnsiString *CodeMelt, double *SizeTube)
 {
     int status = 0;
+    TADOQuery *cQuery = new TADOQuery(dQuery->Owner);
+    int cid = 0;
+    cQuery->Connection = dQuery->Connection;
+    cQuery->SQL->Clear();
+    cQuery->SQL->Add("SELECT");
+    cQuery->SQL->Add(" `parameters`.`Id_Param` AS `id_parametr`");
+    cQuery->SQL->Add("FROM");
+    cQuery->SQL->Add("`parameters`");
+    cQuery->SQL->Add("ORDER BY");
+    cQuery->SQL->Add("`parameters`.`Id_Param` DESC");
+    cQuery->SQL->Add("LIMIT 1");
+
     dQuery->SQL->Clear();
     dQuery->SQL->Add("SELECT");
     dQuery->SQL->Add(" `parameters`.`Id_Param` AS `id_parametr`");
@@ -132,6 +144,7 @@ int  __fastcall TForm1::ReadFromBDNewParametrs(TADOQuery *dQuery, int *id_parame
     dQuery->SQL->Add("`parameters`.`Id_Param` DESC");
     dQuery->SQL->Add("LIMIT 1");
     dQuery->Open();
+    cQuery->Open();
     if (dQuery->RecordCount==0)
     { // no records
         status = 1;
@@ -142,12 +155,20 @@ int  __fastcall TForm1::ReadFromBDNewParametrs(TADOQuery *dQuery, int *id_parame
     }
     else
     {
+        cid          = ReadField( cQuery, "id_parametr", &status);
         *id_parametr = ReadField( dQuery, "id_parametr", &status);
         *id_melt     = ReadField( dQuery, "id_melt",     &status);
         *CodeMelt    = ReadField( dQuery, "CodeMelt",    &status);
         *SizeTube    = ReadField( dQuery, "SizeTube",    &status);
+        if ( (*id_parametr)!=cid )
+            status = -1; // ошибка BD
     }
     dQuery->Close();
+    cQuery->Close();
+    dQuery->SQL->Clear();
+    cQuery->SQL->Clear();
+    delete cQuery;
+    cQuery = NULL;
     return status;
 
 }
@@ -216,7 +237,14 @@ void __fastcall Show_NumberTube(int number)
         Form1->Label_temp->Caption = "no tube";
 }
 
-void __fastcall Show_Parametrs(AnsiString CodeMelt, double SizeTube)
+void __fastcall Show_Parametrs(double nTube, double SizeTube, double LenSegmentTube, int otstup, AnsiString CodeMelt)
 {
+    if (nTube==0)
+        Form1->Label_NumberTube->Caption = "НС";
+    else
+        Form1->Label_NumberTube->Caption = nTube;
+    // ----------------------------------------------
+    Form1->Label_dTube->Caption = SizeTube;
+    // ----------------------------------------------
 }
 
