@@ -102,7 +102,7 @@ public:
         // *  - начало записи дефектов
         // ** - конец записи, массив дефектов можно забирать
         // массив дефектов
-        int  MassDefect[BoxReadMassDefect_MAX]; // массив соправожденных дефектов
+        signed char  MassDefect[BoxReadMassDefect_MAX]; // массив соправожденных дефектов
         int  MassDefectLen;                     // длина сопровожденной трубы в сегментах
         //          флаг нахождение трубы в зоне дефектоскопов (на двух датчиках): 1 - в зоне дефектоскопа, 0 - вне зоны дефектоскопа
         __property bool FlTubeInDefect={read=TubeInDefect};

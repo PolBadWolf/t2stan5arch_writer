@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = -890
   Top = 184
   Width = 854
-  Height = 284
+  Height = 281
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
   Caption = 'Form1'

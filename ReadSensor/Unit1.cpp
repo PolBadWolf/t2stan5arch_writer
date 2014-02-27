@@ -233,7 +233,7 @@ void __fastcall TForm1::TubeEnd()
     }
     // =========================================================
     // massive dafects
-    int  *Mass;
+    signed char  *Mass;
     // len massive dafects
     int  Len = 0;
     // flag tube defect
@@ -274,6 +274,8 @@ void __fastcall TForm1::TubeEnd()
     // set
     TDateTime DtTm = Now();
     AnsiString vDate = FormatDateTime("yyyy-mm-dd", DtTm);
+    // write to BD
+    WriteBD_Datas(ADOConnection1, nTube, Mass, Len, FlagDefectTube, IdParam);
     // reset flag new tube
     FlNewTube = false;
 }
@@ -470,6 +472,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         BoxRead->EvModeCalibrovka  = EvaModeCalibrovka;
         // пуск
         BoxRead->Resume();
+
 // ******************************************************************************************
 // *************************** delete starting timer ****************************************
         delete ((TTimer*)Sender);

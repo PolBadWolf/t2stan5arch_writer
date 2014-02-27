@@ -7,6 +7,7 @@
 #include "UserFunction1.h"
 #include <math.h>
 #include "Unit1.h"
+#include "wstring.h"
 
 //---------------------------------------------------------------------------
 
@@ -149,6 +150,62 @@ int  __fastcall TForm1::ReadFromBDNewParametrs(TADOQuery *dQuery, int *id_parame
     dQuery->Close();
     return status;
 
+}
+
+void __fastcall WriteBD_Datas(TADOConnection *connect, int NumberTube, signed char *Massive, int Len, int GlagDefect, int IdParametr)
+{
+    TADOQuery *Query = new TADOQuery(connect->Owner);
+    TDateTime DT = Now();
+    TMemoryStream *MS = new TMemoryStream;
+    MS->Clear();
+    MS->WriteBuffer(Massive, Len);
+    Query->Connection = connect;
+    Query->Close();
+    Query->Parameters->Clear();
+    Query->SQL->Clear();
+    Query->SQL->Add("INSERT INTO");
+    Query->SQL->Add("`defectsdata`");
+    Query->SQL->Add("(");
+    Query->SQL->Add(" `DatePr`");
+    Query->SQL->Add(",`TimePr`");
+    Query->SQL->Add(",`NumberTube`");
+    Query->SQL->Add(",`CountSegments`");
+    Query->SQL->Add(",`DataSensors`");
+    Query->SQL->Add(",`FlDefectTube`");
+    Query->SQL->Add(",`Id_Param`");
+    Query->SQL->Add(")");
+    Query->SQL->Add("values");
+    Query->SQL->Add("(");
+    Query->SQL->Add(" :IDATE");
+    Query->SQL->Add(",:ITIME");
+    Query->SQL->Add(", :INUMBERTUBE ");
+    Query->SQL->Add(", :ILEN ");
+    Query->SQL->Add(", :IMASS ");
+    Query->SQL->Add(", :IFLAG ");
+    Query->SQL->Add(", :IPARAM ");
+    Query->SQL->Add(")");
+    /*
+    TParameter *Parm;
+    Parm = Query->Parameters->AddParameter();;
+    Parm->Name = "A";
+    Parm->Value = 5;
+    */
+//    Query->Parameters->ParamByName("A")->Value = NumberTube;
+//    Form1->ListBox1->Items = ll->
+    Query->Parameters->ParamByName("IDATE")      ->Value = FormatDateTime("yyyy-mm-dd", DT);
+    Query->Parameters->ParamByName("ITIME")      ->Value = FormatDateTime("hh:nn:ss"  , DT);
+
+    Query->Parameters->ParamByName("INUMBERTUBE")->Value = NumberTube;
+    Query->Parameters->ParamByName("ILEN")       ->Value = Len;
+    Query->Parameters->ParamByName("IMASS")      ->LoadFromStream(MS, ftBlob);
+    Query->Parameters->ParamByName("IFLAG")      ->Value = GlagDefect;
+    Query->Parameters->ParamByName("IPARAM")     ->Value = IdParametr;
+
+    Query->ExecSQL();
+    MS->Clear();
+    delete MS;
+    MS = NULL;
+    delete Query;
 }
 
 void __fastcall Show_NumberTube(int number)
