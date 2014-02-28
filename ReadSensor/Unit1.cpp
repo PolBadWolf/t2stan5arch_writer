@@ -75,13 +75,6 @@ void __fastcall TForm1::FormCloseQuery(TObject *Sender, bool &CanClose)
         }
         delete ViewKoleso;
 }
-void __fastcall TForm1::ShowSensorSample(TShape *Lamp, int lvl)
-{
-    if (BoxRead->FlModeCalibrovka)
-        Lamp->Brush->Color = (lvl)?clGreen:clLime;
-    else
-        Lamp->Brush->Color = clWhite;
-}
 //---------------------------------------------------------------------------
 // изменение состояния датчиков
 void __fastcall TForm1::EvaSensor(int sn, int lvl)
@@ -89,9 +82,16 @@ void __fastcall TForm1::EvaSensor(int sn, int lvl)
         if (sn<14)
         {
             if ( sn==7 ) // sensor "sample"
-                ShowSensorSample(LampDat[7], lvl);
+            {
+            //    ShowSensorSample(LampDat[7], lvl);
+            }
             else
-                LampDat[sn]->Brush->Color = (lvl==0)?clLime:clWhite;
+            {
+                if ( sn==6 )
+                    LampDat[sn]->Brush->Color = (lvl==0)?clRed:clWhite;
+                else
+                    LampDat[sn]->Brush->Color = (lvl==0)?clLime:clWhite;
+            }
         }
         if (dTube>0)
                 //Label17->Caption = dTube - otStep;
@@ -116,6 +116,7 @@ void __fastcall TForm1::EvaWeldDefect(int lvl)
 // 1 - калибровка, 0 - работа
 void __fastcall TForm1::EvaModeCalibrovka(int lvl, int fl_mod)
 {
+    Show_NumberTube(CurentNumberTube);
 }
 //---------------------------------------------------------------------------
 // сработка колеса
@@ -390,8 +391,6 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
                 Form1->Close();
                 return;
         }
-        // show last number tube
-        Show_NumberTube(CurentNumberTube);
         // ====================================================
         // read last parametrs
         if ( !ReadFromBDLastParametrs(ADOQuery1, &IdParamLast, &IdMeltLast, &CodeMeltLast, &SizeTubeLast) )
@@ -409,7 +408,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
             LenSegmentTube = 1000/8;
         }
         otStep = otLmm/LenSegmentTube;
-        Show_Parametrs(0, SizeTube, LenSegmentTube, otStep, CodeMelt);
+        Show_Parametrs(CurentNumberTube, SizeTube, LenSegmentTube, otStep, CodeMelt);
 // ******************************************************************************************
 // *************************** init variable Base Lengh sensors tube ************************
         // отступ в мм от левого датчика
@@ -457,6 +456,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         BoxRead->EvModeCalibrovka  = EvaModeCalibrovka;
         // пуск
         BoxRead->Resume();
+        Timer_ShowSensor->Enabled = true;
         // programm status sensor "sample"
         ShowSensorSample(LampDat[7], 1);
 // ******************************************************************************************
@@ -464,6 +464,9 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         delete ((TTimer*)Sender);
 }
 //---------------------------------------------------------------------------
-
-
+void __fastcall TForm1::Timer_ShowSensorTimer(TObject *Sender)
+{
+    ShowSensorSample(LampDat[7], BoxRead->BoxReadMassSensorsLevel[7]);
+}
+//---------------------------------------------------------------------------
 

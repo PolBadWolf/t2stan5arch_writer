@@ -8,10 +8,13 @@
 #include <math.h>
 #include "Unit1.h"
 #include "wstring.h"
+#include "BoxRead1.h"
 
 //---------------------------------------------------------------------------
 
 #pragma package(smart_init)
+
+extern TNBoxRead *BoxRead;
 
 // Diametr tube -> Len Segment
 // Диаметр трубы в длину сегмента
@@ -229,22 +232,32 @@ void __fastcall WriteBD_Datas(TADOConnection *connect, int NumberTube, signed ch
     delete Query;
 }
 
-void __fastcall Show_NumberTube(int number)
+void __fastcall Show_NumberTube(int nTube)
 {
-    if (number)
-        Form1->Label_temp->Caption = number;
+    if (!BoxRead) return;
+    if (BoxRead->FlModeCalibrovka)
+        Form1->Label_NumberTube->Caption = "smpl";
     else
-        Form1->Label_temp->Caption = "no tube";
+    {
+        if (nTube==0)
+            Form1->Label_NumberTube->Caption = "N S";
+        else
+            Form1->Label_NumberTube->Caption = nTube;
+    }
 }
 
-void __fastcall Show_Parametrs(double nTube, double SizeTube, double LenSegmentTube, int otstup, AnsiString CodeMelt)
+void __fastcall Show_Parametrs(int nTube, double SizeTube, double LenSegmentTube, int otstup, AnsiString CodeMelt)
 {
-    if (nTube==0)
-        Form1->Label_NumberTube->Caption = "НС";
-    else
-        Form1->Label_NumberTube->Caption = nTube;
+    Show_NumberTube(nTube);
     // ----------------------------------------------
     Form1->Label_dTube->Caption = SizeTube;
     // ----------------------------------------------
+}
+void __fastcall TForm1::ShowSensorSample(TShape *Lamp, int lvl)
+{
+    if (BoxRead->FlModeCalibrovka)
+        Lamp->Brush->Color = (lvl)?clGreen:clLime;
+    else
+        Lamp->Brush->Color = clWhite;
 }
 

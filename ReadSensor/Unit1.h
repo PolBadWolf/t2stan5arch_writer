@@ -29,12 +29,8 @@ __published:	// IDE-managed Components
         TShape *Shape_Circle;
         TLabel *Label1;
         TLabel *Label2;
-        TLabel *Label3;
-        TLabel *Label4;
         TLabel *Label5;
         TLabel *Label6;
-        TLabel *Label7;
-        TLabel *Label8;
         TLabel *Label9;
         TLabel *Label10;
         TLabel *Label13;
@@ -56,8 +52,10 @@ __published:	// IDE-managed Components
     TPanel *Panel3;
     TPanel *Panel4;
     TLabel *Label_dTube;
+    TTimer *Timer_ShowSensor;
         void __fastcall FormCloseQuery(TObject *Sender, bool &CanClose);
         void __fastcall TimerStartTimer(TObject *Sender);
+    void __fastcall Timer_ShowSensorTimer(TObject *Sender);
 private:	// User declarations
         bool FlNewTube;
         void __fastcall Img_ClearAll(TImage *Img);
