@@ -1,7 +1,7 @@
 del /f /q *.~*
 del /f /q *.obj
 del /f /q *.tds
-del /f /q *.exe
+rem del /f /q *.exe
 del /f /q crc\*.~*
 del /f /q crc\*.obj
 del /f /q crc\*.tds

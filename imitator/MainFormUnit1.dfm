@@ -237,10 +237,11 @@ object Form1: TForm1
     Width = 121
     Height = 21
     TabOrder = 6
-    Text = '15'
+    Text = '9'
   end
   object Timer_Circle: TTimer
     Enabled = False
+    Interval = 300
     OnTimer = Timer_CircleTimer
     Left = 96
     Top = 448

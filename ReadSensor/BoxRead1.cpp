@@ -57,8 +57,8 @@ __fastcall TNBoxRead::TNBoxRead() : TThread(true)
                 dat_St[i] = true;
                 BoxReadMassSensorsLevel[i] = true;
         }
-        Here1 = true;
-        Here2 = true;
+        OldHere1 = Here1 = true;
+        OldHere2 = Here2 = true;
         // ---------------------------------------------------------------------
         // пуск нити после настроек событий
         // Resume();
@@ -99,7 +99,7 @@ void __fastcall TNBoxRead::Execute()
         {
                 // инициация состояния готовности к приему
                 stat = 0;
-                kik = 0;
+                //kik = 0;
         }
         // ---------------------------------------------------------------------
         // основной цикл модуля
@@ -107,15 +107,18 @@ void __fastcall TNBoxRead::Execute()
         {
                 if (stat)
                 {
+                        /*
                         if (kik>0)
                         {
                                 kik--;
-                                Sleep(5);
+                                Sleep(0);
                                 stat = 0;
                                 continue;
                         }
                         // заморозка приема до прихода данных
                         Suspend();
+                        */
+                        Sleep(1);
                         // инициация состояния готовности к приему
                         stat = 0;
                         continue;
@@ -141,9 +144,9 @@ void __fastcall TNBoxRead::Execute()
 // пришли новые данные
 void __fastcall TNBoxRead::EventNewData(int RdByte)
 {
-        kik++;
+//        kik++;
         // запустить поток
-        Resume();
+//        Resume();
 }
 //---------------------------------------------------------------------------
 // выборка пакетов из потока
@@ -210,11 +213,11 @@ void __fastcall TNBoxRead::SelectDo()
         {       // колесо
                 sn = MassPack[BoxReadMASSPACK_SENSR];
                 lv = MassPack[BoxReadMASSPACK_LEVEL];
+                DoCirle(sn, lv);
                 if (EvCircleSensor)
                 {
                         EvCircleSensor( sn );
                 }
-                DoCirle(sn, lv);
                 return;
         }
 }
@@ -580,6 +583,7 @@ void __fastcall TNBoxRead::DoCirle(int sn, int lv)
                 count--;
                 // установка состояния дефект
                 SetSummDefect();
+                // Tube in zone defectoscope ?
                 if ( !BoxReadMassSensorsLevel[TUBE_HERE1] || !BoxReadMassSensorsLevel[TUBE_HERE2] )
                 {
                     // событие

@@ -149,7 +149,7 @@ void  __fastcall TComPort::Close()
 //---------------------------------------------------------------------------
 __fastcall TComPortWr::TComPortWr(HANDLE HnComPort) : TThread(true)
 {
-        FreeOnTerminate = false;
+        //FreeOnTerminate = false;
         ComPortWr = HnComPort;
 }
 //---------------------------------------------------------------------------
@@ -275,7 +275,7 @@ int  __fastcall TComPort::Deep()
 //---------------------------------------------------------------------------
 __fastcall TComPortRd::TComPortRd(HANDLE HnComPort) : TThread(true)
 {
-        FreeOnTerminate = false;
+        //FreeOnTerminate = false;
         ComPortRd = HnComPort;
         EventNewDate = NULL;
 }
@@ -288,7 +288,7 @@ void __fastcall TComPortRd::Execute()
         SetCommMask(ComPortRd, EV_RXCHAR);
         while (!Terminated) {
                 WaitCommEvent(ComPortRd, &mask, &OverlapsRD);
-                signal = WaitForSingleObject(OverlapsRD.hEvent, 1500);
+                signal = WaitForSingleObject(OverlapsRD.hEvent, 500);
                 if (signal==WAIT_OBJECT_0) {
                         if (GetOverlappedResult(ComPortRd, &OverlapsRD, &temp1, true) ) {
                                 if ( (mask & EV_RXCHAR) != 0) {
@@ -297,11 +297,11 @@ void __fastcall TComPortRd::Execute()
                         }
                 }
                 else {
-                        Sleep(20);
+                        Sleep(1);
                 }
                 if ( !EventNewDate ) continue;
                 if ( FlCallBlock ) continue;
-                if (  FlCallSend ) {
+                while (  FlCallSend ) {
                         ClearCommError(ComPortRd, &temp2, &curstat);
                         btr = curstat.cbInQue;
                         if ( (btr) && (!Terminated) )

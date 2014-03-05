@@ -252,6 +252,8 @@ void __fastcall Show_Parametrs(int nTube, double SizeTube, double LenSegmentTube
     // ----------------------------------------------
     Form1->Label_dTube->Caption = SizeTube;
     // ----------------------------------------------
+    Form1->Memo1->Lines->Strings[0] = "Длина сегмента : " + FloatToStrF(LenSegmentTube, ffFixed, 6, 2);
+    Form1->Memo1->Lines->Strings[1] = "Отступ от датчика : " + IntToStr(otstup);
 }
 void __fastcall TForm1::ShowSensorSample(TShape *Lamp, int lvl)
 {

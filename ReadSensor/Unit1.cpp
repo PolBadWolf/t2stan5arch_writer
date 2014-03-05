@@ -116,6 +116,7 @@ void __fastcall TForm1::EvaWeldDefect(int lvl)
 // 1 - калибровка, 0 - работа
 void __fastcall TForm1::EvaModeCalibrovka(int lvl, int fl_mod)
 {
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ??????????????????????????
     Show_NumberTube(CurentNumberTube);
 }
 //---------------------------------------------------------------------------
@@ -153,8 +154,8 @@ void __fastcall TForm1::EvaCircle(int Napravl, int Dlina, int Position, int *Mas
                         }
                 }
         }
-        if (Position<(otStep+1) ) return; // вне зоны датчика
-        if (Dlina   <(otStep+1) ) return; // вне зоны датчика
+        if (Position<(otStep+0) ) return; // вне зоны датчика
+        if (Dlina   <(otStep+0) ) return; // вне зоны датчика
         //Label14->Caption = BoxRead->Count;
         //Label14->Caption = (BoxRead->Count-otStep)*Step2mm[Step2mmD];
         Label14->Caption = (Position-otStep)*LenSegmentTube;
@@ -173,18 +174,18 @@ void __fastcall TForm1::EvaCircle(int Napravl, int Dlina, int Position, int *Mas
         ImageVisual->Canvas->FillRect(Rect(nX, nY, eX, nY+(eY-nY)/10) );
         ImageVisual->Canvas->Unlock();
         // позитция
-        n = LenSegmentTube*(Position+0-(otStep+1) );
-        e = LenSegmentTube*(Position+1-(otStep+1) );
+        n = LenSegmentTube*(Position+0-(otStep+0) );
+        e = LenSegmentTube*(Position+1-(otStep+0) );
         nY1 = nY;
         eY1 = eY-(eY-nY)/10;
         nX1 = ImgV_TubeMaxPix*n/D_MaxLenTube + D_ImageOffsetX;
         eX1 = ImgV_TubeMaxPix*e/D_MaxLenTube + D_ImageOffsetX;
         // цвет
-        if (MassDefect[otStep+Position-1-(otStep+1) ]==-1)
+        if (MassDefect[otStep+Position-0-(otStep+1) ]==-1)
                 c = clGray;
-        if (MassDefect[otStep+Position-1-(otStep+1) ]==0)
+        if (MassDefect[otStep+Position-0-(otStep+1) ]==0)
                 c = clLime;
-        if (MassDefect[otStep+Position-1-(otStep+1) ]==1)
+        if (MassDefect[otStep+Position-0-(otStep+1) ]==1)
                 c = clRed;
         ImageVisual->Canvas->Lock();
         ImageVisual->Canvas->Brush->Color = c;
@@ -258,6 +259,7 @@ void __fastcall TForm1::TubeEnd()
     AnsiString vDate = FormatDateTime("yyyy-mm-dd", DtTm);
     // write to BD
     WriteBD_Datas(ADOConnection1, nTube, Mass, Len, FlagDefectTube, IdParam);
+    Show_NumberTube(nTube);
     // reset flag new tube
     FlNewTube = false;
 }

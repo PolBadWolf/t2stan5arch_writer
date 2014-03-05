@@ -33,7 +33,7 @@ void __fastcall TNWriteFl::Execute()
         int fl = 1;
         TFileStream *pFileWr = NULL;
         AnsiString old_nam = "";
-        FreeOnTerminate = true;
+        //FreeOnTerminate = true;
         //---- Place thread code here ----
         Suspend();
         while(!Terminated)

@@ -53,6 +53,7 @@ __published:	// IDE-managed Components
     TPanel *Panel4;
     TLabel *Label_dTube;
     TTimer *Timer_ShowSensor;
+    TMemo *Memo1;
         void __fastcall FormCloseQuery(TObject *Sender, bool &CanClose);
         void __fastcall TimerStartTimer(TObject *Sender);
     void __fastcall Timer_ShowSensorTimer(TObject *Sender);

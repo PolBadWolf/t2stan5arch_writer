@@ -38,7 +38,7 @@ __fastcall TForm1::TForm1(TComponent* Owner)
         : TForm(Owner)
 {
         Port = new TComPort;
-        Port->Open("COM1", BaudRate38400, NO);
+        Port->Open("COM3", BaudRate38400, NO);
         // сколько пикселей на метр
         OneMetr = abs(Shape_Sensor2->Left - Shape_Sensor1->Left);
         // состояние сенсора
@@ -62,7 +62,7 @@ void __fastcall TForm1::TubeGoBegin()
         // установить длину трубы (длина в см)
         TubeLen = Edit_TubeLen->Text.ToInt();
         // позитция трубы на метр левее от первого датчика
-        TubePos = - TubeLen - 100;
+        TubePos = - TubeLen - 20;
         // отрисовка трубы
         TubeShow();
         // управление трубой стоп
@@ -175,7 +175,7 @@ void __fastcall TForm1::Timer_CircleTimer(TObject *Sender)
         }
         if (TubeNaprav>0)
         {
-                if (Tl>=150)
+                if (Tl>=100)
                 {
                         Upr_TubeStop();
                         return;
@@ -186,6 +186,7 @@ void __fastcall TForm1::Timer_CircleTimer(TObject *Sender)
         TubeReb = TubeReb + TubeNaprav;
         if (TubeReb<0) TubeReb = 3;
         if (TubeReb>3) TubeReb = 0;
+        // Show Revolver-Baraban
         ShowRev();
         // сдвиг трубы
         if (TubeNaprav<0)
@@ -202,7 +203,9 @@ void __fastcall TForm1::Timer_CircleTimer(TObject *Sender)
         }
         TubeShow();
         // ======================
+        // Show Sensors & packed sensors
         SensorCheck();
+        Timer_Circle->Enabled = false;
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::SensorCheck()

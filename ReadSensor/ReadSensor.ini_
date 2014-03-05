@@ -1,7 +1,8 @@
 [ini]
-ComPortName=COM3
+ComPort=COM3
+PathArchiv=C:\arhiv\
 ComPortBaud=38400
-PathArchiv=D:\GitHub\t2stan5arch_writer\ReadSensor\arhiv\
+ComPortName=COM2
 [Sensors Inversion]
 Sn0=0
 Sn1=0

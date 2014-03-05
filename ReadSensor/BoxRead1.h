@@ -48,7 +48,7 @@ protected:
         //=============================
         // пришли новые данные
         void __fastcall EventNewData(int RdByte);
-        int     kik;
+        //int     kik;
         // выборка пакетов из потока
         void __fastcall SelectPak(unsigned char *b, int len);
         // обработка пакета
