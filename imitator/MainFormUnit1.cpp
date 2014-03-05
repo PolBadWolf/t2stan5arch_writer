@@ -175,7 +175,7 @@ void __fastcall TForm1::Timer_CircleTimer(TObject *Sender)
         }
         if (TubeNaprav>0)
         {
-                if (Tl>=100)
+                if (Tl>=150)
                 {
                         Upr_TubeStop();
                         return;
@@ -205,7 +205,7 @@ void __fastcall TForm1::Timer_CircleTimer(TObject *Sender)
         // ======================
         // Show Sensors & packed sensors
         SensorCheck();
-        Timer_Circle->Enabled = false;
+        //Timer_Circle->Enabled = false;
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::SensorCheck()
