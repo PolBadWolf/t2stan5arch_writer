@@ -14,7 +14,8 @@ private:
     int         buffStrBg;
     int         buffStrEd;
     int __fastcall NormAddr(int addr);
-    CRITICAL_SECTION csBuff;  
+    CRITICAL_SECTION csBuff;
+    int __fastcall Pop(AnsiString *datLog);  
 protected:
     void __fastcall Execute();
 public:

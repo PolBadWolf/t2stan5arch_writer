@@ -58,3 +58,18 @@ int __fastcall TWriteLog::NormAddr(int addr)
     }
     return addr;
 }
+
+int __fastcall TWriteLog::Pop(AnsiString *datLog)
+{
+    int st = 1;
+    EnterCriticalSection(&csBuff);
+    if (buffStrBg!=buffStrEd)
+    {
+        st = 0;
+        *datLog = buffStr[buffStrEd];
+        buffStrEd = NormAddr(buffStrEd+1);
+    }
+    LeaveCriticalSection(&csBuff);
+    return st;
+}
+
