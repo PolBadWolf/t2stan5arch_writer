@@ -5,14 +5,15 @@
 
 #include "Unit1.h"
 #include "BoxRead1.h"
-#include "WriteFl.h"
 #include "ViewKoleso.h"
 #include "UserFunction1.h"
+#include "WriteLog.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 TForm1 *Form1;
 TNBoxRead *BoxRead = NULL;
+TWriteLog *WriteLog = NULL;
 
 #define D_MaxLenTube  15000
 #define D_ImageOffsetX 50
@@ -378,7 +379,8 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         AnsiString  CodeMeltLast , CodeMeltNew;
         double      SizeTubeLast , SizeTubeNew;
         int         statusLast   , statusNew;
-
+// ******************************************************************************************
+        WriteLog = new TWriteLog;
 // ******************************************************************************************
 // *************************** init variable from Data Base *********************************
         // close ado
