@@ -7,7 +7,6 @@
 #include "BoxRead1.h"
 #include "WriteFl.h"
 #include "ViewKoleso.h"
-#include "PapkaName.h"
 #include "UserFunction1.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)

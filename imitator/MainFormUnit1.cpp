@@ -38,7 +38,7 @@ __fastcall TForm1::TForm1(TComponent* Owner)
         : TForm(Owner)
 {
         Port = new TComPort;
-        Port->Open("COM3", BaudRate38400, NO);
+        Port->Open("COM2", BaudRate38400, NO);
         // сколько пикселей на метр
         OneMetr = abs(Shape_Sensor2->Left - Shape_Sensor1->Left);
         // состояние сенсора

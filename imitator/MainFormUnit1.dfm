@@ -241,7 +241,7 @@ object Form1: TForm1
   end
   object Timer_Circle: TTimer
     Enabled = False
-    Interval = 300
+    Interval = 50
     OnTimer = Timer_CircleTimer
     Left = 96
     Top = 448
