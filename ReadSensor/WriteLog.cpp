@@ -70,9 +70,11 @@ void __fastcall TWriteLog::Push(AnsiString datLog)
     AnsiString vr = FormatDateTime("yyyy-mm-dd hh:nn:ss.zzz   ", Now());
     EnterCriticalSection(&csBuff);
     int buffStrNew = NormAddr(buffStrBg+1);
-    if (buffStrNew==buffStrEd) return;
-    buffStr[buffStrBg] = vr + datLog + "\r\n";
-    buffStrBg = buffStrNew;
+    if (buffStrNew!=buffStrEd)
+    {
+        buffStr[buffStrBg] = vr + datLog + "\r\n";
+        buffStrBg = buffStrNew;
+    }
     LeaveCriticalSection(&csBuff);
 }
 
