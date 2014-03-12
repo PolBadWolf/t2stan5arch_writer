@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 207
   Top = 124
   Width = 854
-  Height = 573
+  Height = 272
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
   Caption = 'Form1'
@@ -208,8 +208,8 @@ object Form1: TForm1
     ParentFont = False
   end
   object Label14: TLabel
-    Left = 448
-    Top = 384
+    Left = 560
+    Top = 16
     Width = 38
     Height = 13
     Caption = 'Label14'
@@ -221,8 +221,8 @@ object Form1: TForm1
     Height = 97
   end
   object Label17: TLabel
-    Left = 448
-    Top = 416
+    Left = 560
+    Top = 48
     Width = 38
     Height = 13
     Caption = 'Label17'

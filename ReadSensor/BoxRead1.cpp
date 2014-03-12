@@ -7,6 +7,7 @@
 #include "Unit1.h"
 #include "inifiles.hpp"
 #include "crc8.h"
+#include "WriteLog.h"
 
 //---------------------------------------------------------------------------
 
@@ -23,10 +24,13 @@
 #define SENSOR_AT_TOP           8       // датчики дефектоскопа подняты *
 #define SENSOR_AT_BOTTOM        9       // датчики дефектоскопа опущены *
 
+extern TWriteLog *WriteLog;
+
 __fastcall TNBoxRead::TNBoxRead() : TThread(true)
 {
         // ---------------------------------------------------------------------
         // настройка чтение настроек из ini файла
+        WriteLog->Push("'TNBoxRead::TNBoxRead': open ini file");
         TIniFile *ifile = new TIniFile( ChangeFileExt( Application->ExeName, ".ini" ) );
         PortName = ifile->ReadString("ini", "ComPortName", "COM2" );
         PortBaud = (eBaudRate)ifile->ReadInteger("ini", "ComPortBaud", CBR_38400);
@@ -42,6 +46,7 @@ __fastcall TNBoxRead::TNBoxRead() : TThread(true)
         delete ifile;
         // ---------------------------------------------------------------------
         // создание объекта порта
+        WriteLog->Push("'TNBoxRead::TNBoxRead': open create comport");
         Port = new TComPort;
         if (Port==NULL)
         {
@@ -52,6 +57,7 @@ __fastcall TNBoxRead::TNBoxRead() : TThread(true)
         }
         // ---------------------------------------------------------------------
         // сброс массива состояния датчиков
+        WriteLog->Push("'TNBoxRead::TNBoxRead': reset massive status sensors");
         for (int i=0; i<BoxRead_AllNumersDat; i++)
         {
                 dat_St[i] = true;
@@ -88,8 +94,10 @@ void __fastcall TNBoxRead::Execute()
         unsigned long   vbyte_reality;  // сколько байт принято
         // ---------------------------------------------------------------------
         // настройка события
-        Port->EventNewDate = EventNewData;
+//        WriteLog->Push("'TNBoxRead::Execute': set event new date comport");
+//        Port->EventNewDate = EventNewData;
         // открытие порта
+        WriteLog->Push("'TNBoxRead::Execute': open comport");
         if ( Port->Open(PortName, PortBaud, NO)>0 )
         {
                 Terminate();
@@ -107,17 +115,6 @@ void __fastcall TNBoxRead::Execute()
         {
                 if (stat)
                 {
-                        /*
-                        if (kik>0)
-                        {
-                                kik--;
-                                Sleep(0);
-                                stat = 0;
-                                continue;
-                        }
-                        // заморозка приема до прихода данных
-                        Suspend();
-                        */
                         Sleep(1);
                         // инициация состояния готовности к приему
                         stat = 0;
@@ -173,8 +170,10 @@ void __fastcall TNBoxRead::SelectPak(unsigned char *b, int len)
 void __fastcall TNBoxRead::SelectDo()
 {
         int sn, lv;
+        WriteLog->Push("'TNBoxRead::SelectDo': new packet");
         if (MassPack[BoxReadMASSPACK_TYPE]==1)
         {       // другие сенсоры
+        WriteLog->Push("'TNBoxRead::SelectDo': packet - status sensors");
                 sn = MassPack[BoxReadMASSPACK_SENSR];
                 lv = MassPack[BoxReadMASSPACK_LEVEL] ^ dat_FlInv[sn];
                 // хранение состояния датчиков
@@ -211,6 +210,7 @@ void __fastcall TNBoxRead::SelectDo()
         // колесо
         if (MassPack[BoxReadMASSPACK_TYPE]==0)
         {       // колесо
+        WriteLog->Push("'TNBoxRead::SelectDo': packet - move circe");
                 sn = MassPack[BoxReadMASSPACK_SENSR];
                 lv = MassPack[BoxReadMASSPACK_LEVEL];
                 DoCirle(sn, lv);

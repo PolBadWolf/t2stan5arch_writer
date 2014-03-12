@@ -17,12 +17,35 @@ __fastcall TWriteLog::TWriteLog()
     buffStr = new AnsiString[lenBuff];
     buffStrBg = 0;
     buffStrEd = 0;
+    pFile = NULL;
 }
 
 void __fastcall TWriteLog::Execute()
 {
+    AnsiString stroka;
+    try
+    {
+        pFile = new TFileStream("log.txt", fmOpenWrite + fmShareDenyNone);
+        pFile->Seek(pFile->Size,1);
+    }
+    catch (...)
+    {
+        AnsiString s = "Log :\r\n";
+        pFile = new TFileStream("log.txt", fmCreate);
+        pFile->Write(s.c_str(),s.Length());
+        delete pFile;
+        pFile = new TFileStream("log.txt", fmOpenWrite + fmShareDenyNone);
+        pFile->Seek(pFile->Size,1);
+    }
+
     while(!Terminated)
     {
+        if (Pop(&stroka))
+        {
+            Sleep(2);
+            continue;
+        }
+        pFile->Write(stroka.c_str(), stroka.Length());
     }
     // ---------------------------
     // close
@@ -32,6 +55,11 @@ void __fastcall TWriteLog::Execute()
         buffStr = NULL;
     }
     DeleteCriticalSection(&csBuff);
+    if (pFile)
+    {
+        delete pFile;
+        pFile = NULL;
+    }
     // ******************************
 }
 
@@ -39,10 +67,11 @@ void __fastcall TWriteLog::Push(AnsiString datLog)
 {
     if (Terminated) return;
     if (!buffStr)   return;
+    AnsiString vr = FormatDateTime("yyyy-mm-dd hh:nn:ss.zzz   ", Now());
     EnterCriticalSection(&csBuff);
     int buffStrNew = NormAddr(buffStrBg+1);
     if (buffStrNew==buffStrEd) return;
-    buffStr[buffStrBg] = datLog;
+    buffStr[buffStrBg] = vr + datLog + "\r\n";
     buffStrBg = buffStrNew;
     LeaveCriticalSection(&csBuff);
 }

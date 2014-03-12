@@ -15,7 +15,8 @@ private:
     int         buffStrEd;
     int __fastcall NormAddr(int addr);
     CRITICAL_SECTION csBuff;
-    int __fastcall Pop(AnsiString *datLog);  
+    int __fastcall Pop(AnsiString *datLog);
+    TFileStream *pFile;  
 protected:
     void __fastcall Execute();
 public:

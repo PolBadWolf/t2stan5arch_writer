@@ -1,0 +1,1016 @@
+Log :
+2014-03-12 12:42:29.272   Init programm :
+2014-03-12 12:42:29.272   close query1
+2014-03-12 12:42:29.272   read number tube
+2014-03-12 12:42:29.447   read Last param BD
+2014-03-12 12:42:29.453   show param
+2014-03-12 12:42:29.470   init massive shape
+2014-03-12 12:42:29.470   create boxread
+2014-03-12 12:42:29.471   'TNBoxRead::TNBoxRead': open ini file
+2014-03-12 12:42:29.485   'TNBoxRead::TNBoxRead': open create comport
+2014-03-12 12:42:29.485   'TNBoxRead::TNBoxRead': reset massive status sensors
+2014-03-12 12:42:29.485   pusk timer sensor
+2014-03-12 12:42:29.487   show sensorsample
+2014-03-12 12:42:29.491   'TNBoxRead::Execute': open comport
+2014-03-12 12:42:52.373   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:52.373   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:52.433   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:52.433   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:52.513   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:52.513   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:52.572   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:52.572   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:52.575   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:52.575   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:42:52.578   'TForm1::EvaSensor': key sample no show
+2014-03-12 12:42:52.579   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:52.579   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:42:52.579   'TForm1::TubeBegin': event
+2014-03-12 12:42:52.579   'TForm1::TubeBegin': ReadFromBDLastParametrs
+2014-03-12 12:42:52.586   'TForm1::TubeBegin': ReadFromBDNewParametrs
+2014-03-12 12:42:52.626   'TForm1::TubeBegin': end ReadFromBD
+2014-03-12 12:42:52.626   'TForm1::TubeBegin': show param
+2014-03-12 12:42:52.635   'TForm1::TubeBegin': clear picture
+2014-03-12 12:42:52.635   'TForm1::EvaSensor': other sensors show
+2014-03-12 12:42:52.638   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:52.638   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:52.638   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:52.642   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:52.697   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:52.697   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:52.697   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:52.697   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:52.757   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:52.757   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:52.757   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:52.757   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:52.757   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:52.761   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:52.817   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:52.817   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:52.817   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:52.817   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:52.817   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:52.821   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:52.877   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:52.877   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:52.877   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:52.880   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:52.880   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:52.883   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:52.937   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:52.937   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:52.937   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:52.937   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:52.937   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:52.940   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:52.997   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:52.997   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:52.997   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:52.997   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:52.997   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:52.997   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:53.057   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:53.057   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:53.057   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:53.057   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:53.057   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:53.057   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:53.138   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:53.138   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:53.138   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:53.138   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:53.138   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:53.138   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:53.198   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:53.198   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:53.198   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:53.202   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:53.202   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:53.202   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:53.257   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:53.257   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:53.257   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:53.260   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:53.260   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:53.260   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:53.263   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:53.263   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:42:53.263   'TForm1::EvaSensor': other sensors show
+2014-03-12 12:42:53.319   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:53.319   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:53.319   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:53.319   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:53.319   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:53.319   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:53.381   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:53.381   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:53.381   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:53.381   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:53.381   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:53.381   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:53.439   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:53.439   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:53.439   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:53.439   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:53.439   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:53.439   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:53.499   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:53.499   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:53.499   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:53.499   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:53.499   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:53.499   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:53.579   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:53.579   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:53.579   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:53.579   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:53.579   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:53.579   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:53.639   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:53.639   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:53.639   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:53.639   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:53.639   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:53.639   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:53.699   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:53.699   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:53.699   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:53.699   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:53.699   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:53.699   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:53.759   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:53.759   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:53.759   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:53.759   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:53.759   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:53.759   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:53.818   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:53.818   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:53.818   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:53.818   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:53.818   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:53.825   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:53.880   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:53.880   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:53.880   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:53.882   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:53.882   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:53.886   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:53.940   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:53.940   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:53.940   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:53.942   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:53.942   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:53.942   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:53.999   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:53.999   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:53.999   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:53.999   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:53.999   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:54.008   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:54.059   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:54.059   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:54.059   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:54.059   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:54.059   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:54.062   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:54.119   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:54.119   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:54.119   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:54.119   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:54.119   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:54.119   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:54.182   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:54.182   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:54.182   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:54.182   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:54.182   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:54.182   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:54.242   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:54.242   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:54.242   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:54.242   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:54.242   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:54.242   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:54.308   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:54.308   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:54.308   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:54.308   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:54.308   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:54.308   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:54.387   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:54.387   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:54.387   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:54.387   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:54.387   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:54.387   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:54.428   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:54.428   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:54.428   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:54.428   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:54.428   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:54.428   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:54.507   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:54.507   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:54.507   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:54.507   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:54.507   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:54.507   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:54.567   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:54.567   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:54.567   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:54.567   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:54.567   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:54.567   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:54.626   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:54.626   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:54.626   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:54.626   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:42:54.626   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:54.626   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:54.630   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:54.630   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:42:54.630   'TForm1::EvaSensor': other sensors show
+2014-03-12 12:42:54.690   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:54.690   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:54.690   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:54.690   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:42:54.690   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:54.690   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:54.749   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:54.749   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:54.749   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:54.749   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:42:54.749   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:54.749   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:54.829   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:54.829   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:54.829   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:54.832   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:42:54.832   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:54.832   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:54.869   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:54.869   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:54.869   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:54.869   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:42:54.869   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:42:54.869   'TForm1::EvaCircle': show dlina & set dTube
+2014-03-12 12:42:54.873   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:54.873   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:54.929   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:54.929   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:54.929   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:54.929   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:42:54.929   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:42:54.929   'TForm1::EvaCircle': reset Dlina = dTube
+2014-03-12 12:42:54.929   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:54.929   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:55.009   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:55.009   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:55.009   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:55.009   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:42:55.009   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:42:55.009   'TForm1::EvaCircle': reset Dlina = dTube
+2014-03-12 12:42:55.009   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:55.009   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:55.069   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:55.069   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:55.069   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:55.069   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:42:55.069   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:42:55.069   'TForm1::EvaCircle': reset Dlina = dTube
+2014-03-12 12:42:55.069   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:55.069   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:55.129   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:55.129   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:55.129   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:55.129   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:42:55.129   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:42:55.129   'TForm1::EvaCircle': reset Dlina = dTube
+2014-03-12 12:42:55.129   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:55.129   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:55.190   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:55.190   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:55.190   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:55.190   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:42:55.190   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:42:55.190   'TForm1::EvaCircle': reset Dlina = dTube
+2014-03-12 12:42:55.190   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:55.190   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:55.252   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:55.252   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:55.252   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:55.255   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:42:55.255   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:42:55.255   'TForm1::EvaCircle': reset Dlina = dTube
+2014-03-12 12:42:55.255   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:55.255   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:55.308   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:55.308   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:55.308   'TForm1::EvaCircle': event circle
+2014-03-12 12:42:55.308   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:42:55.308   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:42:55.308   'TForm1::EvaCircle': reset Dlina = dTube
+2014-03-12 12:42:55.308   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:42:55.308   'TForm1::EvaCircle': picture segment
+2014-03-12 12:42:55.312   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:55.312   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:42:55.312   'TForm1::TubeEnd': event
+2014-03-12 12:42:55.318   'TForm1::TubeEnd': write tube
+2014-03-12 12:42:55.639   'TForm1::TubeEnd': show numbertube & reset flag new tube
+2014-03-12 12:42:55.649   'TForm1::EvaSensor': other sensors show
+2014-03-12 12:42:55.649   'TForm1::EvaSensor': show len tube - label17
+2014-03-12 12:42:55.652   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:55.652   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:55.659   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:55.659   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:55.659   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:55.659   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:55.659   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:55.659   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:42:55.659   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:42:55.659   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:45:53.961   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:45:53.961   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:45:53.961   'TForm1::EvaSensor': other sensors show
+2014-03-12 12:45:53.961   'TForm1::EvaSensor': show len tube - label17
+2014-03-12 12:45:55.001   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:45:55.001   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:45:55.001   'TForm1::EvaSensor': other sensors show
+2014-03-12 12:45:55.001   'TForm1::EvaSensor': show len tube - label17
+2014-03-12 12:45:59.883   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:45:59.883   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:45:59.942   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:45:59.942   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:00.003   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:00.003   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:00.081   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:00.081   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:00.084   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:00.084   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:46:00.084   'TForm1::EvaSensor': key sample no show
+2014-03-12 12:46:00.084   'TForm1::EvaSensor': show len tube - label17
+2014-03-12 12:46:00.086   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:00.086   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:46:00.086   'TForm1::TubeBegin': event
+2014-03-12 12:46:00.086   'TForm1::TubeBegin': ReadFromBDLastParametrs
+2014-03-12 12:46:00.094   'TForm1::TubeBegin': ReadFromBDNewParametrs
+2014-03-12 12:46:00.104   'TForm1::TubeBegin': end ReadFromBD
+2014-03-12 12:46:00.104   'TForm1::TubeBegin': show param
+2014-03-12 12:46:00.116   'TForm1::TubeBegin': clear picture
+2014-03-12 12:46:00.116   'TForm1::EvaSensor': other sensors show
+2014-03-12 12:46:00.116   'TForm1::EvaSensor': show len tube - label17
+2014-03-12 12:46:00.146   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:00.146   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:00.146   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:00.150   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:00.206   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:00.206   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:00.206   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:00.209   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:00.266   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:00.266   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:00.266   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:00.266   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:00.266   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:00.270   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:00.326   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:00.326   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:00.326   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:00.328   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:00.328   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:00.331   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:00.386   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:00.386   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:00.386   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:00.386   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:00.386   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:00.390   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:00.446   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:00.446   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:00.446   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:00.448   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:00.449   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:00.452   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:00.506   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:00.506   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:00.506   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:00.509   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:00.509   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:00.509   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:00.586   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:00.586   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:00.586   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:00.586   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:00.586   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:00.586   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:00.646   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:00.646   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:00.646   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:00.646   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:00.646   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:00.646   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:00.706   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:00.706   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:00.706   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:00.710   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:00.710   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:00.710   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:00.765   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:00.765   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:00.765   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:00.765   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:00.765   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:00.765   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:00.768   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:00.768   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:46:00.768   'TForm1::EvaSensor': other sensors show
+2014-03-12 12:46:00.827   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:00.827   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:00.827   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:00.830   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:00.830   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:00.830   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:00.890   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:00.890   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:00.890   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:00.890   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:00.890   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:00.890   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:00.948   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:00.948   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:00.948   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:00.948   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:00.948   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:00.948   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:01.008   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:01.008   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:01.008   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:01.008   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:01.008   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:01.008   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:01.067   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:01.067   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:01.067   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:01.067   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:01.067   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:01.067   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:01.127   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:01.127   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:01.127   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:01.127   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:01.127   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:01.127   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:01.188   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:01.188   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:01.188   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:01.188   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:01.188   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:01.188   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:01.268   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:01.268   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:01.268   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:01.268   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:01.268   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:01.268   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:01.329   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:01.329   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:01.329   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:01.329   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:01.329   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:01.333   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:01.388   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:01.388   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:01.388   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:01.390   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:01.390   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:01.394   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:01.448   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:01.448   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:01.448   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:01.448   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:01.448   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:01.448   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:01.508   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:01.508   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:01.508   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:01.508   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:01.508   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:01.512   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:01.568   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:01.568   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:01.568   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:01.568   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:01.568   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:01.572   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:01.628   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:01.628   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:01.628   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:01.630   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:01.630   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:01.630   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:01.708   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:01.708   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:01.708   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:01.708   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:01.708   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:01.708   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:01.770   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:01.770   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:01.770   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:01.770   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:01.770   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:01.770   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:01.829   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:01.829   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:01.829   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:01.832   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:01.832   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:01.832   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:01.888   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:01.888   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:01.888   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:01.888   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:01.888   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:01.888   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:01.949   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:01.949   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:01.949   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:01.949   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:01.949   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:01.949   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:02.008   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:02.008   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:02.008   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:02.008   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:02.008   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:02.008   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:02.068   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:02.068   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:02.068   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:02.068   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:02.068   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:02.068   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:02.128   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:02.128   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:02.128   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:02.128   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:02.128   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:02.128   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:02.131   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:02.131   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:46:02.131   'TForm1::EvaSensor': other sensors show
+2014-03-12 12:46:02.190   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:02.190   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:02.190   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:02.190   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:02.190   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:02.190   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:02.270   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:02.270   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:02.270   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:02.273   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:02.273   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:02.273   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:02.330   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:02.330   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:02.330   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:02.330   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:02.330   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:02.330   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:02.390   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:02.390   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:02.390   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:02.390   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:02.390   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:46:02.390   'TForm1::EvaCircle': show dlina & set dTube
+2014-03-12 12:46:02.394   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:02.394   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:02.452   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:02.452   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:02.452   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:02.452   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:02.452   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:46:02.452   'TForm1::EvaCircle': reset Dlina = dTube
+2014-03-12 12:46:02.452   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:02.452   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:02.510   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:02.510   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:02.510   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:02.510   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:02.510   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:46:02.510   'TForm1::EvaCircle': reset Dlina = dTube
+2014-03-12 12:46:02.510   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:02.510   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:02.570   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:02.570   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:02.570   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:02.572   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:02.572   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:46:02.572   'TForm1::EvaCircle': reset Dlina = dTube
+2014-03-12 12:46:02.572   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:02.573   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:02.630   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:02.630   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:02.630   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:02.630   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:02.630   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:46:02.630   'TForm1::EvaCircle': reset Dlina = dTube
+2014-03-12 12:46:02.630   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:02.630   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:02.690   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:02.690   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:02.690   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:02.693   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:02.693   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:46:02.693   'TForm1::EvaCircle': reset Dlina = dTube
+2014-03-12 12:46:02.693   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:02.693   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:02.770   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:02.770   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:02.770   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:02.770   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:02.770   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:46:02.770   'TForm1::EvaCircle': reset Dlina = dTube
+2014-03-12 12:46:02.770   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:02.770   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:02.829   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:02.829   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:02.829   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:02.832   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:02.832   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:46:02.832   'TForm1::EvaCircle': reset Dlina = dTube
+2014-03-12 12:46:02.832   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:02.832   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:02.834   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:02.835   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:46:02.835   'TForm1::TubeEnd': event
+2014-03-12 12:46:02.841   'TForm1::TubeEnd': write tube
+2014-03-12 12:46:02.960   'TForm1::TubeEnd': show numbertube & reset flag new tube
+2014-03-12 12:46:02.974   'TForm1::EvaSensor': other sensors show
+2014-03-12 12:46:02.974   'TForm1::EvaSensor': show len tube - label17
+2014-03-12 12:46:02.976   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:02.976   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:02.976   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:02.976   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:03.012   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:03.012   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:03.072   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:03.072   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:03.131   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:03.131   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:09.152   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:09.152   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:09.212   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:09.212   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:09.272   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:09.272   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:09.332   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:09.332   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:09.335   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:09.335   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:46:09.335   'TForm1::EvaSensor': key sample no show
+2014-03-12 12:46:09.335   'TForm1::EvaSensor': show len tube - label17
+2014-03-12 12:46:09.336   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:09.336   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:46:09.336   'TForm1::TubeBegin': event
+2014-03-12 12:46:09.336   'TForm1::TubeBegin': ReadFromBDLastParametrs
+2014-03-12 12:46:09.343   'TForm1::TubeBegin': ReadFromBDNewParametrs
+2014-03-12 12:46:09.352   'TForm1::TubeBegin': end ReadFromBD
+2014-03-12 12:46:09.352   'TForm1::TubeBegin': show param
+2014-03-12 12:46:09.359   'TForm1::TubeBegin': clear picture
+2014-03-12 12:46:09.359   'TForm1::EvaSensor': other sensors show
+2014-03-12 12:46:09.359   'TForm1::EvaSensor': show len tube - label17
+2014-03-12 12:46:09.396   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:09.396   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:09.396   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:09.401   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:09.456   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:09.456   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:09.456   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:09.458   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:09.516   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:09.516   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:09.516   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:09.516   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:09.516   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:09.523   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:09.576   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:09.576   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:09.576   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:09.578   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:09.578   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:09.582   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:09.635   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:09.635   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:09.635   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:09.635   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:09.635   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:09.640   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:09.696   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:09.696   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:09.696   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:09.698   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:09.698   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:09.706   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:09.776   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:09.776   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:09.776   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:09.776   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:09.776   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:09.776   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:09.836   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:09.836   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:09.836   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:09.839   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:09.839   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:09.839   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:09.896   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:09.896   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:09.896   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:09.898   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:09.898   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:09.898   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:09.956   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:09.956   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:09.956   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:09.960   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:09.960   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:09.960   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:09.996   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:09.996   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:46:09.996   'TForm1::EvaSensor': defect show
+2014-03-12 12:46:10.015   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.015   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:10.015   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:10.017   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:10.017   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:10.017   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:10.018   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.018   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:46:10.018   'TForm1::EvaSensor': other sensors show
+2014-03-12 12:46:10.080   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.080   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:10.080   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:10.080   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:10.080   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:10.080   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:10.138   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.138   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:10.138   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:10.138   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:10.138   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:10.138   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:10.196   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.196   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:46:10.196   'TForm1::EvaSensor': defect show
+2014-03-12 12:46:10.199   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.199   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:10.199   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:10.199   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:10.199   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:10.199   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:10.259   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.259   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:10.259   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:10.261   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:10.261   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:10.261   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:10.319   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.319   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:10.319   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:10.321   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:10.321   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:10.321   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:10.339   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.339   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:46:10.339   'TForm1::EvaSensor': defect show
+2014-03-12 12:46:10.399   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.399   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:10.399   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:10.399   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:10.399   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:10.399   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:10.459   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.459   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:10.459   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:10.462   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:10.462   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:10.462   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:10.519   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.519   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:10.519   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:10.519   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:10.519   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:10.519   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:10.558   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.558   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:46:10.558   'TForm1::EvaSensor': defect show
+2014-03-12 12:46:10.563   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.563   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:46:10.563   'TForm1::EvaSensor': defect show
+2014-03-12 12:46:10.580   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.580   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:10.580   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:10.583   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:10.583   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:10.586   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:10.642   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.642   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:10.642   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:10.642   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:10.642   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:10.646   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:10.701   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.701   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:10.701   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:10.703   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:10.703   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:10.703   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:10.760   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.760   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:46:10.760   'TForm1::EvaSensor': defect show
+2014-03-12 12:46:10.762   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.762   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:46:10.762   'TForm1::EvaSensor': defect show
+2014-03-12 12:46:10.765   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.765   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:10.765   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:10.767   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:10.767   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:10.770   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:10.824   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.824   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:10.824   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:10.827   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:10.827   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:10.836   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:10.884   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.884   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:10.884   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:10.886   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:10.886   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:10.886   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:10.944   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.944   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:46:10.944   'TForm1::EvaSensor': defect show
+2014-03-12 12:46:10.966   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:10.967   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:10.967   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:10.971   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:10.971   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:10.971   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:11.004   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:11.004   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:11.004   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:11.004   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:11.004   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:11.004   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:11.084   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:11.084   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:11.084   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:11.084   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:11.084   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:11.084   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:11.124   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:11.124   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:46:11.124   'TForm1::EvaSensor': defect show
+2014-03-12 12:46:11.143   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:11.143   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:11.143   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:11.145   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:11.145   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:11.146   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:11.146   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:11.146   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:46:11.146   'TForm1::EvaSensor': defect show
+2014-03-12 12:46:11.205   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:11.205   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:11.205   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:11.208   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:11.208   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:11.208   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:11.266   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:11.266   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:11.266   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:11.266   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:11.266   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:11.266   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:11.325   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:11.325   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:11.325   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:11.325   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:11.325   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:11.325   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:11.365   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:11.365   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:46:11.365   'TForm1::EvaSensor': defect show
+2014-03-12 12:46:11.384   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:11.384   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:11.384   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:11.384   'TForm1::EvaCircle': LeftSensor ON
+2014-03-12 12:46:11.384   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:11.384   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:11.388   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:11.388   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:46:11.388   'TForm1::EvaSensor': other sensors show
+2014-03-12 12:46:11.447   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:11.447   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:11.447   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:11.447   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:11.447   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:11.447   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:11.507   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:11.507   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:11.507   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:11.507   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:11.507   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:11.507   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:11.567   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:11.567   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:11.567   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:11.567   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:11.567   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:11.567   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:11.627   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:11.627   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:11.627   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:11.627   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:11.627   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:46:11.627   'TForm1::EvaCircle': show dlina & set dTube
+2014-03-12 12:46:11.631   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:11.632   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:11.708   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:11.708   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:11.708   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:11.708   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:11.708   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:46:11.708   'TForm1::EvaCircle': reset Dlina = dTube
+2014-03-12 12:46:11.708   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:11.708   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:11.768   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:11.768   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:11.768   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:11.768   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:11.768   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:46:11.768   'TForm1::EvaCircle': reset Dlina = dTube
+2014-03-12 12:46:11.768   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:11.768   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:11.828   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:11.828   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:11.828   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:11.828   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:11.828   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:46:11.828   'TForm1::EvaCircle': reset Dlina = dTube
+2014-03-12 12:46:11.828   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:11.828   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:11.888   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:11.888   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:11.888   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:11.888   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:11.888   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:46:11.888   'TForm1::EvaCircle': reset Dlina = dTube
+2014-03-12 12:46:11.888   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:11.888   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:11.949   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:11.950   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:11.950   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:11.950   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:11.950   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:46:11.950   'TForm1::EvaCircle': reset Dlina = dTube
+2014-03-12 12:46:11.950   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:11.950   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:12.008   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:12.008   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:12.008   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:12.008   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:12.008   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:46:12.008   'TForm1::EvaCircle': reset Dlina = dTube
+2014-03-12 12:46:12.008   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:12.008   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:12.067   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:12.067   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:12.067   'TForm1::EvaCircle': event circle
+2014-03-12 12:46:12.069   'TForm1::EvaCircle': LeftSensor OFF
+2014-03-12 12:46:12.069   'TForm1::EvaCircle': count otstup zero
+2014-03-12 12:46:12.069   'TForm1::EvaCircle': reset Dlina = dTube
+2014-03-12 12:46:12.069   'TForm1::EvaCircle': show position-otstup mm
+2014-03-12 12:46:12.069   'TForm1::EvaCircle': picture segment
+2014-03-12 12:46:12.071   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:12.071   'TNBoxRead::SelectDo': packet - status sensors
+2014-03-12 12:46:12.071   'TForm1::TubeEnd': event
+2014-03-12 12:46:12.075   'TForm1::TubeEnd': write tube
+2014-03-12 12:46:12.111   'TForm1::TubeEnd': show numbertube & reset flag new tube
+2014-03-12 12:46:12.112   'TForm1::EvaSensor': other sensors show
+2014-03-12 12:46:12.112   'TForm1::EvaSensor': show len tube - label17
+2014-03-12 12:46:12.129   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:12.129   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:12.210   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:12.210   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:12.270   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:12.270   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:12.330   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:12.330   'TNBoxRead::SelectDo': packet - move circe
+2014-03-12 12:46:12.389   'TNBoxRead::SelectDo': new packet
+2014-03-12 12:46:12.389   'TNBoxRead::SelectDo': packet - move circe

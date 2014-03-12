@@ -74,6 +74,11 @@ void __fastcall TForm1::FormCloseQuery(TObject *Sender, bool &CanClose)
                 BoxRead = NULL;
         }
         delete ViewKoleso;
+        if (WriteLog)
+        {
+            delete WriteLog;
+            WriteLog = NULL;
+        }
 }
 //---------------------------------------------------------------------------
 // изменение состояния датчиков
@@ -83,19 +88,28 @@ void __fastcall TForm1::EvaSensor(int sn, int lvl)
         {
             if ( sn==7 ) // sensor "sample"
             {
+                WriteLog->Push("'TForm1::EvaSensor': key sample no show");
             //    ShowSensorSample(LampDat[7], lvl);
             }
             else
             {
                 if ( sn==6 )
+                {
+                    WriteLog->Push("'TForm1::EvaSensor': defect show");
                     LampDat[sn]->Brush->Color = (lvl==0)?clRed:clWhite;
+                }
                 else
+                {
+                    WriteLog->Push("'TForm1::EvaSensor': other sensors show");
                     LampDat[sn]->Brush->Color = (lvl==0)?clLime:clWhite;
+                }
             }
         }
         if (dTube>0)
-                //Label17->Caption = dTube - otStep;
-                Label17->Caption = (dTube-otStep)*LenSegmentTube;
+        {
+            WriteLog->Push("'TForm1::EvaSensor': show len tube - label17");
+            Label17->Caption = (dTube-otStep)*LenSegmentTube;
+        }
         else
                 Label17->Caption = dTube;
 }
@@ -123,10 +137,12 @@ void __fastcall TForm1::EvaModeCalibrovka(int lvl, int fl_mod)
 // сработка колеса
 void __fastcall TForm1::EvaCircle(int Napravl, int Dlina, int Position, int *MassDefect)
 {
+    WriteLog->Push("'TForm1::EvaCircle': event circle");
         Label15->Caption = Position;
         // состояние левого датчика
         if (!BoxRead->BoxReadMassSensorsLevel[TUBE_HERE1])
         {
+                WriteLog->Push("'TForm1::EvaCircle': LeftSensor ON");
                 // труба на датчике
                 otCount = otStep;
                 // длина трубы замеренной
@@ -135,19 +151,22 @@ void __fastcall TForm1::EvaCircle(int Napravl, int Dlina, int Position, int *Mas
         }
         else
         {
+                WriteLog->Push("'TForm1::EvaCircle': LeftSensor OFF");
                 // трубы нет
                 if (otCount>0) otCount--;
                 else
                 {
+                        WriteLog->Push("'TForm1::EvaCircle': count otstup zero");
                         if (dTube<0)
                         {
+                                WriteLog->Push("'TForm1::EvaCircle': show dlina & set dTube");
                                 dTube = Dlina;
-                                //Label17->Caption = dTube - otStep;
                                 // len tube ?
                                 Label17->Caption = (dTube-otStep)*LenSegmentTube;
                         }
                         else
                         {
+                                WriteLog->Push("'TForm1::EvaCircle': reset Dlina = dTube");
                                 Dlina = dTube;
                                 if (Position>dTube)
                                         Position = dTube;
@@ -158,8 +177,10 @@ void __fastcall TForm1::EvaCircle(int Napravl, int Dlina, int Position, int *Mas
         if (Dlina   <(otStep+0) ) return; // вне зоны датчика
         //Label14->Caption = BoxRead->Count;
         //Label14->Caption = (BoxRead->Count-otStep)*Step2mm[Step2mmD];
+        WriteLog->Push("'TForm1::EvaCircle': show position-otstup mm");
         Label14->Caption = (Position-otStep)*LenSegmentTube;
         // рисование
+        WriteLog->Push("'TForm1::EvaCircle': picture segment");
         int nX,  nY,  eX,  eY;
         int nX1, nY1, eX1, eY1;
         double n, e; // позитция сегмента в мм
@@ -193,7 +214,7 @@ void __fastcall TForm1::EvaCircle(int Napravl, int Dlina, int Position, int *Mas
         ImageVisual->Canvas->Unlock();
         // сетка
         Img_Setka(ImageVisual, nX, nY, eX, eY, 15);
-        
+
 }
 //---------------------------------------------------------------------------
 // изменение состояния датчиков колеса
@@ -205,12 +226,18 @@ void __fastcall TForm1::EvaCircleSensor(int sn)
 // завершение дефектоскопии
 void __fastcall TForm1::TubeEnd()
 {
+    WriteLog->Push("'TForm1::TubeEnd': event");
     // new tube ?
-    if (!FlNewTube) return;
+    if (!FlNewTube)
+    {
+        WriteLog->Push("'TForm1::TubeEnd': no new tube");
+        return;
+    }
     // =========================================================
     // no parametrs - no record
     if (!IdParam)
     {
+        WriteLog->Push("'TForm1::TubeEnd': BD clear - no write tube");
         FlNewTube = false;
         return;
     }
@@ -231,6 +258,7 @@ void __fastcall TForm1::TubeEnd()
     // Number tube +1 if no sample
     if ( FlObr )
     {   // sample mark number 0
+        WriteLog->Push("'TForm1::TubeEnd': this tube sample");
         nTube = 0;
     }
     else
@@ -258,7 +286,9 @@ void __fastcall TForm1::TubeEnd()
     TDateTime DtTm = Now();
     AnsiString vDate = FormatDateTime("yyyy-mm-dd", DtTm);
     // write to BD
+    WriteLog->Push("'TForm1::TubeEnd': write tube");
     WriteBD_Datas(ADOConnection1, nTube, Mass, Len, FlagDefectTube, IdParam);
+    WriteLog->Push("'TForm1::TubeEnd': show numbertube & reset flag new tube");
     Show_NumberTube(nTube);
     // reset flag new tube
     FlNewTube = false;
@@ -266,14 +296,18 @@ void __fastcall TForm1::TubeEnd()
 //---------------------------------------------------------------------------
 void __fastcall TForm1::TubeBegin()
 {
+        WriteLog->Push("'TForm1::TubeBegin': event");
         // read last parametrs
         int         IdParamLast  , IdParamNew;
         int         IdMeltLast   , IdMeltNew;
         AnsiString  CodeMeltLast , CodeMeltNew;
         double      SizeTubeLast , SizeTubeNew;
         int         statusLast   , statusNew;
+        WriteLog->Push("'TForm1::TubeBegin': ReadFromBDLastParametrs");
         statusLast = ReadFromBDLastParametrs(ADOQuery1, &IdParamLast, &IdMeltLast, &CodeMeltLast, &SizeTubeLast);
+        WriteLog->Push("'TForm1::TubeBegin': ReadFromBDNewParametrs");
         statusNew  = ReadFromBDNewParametrs (ADOQuery1, &IdParamNew , &IdMeltNew , &CodeMeltNew , &SizeTubeNew );
+        WriteLog->Push("'TForm1::TubeBegin': end ReadFromBD");
         if ( (statusLast && statusNew) || statusNew )
         {   // error read parametrs
             if ( statusNew==-1 )
@@ -297,10 +331,12 @@ void __fastcall TForm1::TubeBegin()
             LenSegmentTube = FnDiametr2LenSegment(SizeTube);
         }
         // offset from left sensor tube, unit segment   // расчитанный отступ в шагах
+        WriteLog->Push("'TForm1::TubeBegin': show param");
         otStep = otLmm/LenSegmentTube;
         Show_Parametrs(CurentNumberTube, SizeTube, LenSegmentTube, otStep, CodeMelt);
         // ==============================
         FlNewTube = true;
+        WriteLog->Push("'TForm1::TubeBegin': clear picture");
         // очистка имиджа + сетка
         int nX, nY, eX, eY;
         nX = D_ImageOffsetX + 1;
@@ -383,10 +419,13 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         WriteLog = new TWriteLog;
 // ******************************************************************************************
 // *************************** init variable from Data Base *********************************
+        WriteLog->Push("Init programm :");
+        WriteLog->Push("close query1");
         // close ado
         ADOQuery1->Close();
         // ====================================================
         // read last number tube ( no sample )
+        WriteLog->Push("read number tube");
         CurentNumberTube = ReadFromBDLastNumberTude(ADOQuery1);
         if (CurentNumberTube<0)
         {       // Date Base Error
@@ -396,6 +435,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         }
         // ====================================================
         // read last parametrs
+        WriteLog->Push("read Last param BD");
         if ( !ReadFromBDLastParametrs(ADOQuery1, &IdParamLast, &IdMeltLast, &CodeMeltLast, &SizeTubeLast) )
         {   // ok
             IdParam   = IdParamLast;
@@ -411,6 +451,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
             LenSegmentTube = 1000/8;
         }
         otStep = otLmm/LenSegmentTube;
+        WriteLog->Push("show param");
         Show_Parametrs(CurentNumberTube, SizeTube, LenSegmentTube, otStep, CodeMelt);
 // ******************************************************************************************
 // *************************** init variable Base Lengh sensors tube ************************
@@ -424,6 +465,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         dTube = -1;
 // ******************************************************************************************
 // *************************** init Massibe indications *************************************
+        WriteLog->Push("init massive shape");
         LampDat[0] = Shape_KEY_BACK;
         LampDat[1] = Shape_KEY_FORWARD;
         LampDat[2] = Shape_TUBE_HERE_L;
@@ -438,6 +480,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         //LampDat[11] = Shape12;
 // ******************************************************************************************
 // *************************** init BoxRead - Read from controller **************************
+        WriteLog->Push("create boxread");
         BoxRead = new TNBoxRead;
         // въезд в начале, начало дефектоскопии
         BoxRead->EvTubeHereBeginUp = TubeBegin;
@@ -459,8 +502,10 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         BoxRead->EvModeCalibrovka  = EvaModeCalibrovka;
         // пуск
         BoxRead->Resume();
+        WriteLog->Push("pusk timer sensor");
         Timer_ShowSensor->Enabled = true;
         // programm status sensor "sample"
+        WriteLog->Push("show sensorsample");
         ShowSensorSample(LampDat[7], 1);
 // ******************************************************************************************
 // *************************** delete starting timer ****************************************
@@ -469,6 +514,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Timer_ShowSensorTimer(TObject *Sender)
 {
+    //WriteLog->Push("'ShowSensorTimer': ShowSensorSample");
     ShowSensorSample(LampDat[7], BoxRead->BoxReadMassSensorsLevel[7]);
 }
 //---------------------------------------------------------------------------
