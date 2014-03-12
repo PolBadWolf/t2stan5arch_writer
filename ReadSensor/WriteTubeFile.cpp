@@ -5,7 +5,7 @@
 
 #include "WriteTubeFile.h"
 #include "inifiles.hpp"
-#include "PapkaName.h"
+//#include "PapkaName.h"
 #pragma package(smart_init)
 #include "BoxRead.h"
 extern TNBoxRead *BoxRead;

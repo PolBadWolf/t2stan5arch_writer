@@ -5,8 +5,7 @@
     <VERSION value="BCB.06.00"/>
     <PROJECT value="ReadSensor.exe"/>
     <OBJFILES value="ReadSensor.obj Unit1.obj CommPort\ComPort.obj crc\crc8.obj ShablBuff.obj 
-      WriteFl.obj MShape.obj ViewKoleso.obj WriteTubeFile.obj 
-      WriteCalibrFile.obj BoxRead1.obj UserFunction1.obj"/>
+      MShape.obj ViewKoleso.obj BoxRead1.obj UserFunction1.obj WriteLog.obj"/>
     <RESFILES value="ReadSensor.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
@@ -62,13 +61,11 @@
       <FILE FILENAME="CommPort\ComPort.cpp" FORMNAME="" UNITNAME="ComPort" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="crc\crc8.cpp" FORMNAME="" UNITNAME="crc8" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="ShablBuff.cpp" FORMNAME="" UNITNAME="ShablBuff" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="WriteFl.cpp" FORMNAME="" UNITNAME="WriteFl" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="MShape.cpp" FORMNAME="" UNITNAME="MShape" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="ViewKoleso.cpp" FORMNAME="" UNITNAME="ViewKoleso" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="WriteTubeFile.cpp" FORMNAME="" UNITNAME="WriteTubeFile" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="WriteCalibrFile.cpp" FORMNAME="" UNITNAME="WriteCalibrFile" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="BoxRead1.cpp" FORMNAME="" UNITNAME="BoxRead1" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="UserFunction1.cpp" FORMNAME="" UNITNAME="UserFunction1" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="WriteLog.cpp" FORMNAME="" UNITNAME="WriteLog" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
   </BUILDTOOLS>
