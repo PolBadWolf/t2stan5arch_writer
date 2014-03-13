@@ -21,5 +21,6 @@ protected:
     void __fastcall Execute();
 public:
     void __fastcall Push(AnsiString datLog);
+    int debugMode;
 };
 #endif

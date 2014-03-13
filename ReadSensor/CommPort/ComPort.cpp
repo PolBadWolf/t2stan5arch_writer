@@ -106,7 +106,7 @@ int  __fastcall TComPort::Open(AnsiString PortName,
                 return 4;
         }
         //
-        SetupComm(COMport, 4096, 32768);
+        SetupComm(COMport, 65536, 65536);
         NitWrite = new TComPortWr(COMport);
         PurgeComm(COMport, PURGE_TXCLEAR);
         NitWrite->Resume();

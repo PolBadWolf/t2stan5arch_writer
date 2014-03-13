@@ -84,7 +84,8 @@ void __fastcall TForm1::FormCloseQuery(TObject *Sender, bool &CanClose)
 // изменение состояния датчиков
 void __fastcall TForm1::EvaSensor(int sn, int lvl)
 {
-        if (sn<14)
+        WriteLog->Push("'TForm1::EvaSensor': sn:"+IntToStr(sn)+"  lvl:"+IntToStr(lvl));
+        if (sn<10)
         {
             if ( sn==7 ) // sensor "sample"
             {
@@ -287,7 +288,7 @@ void __fastcall TForm1::TubeEnd()
     AnsiString vDate = FormatDateTime("yyyy-mm-dd", DtTm);
     // write to BD
     WriteLog->Push("'TForm1::TubeEnd': write tube");
-    WriteBD_Datas(ADOConnection1, nTube, Mass, Len, FlagDefectTube, IdParam);
+    //WriteBD_Datas(ADOConnection1, nTube, Mass, Len, FlagDefectTube, IdParam);
     WriteLog->Push("'TForm1::TubeEnd': show numbertube & reset flag new tube");
     Show_NumberTube(nTube);
     // reset flag new tube

@@ -18,6 +18,7 @@ __fastcall TWriteLog::TWriteLog()
     buffStrBg = 0;
     buffStrEd = 0;
     pFile = NULL;
+    debugMode = 1;
 }
 
 void __fastcall TWriteLog::Execute()
@@ -66,6 +67,7 @@ void __fastcall TWriteLog::Execute()
 void __fastcall TWriteLog::Push(AnsiString datLog)
 {
     if (Terminated) return;
+    if (!debugMode) return;
     if (!buffStr)   return;
     AnsiString vr = FormatDateTime("yyyy-mm-dd hh:nn:ss.zzz   ", Now());
     EnterCriticalSection(&csBuff);

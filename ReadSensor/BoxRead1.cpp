@@ -28,13 +28,16 @@ extern TWriteLog *WriteLog;
 
 __fastcall TNBoxRead::TNBoxRead() : TThread(true)
 {
+        int modeDebug;
         // ---------------------------------------------------------------------
         // настройка чтение настроек из ini файла
         WriteLog->Push("'TNBoxRead::TNBoxRead': open ini file");
         TIniFile *ifile = new TIniFile( ChangeFileExt( Application->ExeName, ".ini" ) );
+        modeDebug = ifile->ReadInteger("Debug", "Write_log_txt", 0 );
         PortName = ifile->ReadString("ini", "ComPortName", "COM2" );
         PortBaud = (eBaudRate)ifile->ReadInteger("ini", "ComPortBaud", CBR_38400);
         PathName = ifile->ReadString("ini", "PathArchiv", ExtractFilePath(Application->ExeName)+"arhiv\\" );
+        ifile->WriteInteger("Debug", "Write_log_txt", modeDebug);
         ifile->WriteString ("ini", "ComPortName", PortName);
         ifile->WriteInteger("ini", "ComPortBaud", PortBaud);
         ifile->WriteString ("ini", "PathArchiv",  PathName);
@@ -44,6 +47,11 @@ __fastcall TNBoxRead::TNBoxRead() : TThread(true)
                 ifile->WriteBool("Sensors Inversion", "Sn"+IntToStr(i), dat_FlInv[i] );
         }
         delete ifile;
+        if (modeDebug)
+            WriteLog->Push("'TNBoxRead::TNBoxRead': Debug mode ON");
+        else
+            WriteLog->Push("'TNBoxRead::TNBoxRead': Debug mode OFF");
+        WriteLog->debugMode = modeDebug;
         // ---------------------------------------------------------------------
         // создание объекта порта
         WriteLog->Push("'TNBoxRead::TNBoxRead': open create comport");
