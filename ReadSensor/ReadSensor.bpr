@@ -5,7 +5,7 @@
     <VERSION value="BCB.06.00"/>
     <PROJECT value="ReadSensor.exe"/>
     <OBJFILES value="ReadSensor.obj Unit1.obj CommPort\ComPort.obj crc\crc8.obj ShablBuff.obj 
-      MShape.obj ViewKoleso.obj UserFunction1.obj WriteLog.obj"/>
+      MShape.obj ViewKoleso.obj UserFunction1.obj WriteLog.obj BoxRead.obj"/>
     <RESFILES value="ReadSensor.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
@@ -65,6 +65,7 @@
       <FILE FILENAME="ViewKoleso.cpp" FORMNAME="" UNITNAME="ViewKoleso" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="UserFunction1.cpp" FORMNAME="" UNITNAME="UserFunction1" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="WriteLog.cpp" FORMNAME="" UNITNAME="WriteLog" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="BoxRead.cpp" FORMNAME="" UNITNAME="BoxRead" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
   </BUILDTOOLS>

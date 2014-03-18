@@ -8,13 +8,13 @@
 #include <math.h>
 #include "Unit1.h"
 #include "wstring.h"
-#include "BoxRead1.h"
+//#include "BoxRead1.h"
 
 //---------------------------------------------------------------------------
 
 #pragma package(smart_init)
 
-extern TNBoxRead *BoxRead;
+//extern TNBoxRead *BoxRead;
 
 // Diametr tube -> Len Segment
 // Диаметр трубы в длину сегмента
@@ -234,8 +234,8 @@ void __fastcall WriteBD_Datas(TADOConnection *connect, int NumberTube, signed ch
 
 void __fastcall Show_NumberTube(int nTube)
 {
-    if (!BoxRead) return;
-    if (BoxRead->FlModeCalibrovka)
+//    if (!BoxRead) return;
+/*    if (BoxRead->FlModeCalibrovka)
         Form1->Label_NumberTube->Caption = "smpl";
     else
     {
@@ -244,6 +244,7 @@ void __fastcall Show_NumberTube(int nTube)
         else
             Form1->Label_NumberTube->Caption = nTube;
     }
+    */
 }
 
 void __fastcall Show_Parametrs(int nTube, double SizeTube, double LenSegmentTube, int otstup, AnsiString CodeMelt)
@@ -257,9 +258,11 @@ void __fastcall Show_Parametrs(int nTube, double SizeTube, double LenSegmentTube
 }
 void __fastcall TForm1::ShowSensorSample(TShape *Lamp, int lvl)
 {
+    /*
     if (BoxRead->FlModeCalibrovka)
         Lamp->Brush->Color = (lvl)?clGreen:clLime;
     else
         Lamp->Brush->Color = clWhite;
+    */
 }
 

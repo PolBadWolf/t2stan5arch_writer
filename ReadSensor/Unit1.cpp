@@ -4,7 +4,6 @@
 #pragma hdrstop
 
 #include "Unit1.h"
-#include "BoxRead1.h"
 #include "ViewKoleso.h"
 #include "UserFunction1.h"
 #include "WriteLog.h"
@@ -12,7 +11,7 @@
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 TForm1 *Form1;
-TNBoxRead *BoxRead = NULL;
+//TNBoxRead *BoxRead = NULL;
 TWriteLog *WriteLog = NULL;
 
 #define D_MaxLenTube  15000
@@ -67,12 +66,14 @@ void __fastcall TForm1::FormCloseQuery(TObject *Sender, bool &CanClose)
         {
                 ADOConnection1->Close();
         }
+        /*
         if (BoxRead)
         {
                 BoxRead->Terminate();
                 BoxRead->Resume();
                 BoxRead = NULL;
         }
+        */
         delete ViewKoleso;
         if (WriteLog)
         {
@@ -141,6 +142,7 @@ void __fastcall TForm1::EvaCircle(int Napravl, int Dlina, int Position, int *Mas
     WriteLog->Push("'TForm1::EvaCircle': event circle");
         Label15->Caption = Position;
         // состояние левого датчика
+        /*
         if (!BoxRead->BoxReadMassSensorsLevel[TUBE_HERE1])
         {
                 WriteLog->Push("'TForm1::EvaCircle': LeftSensor ON");
@@ -174,6 +176,7 @@ void __fastcall TForm1::EvaCircle(int Napravl, int Dlina, int Position, int *Mas
                         }
                 }
         }
+        */
         if (Position<(otStep+0) ) return; // вне зоны датчика
         if (Dlina   <(otStep+0) ) return; // вне зоны датчика
         //Label14->Caption = BoxRead->Count;
@@ -254,7 +257,7 @@ void __fastcall TForm1::TubeEnd()
     int  nTube;
     // =========================================================
     // read status : "it`s sample"
-    FlObr = BoxRead->FlModeCalibrovka;
+    //FlObr = BoxRead->FlModeCalibrovka;
     // =========================================================
     // Number tube +1 if no sample
     if ( FlObr )
@@ -269,7 +272,7 @@ void __fastcall TForm1::TubeEnd()
     }
     // =========================================================
     // set address massive
-    Mass = BoxRead->MassDefect + otStep;
+    //Mass = BoxRead->MassDefect + otStep;
     // Len       = BoxRead->MassDefectLen;
     Len       = dTube - otStep;
     int zn = -1;
@@ -482,27 +485,27 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
 // ******************************************************************************************
 // *************************** init BoxRead - Read from controller **************************
         WriteLog->Push("create boxread");
-        BoxRead = new TNBoxRead;
+        //BoxRead = new TNBoxRead;
         // въезд в начале, начало дефектоскопии
-        BoxRead->EvTubeHereBeginUp = TubeBegin;
-        BoxRead->EvTubeHereBeginDn;
-        BoxRead->EvTubeHereEndUp;
+        //BoxRead->EvTubeHereBeginUp = TubeBegin;
+        //BoxRead->EvTubeHereBeginDn;
+        //BoxRead->EvTubeHereEndUp;
         // cъезд в конце, конец дефектоскопии
-        BoxRead->EvTubeHereEndDn   = TubeEnd;
+        //BoxRead->EvTubeHereEndDn   = TubeEnd;
         // положение головки дефектоскопа ( lvl : 0 - на трубе, 1 - над трубой )
-        BoxRead->EvSensorAt        = EvaSensorAt;
+        //BoxRead->EvSensorAt        = EvaSensorAt;
         // событие сработка колеса
-        BoxRead->EvCircle          = EvaCircle;
+        //BoxRead->EvCircle          = EvaCircle;
         // общее - изменение состояния датчика
-        BoxRead->EvSensor          = EvaSensor;
+        //BoxRead->EvSensor          = EvaSensor;
         // общее - изменение состояния датчика колеса
-        BoxRead->EvCircleSensor    = EvaCircleSensor;
+        //BoxRead->EvCircleSensor    = EvaCircleSensor;
         // изменение состояния датчика дефектов
-        BoxRead->EvWeldDefect      = EvaWeldDefect;
+        //BoxRead->EvWeldDefect      = EvaWeldDefect;
         // изменение состояния ключа калибровка
-        BoxRead->EvModeCalibrovka  = EvaModeCalibrovka;
+        //BoxRead->EvModeCalibrovka  = EvaModeCalibrovka;
         // пуск
-        BoxRead->Resume();
+        //BoxRead->Resume();
         WriteLog->Push("pusk timer sensor");
         Timer_ShowSensor->Enabled = true;
         // programm status sensor "sample"
@@ -516,7 +519,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
 void __fastcall TForm1::Timer_ShowSensorTimer(TObject *Sender)
 {
     //WriteLog->Push("'ShowSensorTimer': ShowSensorSample");
-    ShowSensorSample(LampDat[7], BoxRead->BoxReadMassSensorsLevel[7]);
+    //ShowSensorSample(LampDat[7], BoxRead->BoxReadMassSensorsLevel[7]);
 }
 //---------------------------------------------------------------------------
 
