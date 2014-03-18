@@ -7,8 +7,8 @@
 #include "ViewKoleso.h"
 #include "UserFunction1.h"
 #include "WriteLog.h"
-#include "ComPort.h"
 #include "inifiles.hpp"
+#include "BoxRead.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -17,7 +17,7 @@ TComPort   *Port = NULL;
 AnsiString PortName;
 eBaudRate  PortBaud;
 eParity    PortParity;
-//TNBoxRead *BoxRead = NULL;
+TBoxRead  *BoxRead = NULL;
 TWriteLog *WriteLog = NULL;
 
 #define D_MaxLenTube  15000
@@ -517,6 +517,8 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         Form1->Close();
         return;
     }
+    Port->aOwner = Port;
+    Port->EventNewDate = PortNewDate;
     // open com port
     if (Port->Open(PortName, PortBaud, PortParity)>0)
     {
@@ -527,7 +529,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
 // ******************************************************************************************
 // *************************** init BoxRead - Read from controller **************************
         WriteLog->Push("create boxread");
-        //BoxRead = new TNBoxRead;
+        BoxRead = new TBoxRead;
         // въезд в начале, начало дефектоскопии
         //BoxRead->EvTubeHereBeginUp = TubeBegin;
         //BoxRead->EvTubeHereBeginDn;
@@ -564,4 +566,15 @@ void __fastcall TForm1::Timer_ShowSensorTimer(TObject *Sender)
     //ShowSensorSample(LampDat[7], BoxRead->BoxReadMassSensorsLevel[7]);
 }
 //---------------------------------------------------------------------------
+void __fastcall TForm1::PortNewDate(TComPort *cPort, int RdByte)
+{
+    unsigned char Buf;
+    unsigned long zak, ok;
+    while( !cPort->ReadBuf(&Buf, &(zak=1), &ok) )
+    {
+        BoxRead->PushFromCommPort(Buf);
+    }
+}
+//---------------------------------------------------------------------------
+
 

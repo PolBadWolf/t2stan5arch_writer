@@ -12,6 +12,7 @@
 //---------------------------------------------------------------------------
 __fastcall TComPort::TComPort()
 {
+        Owner = NULL;
         COMport = NULL;
         NitWrite = NULL;
         NitRead = NULL;
@@ -356,7 +357,7 @@ int  __fastcall TComPort::ReadBuf(unsigned char *Buf, DWORD *len_zakaz, DWORD *l
 void __fastcall TComPort::fEventNewDate(int RdByte)
 {
         if (EventNewDate)
-                EventNewDate(RdByte);
+                EventNewDate(Owner, RdByte);
 }
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------

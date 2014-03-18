@@ -9,6 +9,7 @@
 #include <Forms.hpp>
 #include <ExtCtrls.hpp>
 //---------------------------------------------------------------------------
+#include "ComPort.h"
 #include "MShape.h"
 #include <ADODB.hpp>
 #include <DB.hpp>
@@ -105,6 +106,7 @@ public:		// User declarations
         AnsiString CodeMelt;
         double SizeTube;
         double LenSegmentTube;
+        void __fastcall PortNewDate(TComPort *cPort, int RdByte);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TForm1 *Form1;

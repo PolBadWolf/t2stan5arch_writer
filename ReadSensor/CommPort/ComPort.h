@@ -109,7 +109,15 @@ class TComPort
 private:
         HANDLE          COMport;
         void __fastcall fEventNewDate(int RdByte);
+        TComPort        *Owner;
+        int x1;
+        void __fastcall WaOwner(TComPort *aOwner)
+        {
+            if (!Owner)
+                Owner = aOwner;
+        }
 public:
+        __property TComPort *aOwner = {read=Owner, write=WaOwner };
         __fastcall      TComPort();
         __fastcall      ~TComPort();
         TComPortWr      *NitWrite;
@@ -120,7 +128,7 @@ public:
         void __fastcall Close();
         int  __fastcall Deep();
         void __fastcall Write(unsigned char *Bufferx, int Lenx);
-        void __fastcall (__closure *EventNewDate) (int RdByte);
+        void __fastcall (__closure *EventNewDate) (TComPort *cPort, int RdByte);
         int  __fastcall ReadBuf(unsigned char *Buf, DWORD *len_zakaz, DWORD *len_ok);
         // **************************************************************************************************************
         // Включает режим слежения за сигналом CTS.
