@@ -7,10 +7,16 @@
 #include "ViewKoleso.h"
 #include "UserFunction1.h"
 #include "WriteLog.h"
+#include "ComPort.h"
+#include "inifiles.hpp"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 TForm1 *Form1;
+TComPort   *Port = NULL;
+AnsiString PortName;
+eBaudRate  PortBaud;
+eParity    PortParity;
 //TNBoxRead *BoxRead = NULL;
 TWriteLog *WriteLog = NULL;
 
@@ -482,6 +488,42 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         LampDat[9] = Shape_SENSOR_AT_BOTTOM;
         //LampDat[10] = Shape11;
         //LampDat[11] = Shape12;
+// ******************************************************************************************
+// Initialize com port
+    TIniFile *ifile = new TIniFile( ChangeFileExt( Application->ExeName, ".ini" ) );
+    // checked open ini file
+    if (!ifile)
+    {
+        ShowMessage("Ошибка открытия ini файла");
+        Form1->Close();
+        return;
+    }
+    // read parametrs com port
+    PortName   =            ifile->ReadString ("comm", "Name",  "COM2" );
+    PortBaud   = (eBaudRate)ifile->ReadInteger("comm", "Baud",   CBR_38400);
+    PortParity = (eParity)  ifile->ReadInteger("comm", "Parity", NO);
+    // write default parametrs
+    ifile->WriteString ("comm", "Name",   PortName);
+    ifile->WriteInteger("comm", "Baud",   PortBaud);
+    ifile->WriteInteger("comm", "Parity", PortParity);
+    // close ini file
+    delete ifile;
+    ifile = NULL;
+    // create
+    Port = new TComPort;
+    if (!Port)
+    {
+        ShowMessage("Ошибка создания ком порта");
+        Form1->Close();
+        return;
+    }
+    // open com port
+    if (Port->Open(PortName, PortBaud, PortParity)>0)
+    {
+        ShowMessage("Ошибка открытия ком порта");
+        Form1->Close();
+        return;
+    }
 // ******************************************************************************************
 // *************************** init BoxRead - Read from controller **************************
         WriteLog->Push("create boxread");
