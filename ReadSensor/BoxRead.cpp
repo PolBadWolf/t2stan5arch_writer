@@ -30,7 +30,15 @@
 
 __fastcall TBoxRead::TBoxRead()
 {
-    // clear massvive sensors
+	TBoxRead(720, 340, 800);
+}
+
+__fastcall TBoxRead::TBoxRead(int hero1, int hero2, int circle)
+{
+    lenghHero1  = hero1;
+	lenghHero2  = hero2;
+	lenghCircle = circle;
+	// clear massvive sensors
     for (int i=0; i<boxRead_MassSensorsLen; i++)
         massSensors[i] = -1;
     // sensorAt top
@@ -154,6 +162,14 @@ void __fastcall TBoxRead::SensorsTubeHere(int sn, int lvl)
     // Begin tube
     if ( (oldHere1) && (!vTubeHere1) && (oldHere2) && (vTubeHere2) )
     {
+	    double lenSegment;
+		if (EvTubeBegin)
+			lenSegment = EvTubeBegin();
+		else
+			lenSegment = 100;
+		segmentHero1  = hero1  / lenSegment;
+		segmentHero2  = hero2  / lenSegment;
+		segmentCircle = circle / lenSegment;
     }
     // Begin record
     if ( (!oldHere1) && (!vTubeHere1) && (oldHere2) && (!vTubeHere2) )

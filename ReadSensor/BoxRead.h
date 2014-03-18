@@ -12,11 +12,15 @@ class TBoxRead
 {
 public:
     __fastcall TBoxRead();
+    __fastcall TBoxRead(int hero1, int hero2, int circle);
     __fastcall ~TBoxRead();
 private:
     signed char defectMassIn[boxReadMaxLenMassive];
     int         defectMassInPosition;
     int         defectMassInLen;
+	int         lenghHero1,  segmentHero1;
+	int         lenghHero2,  segmentHero2;
+	int         lenghCircle, segmentCircle;
     // massive read pack
     unsigned char massPack[boxRead_MassPackLen];
     unsigned char massSensors[boxRead_MassSensorsLen];
@@ -42,7 +46,8 @@ public:
 public:
     void __fastcall (__closure *EvSample)(int trg, int lvl);
 public:
-    void __fastcall (__closure *EvTubeHere)(int sn, int lvl);
+    void __fastcall   (__closure *EvTubeHere )(int sn, int lvl);
+    double __fastcall (__closure *EvTubeBegin)();
 };
 
 #endif
