@@ -48,6 +48,7 @@ protected:
     void __fastcall SensorWild(int sn, int lvl);
 public:
     signed char defectMass  [boxReadMaxLenMassive];
+    int         defectMassLen;
     void __fastcall PushFromCommPort(unsigned char bt);
 public:
     void __fastcall (__closure *EvAt)(int sn, int lvl);

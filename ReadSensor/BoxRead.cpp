@@ -281,6 +281,10 @@ void __fastcall TBoxRead::SensorsTubeHere(int sn, int lvl)
     if ( (oldHere1) && (vTubeHere1) && (!oldHere2) && (vTubeHere2) )
     {
         circleOff = 1;
+        // copy tube
+        defectMassLen = defectMassInLen;
+        for (int i=0; i<boxReadMaxLenMassive; i++)
+            defectMass[i] = defectMassIn[i];
         // call
         newTube   = 0;
         return;
