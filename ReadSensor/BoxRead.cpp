@@ -48,7 +48,7 @@ __fastcall TBoxRead::TBoxRead(int hero1, int hero2, int circle)
     vTubeHere2 = 1;
     // circle
     count = 0;
-    countOff = 1;
+    circleOff = 1;
 }
 
 __fastcall TBoxRead::~TBoxRead()
@@ -87,18 +87,34 @@ void __fastcall TBoxRead::Circle()
     sn = massPack[BoxReadMASSPACK_SENSR];
     if (EvCircleShow)
         EvCircleShow(sn);
-    if (countOff)
+    if (circleOff)
         return;
     if (sn==CIRCLE_FORWARD)
     {
-        if (EvCircleForward)
-            EvCircleForward();
-        return;
-    }
-    if (sn==CIRCLE_FORWARD)
-    {
-        if (EvCircleForward)
-            EvCircleForward();
+        // read & reset defect
+        // ************** defect
+        // mode
+        if (defectMassInCircleBuff)
+        { // cirle buff mode
+            // shift buffer
+            // write defect
+            if ( (segmentHero2>=0) && (segmentHero2<boxReadMaxLenMassive) )
+                defectMassIn[segmentHero2] = 0; // ************** defect
+            // show
+            if (EvCircleForward)
+                EvCircleForward();
+        }
+        else
+        { // normal mode
+            // write
+            if ( (count>=0) && (count<boxReadMaxLenMassive) )
+                defectMassIn[count] = 0; // ************** defect
+            // show
+            if (EvCircleForward)
+                EvCircleForward();
+            if ( count<(boxReadMaxLenMassive-1) )
+                count++;
+        }
         return;
     }
     if (sn==CIRCLE_BACK)
@@ -191,22 +207,35 @@ void __fastcall TBoxRead::SensorsTubeHere(int sn, int lvl)
     if ( (oldHere1) && (!vTubeHere1) && (oldHere2) && (vTubeHere2) )
     {
 	    double lenSegment;
+        // work circle on
+        circleOff = 0;
+        // clear count
+        count = 0;
+        // massive mode circle buff
+        defectMassInCircleBuff = 1;
+        // clear massive
+        for (int i=0; i<boxReadMaxLenMassive; i++)
+            defectMassIn[i] = -1;
+        // max length tube
+        defectMassInLen = 0;
+        // new tube
+        newTube = 1;
+        // read len segment tube
 		if (EvTubeBegin)
 			lenSegment = EvTubeBegin();
 		else
 			lenSegment = 100;
+        // calculate base lenght
 		segmentHero1  = lenghHero1  / lenSegment;
 		segmentHero2  = lenghHero2  / lenSegment;
 		segmentCircle = lenghCircle / lenSegment;
-        //
-        countOff = 1;
-        count = 0;
+        return;
     }
     // Begin record
     if ( (!oldHere1) && (!vTubeHere1) && (oldHere2) && (!vTubeHere2) )
     {
         count = segmentHero2;
-        countOff = 0;
+        circleOff = 0;
     }
     // Begin count end
     if ( (!oldHere1) && (vTubeHere1) && (!oldHere2) && (!vTubeHere2) )
@@ -215,12 +244,12 @@ void __fastcall TBoxRead::SensorsTubeHere(int sn, int lvl)
     // End tube
     if ( (oldHere1) && (vTubeHere1) && (!oldHere2) && (vTubeHere2) )
     {
-        countOff = 1;
+        circleOff = 1;
     }
     // Reset tube
     if ( (oldHere1) && (vTubeHere1) )
     {
-        countOff = 1;
+        circleOff = 1;
     }
     //      tube run come back
     // count off &

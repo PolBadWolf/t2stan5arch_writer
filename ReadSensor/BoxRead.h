@@ -16,8 +16,9 @@ public:
     __fastcall ~TBoxRead();
 private:
     signed char defectMassIn[boxReadMaxLenMassive];
-    int         defectMassInPosition;
+    //int         defectMassInPosition;
     int         defectMassInLen;
+    //
 	int         lenghHero1,  segmentHero1;
 	int         lenghHero2,  segmentHero2;
 	int         lenghCircle, segmentCircle;
@@ -31,7 +32,9 @@ private:
     unsigned char vTubeHere2;
     // circle
     int         count;
-    int         countOff;
+    int         circleOff;
+    int         defectMassInCircleBuff;
+    int         newTube;
 protected:
     void __fastcall SelectDo();
     void __fastcall Circle();
