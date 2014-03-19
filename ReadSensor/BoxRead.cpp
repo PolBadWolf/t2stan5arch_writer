@@ -89,6 +89,24 @@ void __fastcall TBoxRead::Circle()
         EvCircleShow(sn);
     if (countOff)
         return;
+    if (sn==CIRCLE_FORWARD)
+    {
+        if (EvCircleForward)
+            EvCircleForward();
+        return;
+    }
+    if (sn==CIRCLE_FORWARD)
+    {
+        if (EvCircleForward)
+            EvCircleForward();
+        return;
+    }
+    if (sn==CIRCLE_BACK)
+    {
+        if (EvCircleBack)
+            EvCircleBack();
+        return;
+    }
 }
 
 void __fastcall TBoxRead::Sensors()

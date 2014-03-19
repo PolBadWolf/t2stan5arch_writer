@@ -53,6 +53,8 @@ public:
     double __fastcall (__closure *EvTubeBegin)();
 public:
     void __fastcall   (__closure *EvCircleShow)(int sn);
+    void __fastcall   (__closure *EvCircleForward)();
+    void __fastcall   (__closure *EvCircleBack)();
 };
 
 #endif
