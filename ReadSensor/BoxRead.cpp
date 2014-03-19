@@ -91,15 +91,24 @@ void __fastcall TBoxRead::Circle()
         return;
     if (sn==CIRCLE_FORWARD)
     {
+        signed char def;
         // read & reset defect
-        // ************** defect
+        if (vSensorAt)
+            def = -1;
+        else
+            def = summDefect;
+        summDefect = 0;
         // mode
         if (defectMassInCircleBuff)
         { // cirle buff mode
+            //safe
+            if ( (segmentHero2<0) || (segmentHero2>=boxReadMaxLenMassive) )
+                return;
             // shift buffer
+            for (int i=0; i<segmentHero2; i++)
+                defectMassIn[i] = defectMassIn[i+1];
             // write defect
-            if ( (segmentHero2>=0) && (segmentHero2<boxReadMaxLenMassive) )
-                defectMassIn[segmentHero2] = 0; // ************** defect
+                defectMassIn[segmentHero2] = def;
             // show
             if (EvCircleForward)
                 EvCircleForward();
@@ -108,10 +117,11 @@ void __fastcall TBoxRead::Circle()
         { // normal mode
             // write
             if ( (count>=0) && (count<boxReadMaxLenMassive) )
-                defectMassIn[count] = 0; // ************** defect
+                defectMassIn[count] = def;
             // show
             if (EvCircleForward)
                 EvCircleForward();
+            // count +1 safe
             if ( count<(boxReadMaxLenMassive-1) )
                 count++;
         }
@@ -119,6 +129,12 @@ void __fastcall TBoxRead::Circle()
     }
     if (sn==CIRCLE_BACK)
     {
+        // bad zone in begin way
+        if (defectMassInCircleBuff)
+            return;
+        if (count<=0)
+            return;
+        count--;
         if (EvCircleBack)
             EvCircleBack();
         return;
@@ -142,6 +158,7 @@ void __fastcall TBoxRead::Sensors()
     // defect
     if ( sn==WELD_DEFECT )
     {
+        SensorWild(sn, lvl);
         return;
     }
     // sample
@@ -156,6 +173,16 @@ void __fastcall TBoxRead::Sensors()
         SensorsAt(sn, lvl);
         return;
     }
+}
+
+void __fastcall TBoxRead::SensorWild(int sn, int lvl)
+{
+    if (vSensorAt)
+        summDefect = -1;
+    else
+        summDefect = summDefect | (!lvl);
+    if (EvWild)
+        EvWild(lvl);
 }
 
 void __fastcall TBoxRead::SensorsAt(int sn, int lvl)
@@ -245,16 +272,25 @@ void __fastcall TBoxRead::SensorsTubeHere(int sn, int lvl)
     if ( (oldHere1) && (vTubeHere1) && (!oldHere2) && (vTubeHere2) )
     {
         circleOff = 1;
+        // call
+        newTube   = 0;
+        return;
     }
+    //      tube run come back
+    // Bad zone D1 d2
+    if ( (!oldHere1) && (!vTubeHere1) && (!oldHere2) && (vTubeHere2) )
+    {
+        circleOff = 1;
+        newTube   = 0;
+        return;
+    }
+    // **************************************
     // Reset tube
     if ( (oldHere1) && (vTubeHere1) )
     {
         circleOff = 1;
-    }
-    //      tube run come back
-    // count off &
-    if ( (!oldHere1) && (!vTubeHere1) && (!oldHere2) && (vTubeHere2) )
-    {
+        newTube   = 0;
+        return;
     }
 }
 

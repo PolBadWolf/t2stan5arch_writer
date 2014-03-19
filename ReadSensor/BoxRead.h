@@ -35,6 +35,9 @@ private:
     int         circleOff;
     int         defectMassInCircleBuff;
     int         newTube;
+    signed char summDefect;
+    // wild
+
 protected:
     void __fastcall SelectDo();
     void __fastcall Circle();
@@ -42,6 +45,7 @@ protected:
     void __fastcall SensorsAt(int sn, int lvl);
     void __fastcall SensorsSample(int sn, int lvl);
     void __fastcall SensorsTubeHere(int sn, int lvl);
+    void __fastcall SensorWild(int sn, int lvl);
 public:
     signed char defectMass  [boxReadMaxLenMassive];
     void __fastcall PushFromCommPort(unsigned char bt);
@@ -58,6 +62,8 @@ public:
     void __fastcall   (__closure *EvCircleShow)(int sn);
     void __fastcall   (__closure *EvCircleForward)();
     void __fastcall   (__closure *EvCircleBack)();
+public:
+    void __fastcall   (__closure *EvWild)(int lvl);
 };
 
 #endif
