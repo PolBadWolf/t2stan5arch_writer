@@ -153,6 +153,7 @@ void __fastcall TBoxRead::Sensors()
     // tube here
     if ( (sn==TUBE_HERE1) || (sn==TUBE_HERE2) )
     {
+        SensorsTubeHere(sn, lvl);
         return;
     }
     // defect
@@ -263,10 +264,18 @@ void __fastcall TBoxRead::SensorsTubeHere(int sn, int lvl)
     {
         count = segmentHero2;
         circleOff = 0;
+        // massive mode circle buff off
+        defectMassInCircleBuff = 0;
+        // len tube
+        defectMassInLen = 0;
+        return;
     }
     // Begin count end
     if ( (!oldHere1) && (vTubeHere1) && (!oldHere2) && (!vTubeHere2) )
     {
+        // len tube
+        if (defectMassInLen==0)
+            defectMassInLen = count + segmentHero1;
     }
     // End tube
     if ( (oldHere1) && (vTubeHere1) && (!oldHere2) && (vTubeHere2) )
