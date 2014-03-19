@@ -46,6 +46,9 @@ __fastcall TBoxRead::TBoxRead(int hero1, int hero2, int circle)
     // tube here
     vTubeHere1 = 1;
     vTubeHere2 = 1;
+    // circle
+    count = 0;
+    countOff = 1;
 }
 
 __fastcall TBoxRead::~TBoxRead()
@@ -80,6 +83,12 @@ void __fastcall TBoxRead::SelectDo()
 
 void __fastcall TBoxRead::Circle()
 {
+    int sn;
+    sn = massPack[BoxReadMASSPACK_SENSR];
+    if (EvCircleShow)
+        EvCircleShow(sn);
+    if (countOff)
+        return;
 }
 
 void __fastcall TBoxRead::Sensors()
@@ -159,6 +168,7 @@ void __fastcall TBoxRead::SensorsTubeHere(int sn, int lvl)
     if (sn==TUBE_HERE2)
         vTubeHere2 = lvl;
     // ******************
+    //      tube run forever
     // Begin tube
     if ( (oldHere1) && (!vTubeHere1) && (oldHere2) && (vTubeHere2) )
     {
@@ -167,12 +177,36 @@ void __fastcall TBoxRead::SensorsTubeHere(int sn, int lvl)
 			lenSegment = EvTubeBegin();
 		else
 			lenSegment = 100;
-		segmentHero1  = hero1  / lenSegment;
-		segmentHero2  = hero2  / lenSegment;
-		segmentCircle = circle / lenSegment;
+		segmentHero1  = lenghHero1  / lenSegment;
+		segmentHero2  = lenghHero2  / lenSegment;
+		segmentCircle = lenghCircle / lenSegment;
+        //
+        countOff = 1;
+        count = 0;
     }
     // Begin record
     if ( (!oldHere1) && (!vTubeHere1) && (oldHere2) && (!vTubeHere2) )
+    {
+        count = segmentHero2;
+        countOff = 0;
+    }
+    // Begin count end
+    if ( (!oldHere1) && (vTubeHere1) && (!oldHere2) && (!vTubeHere2) )
+    {
+    }
+    // End tube
+    if ( (oldHere1) && (vTubeHere1) && (!oldHere2) && (vTubeHere2) )
+    {
+        countOff = 1;
+    }
+    // Reset tube
+    if ( (oldHere1) && (vTubeHere1) )
+    {
+        countOff = 1;
+    }
+    //      tube run come back
+    // count off &
+    if ( (!oldHere1) && (!vTubeHere1) && (!oldHere2) && (vTubeHere2) )
     {
     }
 }

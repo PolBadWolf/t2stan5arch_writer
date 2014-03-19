@@ -29,6 +29,9 @@ private:
     int         vSensorAtBottom;
     unsigned char vTubeHere1;
     unsigned char vTubeHere2;
+    // circle
+    int         count;
+    int         countOff;
 protected:
     void __fastcall SelectDo();
     void __fastcall Circle();
@@ -48,6 +51,8 @@ public:
 public:
     void __fastcall   (__closure *EvTubeHere )(int sn, int lvl);
     double __fastcall (__closure *EvTubeBegin)();
+public:
+    void __fastcall   (__closure *EvCircleShow)(int sn);
 };
 
 #endif
