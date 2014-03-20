@@ -145,7 +145,11 @@ void  __fastcall TComPort::Close()
                 delete NitRead;
                 NitRead = NULL;
         }
-        CloseHandle(COMport);
+        if (COMport)
+        {
+            CloseHandle(COMport);
+            COMport = NULL;
+        }
 }
 //---------------------------------------------------------------------------
 __fastcall TComPortWr::TComPortWr(HANDLE HnComPort) : TThread(true)

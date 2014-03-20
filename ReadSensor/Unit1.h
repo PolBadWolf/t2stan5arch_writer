@@ -55,6 +55,7 @@ __published:	// IDE-managed Components
     TLabel *Label_dTube;
     TTimer *Timer_ShowSensor;
     TMemo *Memo1;
+    TShape *Shape_SENSOR_AT;
         void __fastcall FormCloseQuery(TObject *Sender, bool &CanClose);
         void __fastcall TimerStartTimer(TObject *Sender);
     void __fastcall Timer_ShowSensorTimer(TObject *Sender);
@@ -95,6 +96,30 @@ public:		// User declarations
         // len last tube                                // длина трубы замеренной
         int dTube;
         */
+        // *********************************************************************************
+        // Sensor Wild
+        void __fastcall EvaSensorWild(int lvl);
+        // *********************************************************************************
+        // Sensors At Top
+        void __fastcall EvaSensorAtTop(int lvl);
+        // Sensors At Bottom
+        void __fastcall EvaSensorAtBottom(int lvl);
+        // Sensors At Show
+        void __fastcall EvaSensorsAtShow(int n, int lvl);
+        // *********************************************************************************
+        // Sensors Tube here Show
+        void __fastcall EvaSensorsTubeHereShow(int n, int lvl);
+        // Sensors Tube here Tube begin
+        double __fastcall EvaSensorTubeBegin();
+        // Sensors Tube here Tube Len
+        void __fastcall EvaSensorTubeLen(int segments, double lenght);
+        // Sensors Tube here End Tube
+        void __fastcall EvaSensorTubeEnd(int len, signed char *massDefect, int flagSample);
+
+
+
+
+
         // curent number tube
         int     CurentNumberTube;
         int  __fastcall ReadFromBDLastNumberTude(TADOQuery *dQuery);

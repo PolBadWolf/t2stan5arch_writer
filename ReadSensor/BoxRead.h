@@ -49,6 +49,7 @@ protected:
 public:
     signed char defectMass  [boxReadMaxLenMassive];
     int         defectMassLen;
+    // for comm port
     void __fastcall PushFromCommPort(unsigned char bt);
 // ******************************************************************
 //                      Sensors

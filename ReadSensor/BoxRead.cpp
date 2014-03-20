@@ -235,8 +235,9 @@ void __fastcall TBoxRead::SensorsTubeHere(int sn, int lvl)
     if ( (!oldHere1) && (vTubeHere1) && (!oldHere2) && (!vTubeHere2) )
     {
         // len tube
-        if (defectMassInLen==0)
-            defectMassInLen = count + segmentHero1;
+        if (defectMassInLen!=0)
+            return;
+        defectMassInLen = count + segmentHero1;
         if (EvSensorTubeLen)
             EvSensorTubeLen(defectMassInLen, defectMassInLen*lenSegment);
         return;

@@ -287,6 +287,13 @@ object Form1: TForm1
     Height = 13
     Caption = 'Label15'
   end
+  object Shape_SENSOR_AT: TShape
+    Left = 264
+    Top = 8
+    Width = 25
+    Height = 25
+    Shape = stCircle
+  end
   object Panel1: TPanel
     Left = 8
     Top = 16
@@ -350,7 +357,7 @@ object Form1: TForm1
     end
   end
   object Memo1: TMemo
-    Left = 296
+    Left = 320
     Top = 16
     Width = 233
     Height = 57

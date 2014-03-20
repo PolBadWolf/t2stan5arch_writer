@@ -62,6 +62,9 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 //---------------------------------------------------------------------------
 void __fastcall TForm1::FormCloseQuery(TObject *Sender, bool &CanClose)
 {
+        Port->Close();
+        delete Port;
+        Port = NULL;
         // checked close ADOQuery1
         if ( ADOQuery1->Active )
         {       //ADOQuery1 - no terminated
@@ -72,14 +75,11 @@ void __fastcall TForm1::FormCloseQuery(TObject *Sender, bool &CanClose)
         {
                 ADOConnection1->Close();
         }
-        /*
         if (BoxRead)
         {
-                BoxRead->Terminate();
-                BoxRead->Resume();
+                delete BoxRead;
                 BoxRead = NULL;
         }
-        */
         delete ViewKoleso;
         if (WriteLog)
         {
@@ -523,17 +523,41 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
     }
     Port->aOwner = Port;
     Port->EventNewDate = PortNewDate;
-    // open com port
-    if (Port->Open(PortName, PortBaud, PortParity)>0)
-    {
-        ShowMessage("Ошибка открытия ком порта");
-        Form1->Close();
-        return;
-    }
 // ******************************************************************************************
 // *************************** init BoxRead - Read from controller **************************
         WriteLog->Push("create boxread");
         BoxRead = new TBoxRead;
+// ******************************************************************************************
+        // Other sensors
+        // BoxRead->EvSensorsOther = // (int sn, int lvl);
+// ******************************************************************************************
+        // Sensor Wild
+        BoxRead->EvSensorWild = EvaSensorWild; // (int lvl);
+// ******************************************************************************************
+        //                             Sensors At
+        // Sensors At Top
+        BoxRead->EvSensorAtTop = EvaSensorAtTop;
+        // Sensors At Bottom
+        BoxRead->EvSensorAtTop = EvaSensorAtBottom;
+        // Sensors At
+        BoxRead->EvSensorsAtShow = EvaSensorsAtShow;
+// ******************************************************************************************
+        //                         Sensors Tube here
+        // Sensors Tube here Show
+        BoxRead->EvSensorsTubeHereShow = EvaSensorsTubeHereShow;
+        // Sensors Tube here Tube begin
+        BoxRead->EvSensorTubeBegin = EvaSensorTubeBegin;
+        // Sensors Tube here Begin Record
+        //BoxRead->EvSensorTubeBeginRecord =
+        // Sensors Tube here Len Tube
+        BoxRead->EvSensorTubeLen = EvaSensorTubeLen;
+        // Sensors Tube here End Tube
+        BoxRead->EvSensorTubeEnd = EvaSensorTubeEnd;
+        // Sensors Tube Reset tube
+        // BoxRead->EvSensorTubeReset =
+
+        
+
         //BoxRead->EvSensorWild =
         // въезд в начале, начало дефектоскопии
         //BoxRead->EvTubeHereBeginUp = TubeBegin;
@@ -555,11 +579,19 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         //BoxRead->EvModeCalibrovka  = EvaModeCalibrovka;
         // пуск
         //BoxRead->Resume();
-        WriteLog->Push("pusk timer sensor");
+        //WriteLog->Push("pusk timer sensor");
         Timer_ShowSensor->Enabled = true;
         // programm status sensor "sample"
-        WriteLog->Push("show sensorsample");
+        //WriteLog->Push("show sensorsample");
 //        ShowSensorSample(LampDat[7], 1);
+// ******************************************************************************************
+    // open com port
+    if (Port->Open(PortName, PortBaud, PortParity)>0)
+    {
+        ShowMessage("Ошибка открытия ком порта");
+        Form1->Close();
+        return;
+    }
 // ******************************************************************************************
 // *************************** delete starting timer ****************************************
         delete ((TTimer*)Sender);
@@ -580,6 +612,157 @@ void __fastcall TForm1::PortNewDate(TComPort *cPort, int RdByte)
         BoxRead->PushFromCommPort(Buf);
     }
 }
+//---------------------------------------------------------------------------
+// Sensor Wild
+void __fastcall TForm1::EvaSensorWild(int lvl)
+{
+    Shape_WELD_DEFECT->Brush->Color = (lvl)?clWhite:clRed;
+}
+//---------------------------------------------------------------------------
+// Sensors At Top
+void __fastcall TForm1::EvaSensorAtTop(int lvl)
+{
+    Shape_SENSOR_AT->Brush->Color = clRed;
+    Shape_SENSOR_AT->Top = 8;
+}
+//---------------------------------------------------------------------------
+// Sensors At Bottom
+void __fastcall TForm1::EvaSensorAtBottom(int lvl)
+{
+    Shape_SENSOR_AT->Brush->Color = clLime;
+    Shape_SENSOR_AT->Top = 70;
+}
+//---------------------------------------------------------------------------
+// Sensors At Show
+void __fastcall TForm1::EvaSensorsAtShow(int n, int lvl)
+{
+    if (n==0)
+        Shape_SENSOR_AT_TOP->Brush->Color    = (lvl)?clWhite:clLime;
+    if (n==1)
+        Shape_SENSOR_AT_BOTTOM->Brush->Color = (lvl)?clWhite:clLime;
+}
+//---------------------------------------------------------------------------
+// Sensors Tube here Show
+void __fastcall TForm1::EvaSensorsTubeHereShow(int n, int lvl)
+{
+    if (n==0)
+        Shape_TUBE_HERE_L->Brush->Color = (lvl)?clWhite:clLime;
+    if (n==1)
+        Shape_TUBE_HERE_R->Brush->Color = (lvl)?clWhite:clLime;
+}
+//---------------------------------------------------------------------------
+// Sensors Tube here Tube begin
+double __fastcall TForm1::EvaSensorTubeBegin()
+{
+    // read last parametrs
+    int         IdParamLast  , IdParamNew;
+    int         IdMeltLast   , IdMeltNew;
+    AnsiString  CodeMeltLast , CodeMeltNew;
+    double      SizeTubeLast , SizeTubeNew;
+    int         statusLast   , statusNew;
+    // WriteLog->Push("'TForm1::TubeBegin': ReadFromBDLastParametrs");
+    statusLast = ReadFromBDLastParametrs(ADOQuery1, &IdParamLast, &IdMeltLast, &CodeMeltLast, &SizeTubeLast);
+    // WriteLog->Push("'TForm1::TubeBegin': ReadFromBDNewParametrs");
+    statusNew  = ReadFromBDNewParametrs (ADOQuery1, &IdParamNew , &IdMeltNew , &CodeMeltNew , &SizeTubeNew );
+    // WriteLog->Push("'TForm1::TubeBegin': end ReadFromBD");
+    //
+    // checked load parametrs
+    if ( (statusLast && statusNew) || statusNew )
+    {   // error read parametrs
+        if ( statusNew==-1 )
+        {   // show error BD
+        }
+        IdParam  = 0;
+        CodeMelt = "No melt";
+        SizeTube = 0;
+        LenSegmentTube = 1000/8;
+    }
+    else
+    {   // ok
+        // new melt ?
+        if ( IdMeltLast!=IdMeltNew)
+        {   // new melt
+            CurentNumberTube = 0;
+        }
+        IdParam  = IdParamNew;
+        CodeMelt = CodeMeltNew;
+        SizeTube = SizeTubeNew;
+        LenSegmentTube = FnDiametr2LenSegment(SizeTube);
+    }
+    // ******************
+    //Show_Parametrs(CurentNumberTube, SizeTube, LenSegmentTube, otStep, CodeMelt);
+    // ==============================
+    WriteLog->Push("'TForm1::TubeBegin': clear picture");
+    // очистка имиджа + сетка
+    int nX, nY, eX, eY;
+    nX = D_ImageOffsetX + 1;
+    nY = D_ImageOffsetY + 1;
+    eX = ImageVisual->Width -1;
+    eY = ImageVisual->Height -1;
+    Img_Clear(ImageVisual, nX, nY, eX, eY, 15);
+    Img_Setka(ImageVisual, nX, nY, eX, eY, 15);
+    return LenSegmentTube;
+}
+//---------------------------------------------------------------------------
+// Sensors Tube here Tube Len
+void __fastcall TForm1::EvaSensorTubeLen(int segments, double lenght)
+{
+}
+//---------------------------------------------------------------------------
+// Sensors Tube here End Tube
+void __fastcall TForm1::EvaSensorTubeEnd(int len, signed char *massDefect, int flagSample)
+{
+    //WriteLog->Push("'TForm1::TubeEnd': event");
+    // =========================================================
+    // no parametrs - no record
+    if (!IdParam)
+    {
+        //WriteLog->Push("'TForm1::TubeEnd': BD clear - no write tube");
+        return;
+    }
+    // =========================================================
+    // flag tube defect
+    bool FlagDefectTube = false;
+    int  nTube;
+    // =========================================================
+    // Number tube +1 if no sample
+    if ( flagSample )
+    {   // sample mark number 0
+        //WriteLog->Push("'TForm1::TubeEnd': this tube sample");
+        nTube = 0;
+    }
+    else
+    {   // number tube +1
+        CurentNumberTube = ReadFromBDLastNumberTude(ADOQuery1);
+        CurentNumberTube++;
+        nTube = CurentNumberTube;
+    }
+    // =========================================================
+    // set address massive
+    int zn = -1;
+    for (int i=0;i<len;i++)
+    {
+        zn = massDefect[i];
+        if ( zn>0 )
+        {
+            FlagDefectTube = FlagDefectTube | true;
+        }
+    }
+    // =========================================================
+    //Label14->Caption = "-//-";
+    // set
+    TDateTime DtTm = Now();
+    AnsiString vDate = FormatDateTime("yyyy-mm-dd", DtTm);
+    // write to BD
+    //WriteLog->Push("'TForm1::TubeEnd': write tube");
+    WriteBD_Datas(ADOConnection1, nTube, massDefect, len, FlagDefectTube, IdParam);
+    //WriteLog->Push("'TForm1::TubeEnd': show numbertube & reset flag new tube");
+    Show_NumberTube(nTube);
+}
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 
 
