@@ -66,6 +66,7 @@ private:	// User declarations
         int  ImgV_TubeMaxPix;
 public:		// User declarations
         __fastcall TForm1(TComponent* Owner);
+        /*
         TShape *LampDat[16];
         // === события ===
         // изменение состояния датчиков
@@ -93,6 +94,7 @@ public:		// User declarations
         int otCount;
         // len last tube                                // длина трубы замеренной
         int dTube;
+        */
         // curent number tube
         int     CurentNumberTube;
         int  __fastcall ReadFromBDLastNumberTude(TADOQuery *dQuery);
@@ -113,4 +115,3 @@ extern PACKAGE TForm1 *Form1;
 extern bool UnicalFlDefect;
 //---------------------------------------------------------------------------
 #endif
- 

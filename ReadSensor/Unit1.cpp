@@ -88,6 +88,7 @@ void __fastcall TForm1::FormCloseQuery(TObject *Sender, bool &CanClose)
         }
 }
 //---------------------------------------------------------------------------
+/*
 // изменение состояния датчиков
 void __fastcall TForm1::EvaSensor(int sn, int lvl)
 {
@@ -121,19 +122,25 @@ void __fastcall TForm1::EvaSensor(int sn, int lvl)
         else
                 Label17->Caption = dTube;
 }
+*/
 //---------------------------------------------------------------------------
+/*
 // изменение положения датчика дефектоскопа
 // 0 - на трубе, 1 - над трубой
 void __fastcall TForm1::EvaSensorAt(int lvl)
 {
 }
+*/
 //---------------------------------------------------------------------------
+/*
 // изменение состояние датчика дефект
 // 0 - нет дефекта, 1 - дефекта
 void __fastcall TForm1::EvaWeldDefect(int lvl)
 {
 }
+*/
 //---------------------------------------------------------------------------
+/*
 // изменение состояние датчика калибровки
 // 1 - калибровка, 0 - работа
 void __fastcall TForm1::EvaModeCalibrovka(int lvl, int fl_mod)
@@ -141,14 +148,16 @@ void __fastcall TForm1::EvaModeCalibrovka(int lvl, int fl_mod)
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ??????????????????????????
     Show_NumberTube(CurentNumberTube);
 }
+*/
 //---------------------------------------------------------------------------
+/*
 // сработка колеса
 void __fastcall TForm1::EvaCircle(int Napravl, int Dlina, int Position, int *MassDefect)
 {
     WriteLog->Push("'TForm1::EvaCircle': event circle");
         Label15->Caption = Position;
         // состояние левого датчика
-        /*
+        //
         if (!BoxRead->BoxReadMassSensorsLevel[TUBE_HERE1])
         {
                 WriteLog->Push("'TForm1::EvaCircle': LeftSensor ON");
@@ -182,7 +191,7 @@ void __fastcall TForm1::EvaCircle(int Napravl, int Dlina, int Position, int *Mas
                         }
                 }
         }
-        */
+        //
         if (Position<(otStep+0) ) return; // вне зоны датчика
         if (Dlina   <(otStep+0) ) return; // вне зоны датчика
         //Label14->Caption = BoxRead->Count;
@@ -226,13 +235,17 @@ void __fastcall TForm1::EvaCircle(int Napravl, int Dlina, int Position, int *Mas
         Img_Setka(ImageVisual, nX, nY, eX, eY, 15);
 
 }
+*/
 //---------------------------------------------------------------------------
+/*
 // изменение состояния датчиков колеса
 void __fastcall TForm1::EvaCircleSensor(int sn)
 {
         ViewKoleso->Flash(sn, clLime, clGreen);
 }
+*/
 //---------------------------------------------------------------------------
+/*
 // завершение дефектоскопии
 void __fastcall TForm1::TubeEnd()
 {
@@ -303,7 +316,9 @@ void __fastcall TForm1::TubeEnd()
     // reset flag new tube
     FlNewTube = false;
 }
+*/
 //---------------------------------------------------------------------------
+/*
 void __fastcall TForm1::TubeBegin()
 {
         WriteLog->Push("'TForm1::TubeBegin': event");
@@ -356,6 +371,7 @@ void __fastcall TForm1::TubeBegin()
         Img_Clear(ImageVisual, nX, nY, eX, eY, 15);
         Img_Setka(ImageVisual, nX, nY, eX, eY, 15);
 }
+*/
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Img_ClearAll(TImage *Img)
 {
@@ -460,34 +476,22 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
             SizeTube  = 0;
             LenSegmentTube = 1000/8;
         }
-        otStep = otLmm/LenSegmentTube;
+//        otStep = otLmm/LenSegmentTube;
         WriteLog->Push("show param");
-        Show_Parametrs(CurentNumberTube, SizeTube, LenSegmentTube, otStep, CodeMelt);
+//        Show_Parametrs(CurentNumberTube, SizeTube, LenSegmentTube, otStep, CodeMelt);
 // ******************************************************************************************
 // *************************** init variable Base Lengh sensors tube ************************
         // отступ в мм от левого датчика
-        otLmm = 365;
+//        otLmm = 365;
         // offset from left sensor tube, unit segment   // расчитанный отступ в шагах
-        otStep = otLmm/LenSegmentTube;
+//        otStep = otLmm/LenSegmentTube;
         // счетчик окончания замера после отключения левого датчика
-        otCount = 0;
+//        otCount = 0;
         // длина трубы замеренной
-        dTube = -1;
+//        dTube = -1;
 // ******************************************************************************************
 // *************************** init Massibe indications *************************************
         WriteLog->Push("init massive shape");
-        LampDat[0] = Shape_KEY_BACK;
-        LampDat[1] = Shape_KEY_FORWARD;
-        LampDat[2] = Shape_TUBE_HERE_L;
-        LampDat[3] = Shape_TUBE_HERE_R;
-        LampDat[4] = Shape5;
-        LampDat[5] = Shape6;
-        LampDat[6] = Shape_WELD_DEFECT;
-        LampDat[7] = Shape_MODE_CALIBROVKA;
-        LampDat[8] = Shape_SENSOR_AT_TOP;
-        LampDat[9] = Shape_SENSOR_AT_BOTTOM;
-        //LampDat[10] = Shape11;
-        //LampDat[11] = Shape12;
 // ******************************************************************************************
 // Initialize com port
     TIniFile *ifile = new TIniFile( ChangeFileExt( Application->ExeName, ".ini" ) );
@@ -530,6 +534,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
 // *************************** init BoxRead - Read from controller **************************
         WriteLog->Push("create boxread");
         BoxRead = new TBoxRead;
+        //BoxRead->EvSensorWild =
         // въезд в начале, начало дефектоскопии
         //BoxRead->EvTubeHereBeginUp = TubeBegin;
         //BoxRead->EvTubeHereBeginDn;
@@ -554,7 +559,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         Timer_ShowSensor->Enabled = true;
         // programm status sensor "sample"
         WriteLog->Push("show sensorsample");
-        ShowSensorSample(LampDat[7], 1);
+//        ShowSensorSample(LampDat[7], 1);
 // ******************************************************************************************
 // *************************** delete starting timer ****************************************
         delete ((TTimer*)Sender);
