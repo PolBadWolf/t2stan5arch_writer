@@ -71,7 +71,7 @@ object Form1: TForm1
     Height = 33
     Brush.Color = clMedGray
   end
-  object Shape_MODE_CALIBROVKA: TShape
+  object Shape_MODE_SAMPLE: TShape
     Left = 8
     Top = 72
     Width = 89

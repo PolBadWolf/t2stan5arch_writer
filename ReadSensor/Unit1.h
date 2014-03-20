@@ -24,7 +24,7 @@ __published:	// IDE-managed Components
         TShape *Shape5;
         TShape *Shape6;
         TShape *Shape_WELD_DEFECT;
-        TShape *Shape_MODE_CALIBROVKA;
+    TShape *Shape_MODE_SAMPLE;
         TShape *Shape_SENSOR_AT_TOP;
         TShape *Shape_SENSOR_AT_BOTTOM;
         TShape *Shape_Circle;
@@ -115,6 +115,8 @@ public:		// User declarations
         void __fastcall EvaSensorTubeLen(int segments, double lenght);
         // Sensors Tube here End Tube
         void __fastcall EvaSensorTubeEnd(int len, signed char *massDefect, int flagSample);
+        // Sensor Sample
+        void __fastcall EvaSample(int trg, int lvl);
 
 
 

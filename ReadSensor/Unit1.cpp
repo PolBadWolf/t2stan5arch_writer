@@ -538,7 +538,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         // Sensors At Top
         BoxRead->EvSensorAtTop = EvaSensorAtTop;
         // Sensors At Bottom
-        BoxRead->EvSensorAtTop = EvaSensorAtBottom;
+        BoxRead->EvSensorAtBottom = EvaSensorAtBottom;
         // Sensors At
         BoxRead->EvSensorsAtShow = EvaSensorsAtShow;
 // ******************************************************************************************
@@ -555,8 +555,13 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         BoxRead->EvSensorTubeEnd = EvaSensorTubeEnd;
         // Sensors Tube Reset tube
         // BoxRead->EvSensorTubeReset =
+// ******************************************************************************************
+        // Sensors Tube Sample
+        BoxRead->EvSample = EvaSample;
 
-        
+
+
+
 
         //BoxRead->EvSensorWild =
         // въезд в начале, начало дефектоскопии
@@ -760,6 +765,14 @@ void __fastcall TForm1::EvaSensorTubeEnd(int len, signed char *massDefect, int f
     Show_NumberTube(nTube);
 }
 //---------------------------------------------------------------------------
+// Sensor Sample
+void __fastcall TForm1::EvaSample(int trg, int lvl)
+{
+    if (!lvl)
+        Shape_MODE_SAMPLE->Brush->Color = clLime;
+    else
+        Shape_MODE_SAMPLE->Brush->Color = (trg)?clGreen:clWhite;
+}
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
