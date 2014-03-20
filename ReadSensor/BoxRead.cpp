@@ -81,66 +81,6 @@ void __fastcall TBoxRead::SelectDo()
         Sensors();
 }
 
-void __fastcall TBoxRead::Circle()
-{
-    int sn;
-    sn = massPack[BoxReadMASSPACK_SENSR];
-    if (EvCircleShow)
-        EvCircleShow(sn);
-    if (circleOff)
-        return;
-    if (sn==CIRCLE_FORWARD)
-    {
-        signed char def;
-        // read & reset defect
-        if (vSensorAt)
-            def = -1;
-        else
-            def = summDefect;
-        summDefect = 0;
-        // mode
-        if (defectMassInCircleBuff)
-        { // cirle buff mode
-            //safe
-            if ( (segmentHero2<0) || (segmentHero2>=boxReadMaxLenMassive) )
-                return;
-            // shift buffer
-            for (int i=0; i<segmentHero2; i++)
-                defectMassIn[i] = defectMassIn[i+1];
-            // write defect
-                defectMassIn[segmentHero2] = def;
-            // show
-            if (EvCircleForward)
-                EvCircleForward();
-        }
-        else
-        { // normal mode
-            // write
-            if ( (count>=0) && (count<boxReadMaxLenMassive) )
-                defectMassIn[count] = def;
-            // show
-            if (EvCircleForward)
-                EvCircleForward();
-            // count +1 safe
-            if ( count<(boxReadMaxLenMassive-1) )
-                count++;
-        }
-        return;
-    }
-    if (sn==CIRCLE_BACK)
-    {
-        // bad zone in begin way
-        if (defectMassInCircleBuff)
-            return;
-        if (count<=0)
-            return;
-        count--;
-        if (EvCircleBack)
-            EvCircleBack();
-        return;
-    }
-}
-
 void __fastcall TBoxRead::Sensors()
 {
     int sn, lvl;
@@ -174,6 +114,9 @@ void __fastcall TBoxRead::Sensors()
         SensorsAt(sn, lvl);
         return;
     }
+    // Other sensors
+    if (EvSensorsOther)
+        EvSensorsOther(sn, lvl);
 }
 
 void __fastcall TBoxRead::SensorWild(int sn, int lvl)
@@ -182,59 +125,73 @@ void __fastcall TBoxRead::SensorWild(int sn, int lvl)
         summDefect = -1;
     else
         summDefect = summDefect | (!lvl);
-    if (EvWild)
-        EvWild(lvl);
+    if (EvSensorWild)
+        EvSensorWild(lvl);
 }
 
 void __fastcall TBoxRead::SensorsAt(int sn, int lvl)
 {
     // new data
+    int n = -1;
     if (sn==SENSOR_AT_TOP)
+    {
+        n = 0;
         vSensorAtTop = lvl;
+    }
     if (sn==SENSOR_AT_BOTTOM)
+    {
+        n = 1;
         vSensorAtBottom = lvl;
+    }
+    if (n<0)
+        return;
     if ( (!vSensorAtTop) && (vSensorAtBottom) )
     {
         vSensorAt = 1;
         // call at_top
-        if (EvAtTop)
-            EvAtTop(vSensorAt);
+        if (EvSensorAtTop)
+            EvSensorAtTop(vSensorAt);
     }
     if ( (vSensorAtTop) && (!vSensorAtBottom) )
     {
         vSensorAt = 0;
         // call at_bottom
-        if (EvAtBottom)
-            EvAtBottom(vSensorAt);
+        if (EvSensorAtBottom)
+            EvSensorAtBottom(vSensorAt);
     }
-    if (EvAt)
-        EvAt(sn, lvl);
-}
-
-void __fastcall TBoxRead::SensorsSample(int sn, int lvl)
-{
-    // установка тригера
-    if (EvSample)
-        EvSample(1, lvl);
+    if (EvSensorsAtShow)
+        EvSensorsAtShow(n, lvl);
 }
 
 void __fastcall TBoxRead::SensorsTubeHere(int sn, int lvl)
 {
     int oldHere1, oldHere2;
+    int n = -1;
     // old status
     oldHere1 = vTubeHere1;
     oldHere2 = vTubeHere2;
     // new status
     if (sn==TUBE_HERE1)
+    {
+        n = 0;
         vTubeHere1 = lvl;
+    }
     if (sn==TUBE_HERE2)
+    {
+        n = 1;
         vTubeHere2 = lvl;
+    }
+    if (n<0)
+        return;
+    // ******************
+    if (EvSensorsTubeHereShow)
+        EvSensorsTubeHereShow(n, lvl);
     // ******************
     //      tube run forever
-    // Begin tube
+    // Begin tube  H1 h2
     if ( (oldHere1) && (!vTubeHere1) && (oldHere2) && (vTubeHere2) )
     {
-	    double lenSegment;
+        vSampleTriger = 0;
         // work circle on
         circleOff = 0;
         // clear count
@@ -249,8 +206,8 @@ void __fastcall TBoxRead::SensorsTubeHere(int sn, int lvl)
         // new tube
         newTube = 1;
         // read len segment tube
-		if (EvTubeBegin)
-			lenSegment = EvTubeBegin();
+		if (EvSensorTubeBegin)
+			lenSegment = EvSensorTubeBegin();
 		else
 			lenSegment = 100;
         // calculate base lenght
@@ -259,7 +216,7 @@ void __fastcall TBoxRead::SensorsTubeHere(int sn, int lvl)
 		segmentCircle = lenghCircle / lenSegment;
         return;
     }
-    // Begin record
+    // Begin record H1 H2
     if ( (!oldHere1) && (!vTubeHere1) && (oldHere2) && (!vTubeHere2) )
     {
         count = segmentHero2;
@@ -268,33 +225,60 @@ void __fastcall TBoxRead::SensorsTubeHere(int sn, int lvl)
         defectMassInCircleBuff = 0;
         // len tube
         defectMassInLen = 0;
+        // new tube
+        newTube = 1;
+        if (EvSensorTubeBeginRecord)
+            EvSensorTubeBeginRecord();
         return;
     }
-    // Begin count end
+    // Begin count end  h1 H2
     if ( (!oldHere1) && (vTubeHere1) && (!oldHere2) && (!vTubeHere2) )
     {
         // len tube
         if (defectMassInLen==0)
             defectMassInLen = count + segmentHero1;
+        if (EvSensorTubeLen)
+            EvSensorTubeLen(defectMassInLen, defectMassInLen*lenSegment);
+        return;
     }
-    // End tube
+    // End tube  h1 h2
     if ( (oldHere1) && (vTubeHere1) && (!oldHere2) && (vTubeHere2) )
     {
         circleOff = 1;
+        if (!newTube)
+            return;
         // copy tube
         defectMassLen = defectMassInLen;
         for (int i=0; i<boxReadMaxLenMassive; i++)
             defectMass[i] = defectMassIn[i];
-        // call
+        newTube   = 0;
+        if (EvSensorTubeEnd)
+            EvSensorTubeEnd(defectMassLen, defectMass, vSampleTriger);
+        return;
+    }
+    // **************************************
+    //      tube run come back
+    // tube back h1 H2
+    if ( (oldHere1) && (vTubeHere1) && (oldHere2) && (!vTubeHere2) )
+    {
+        circleOff = 1;
         newTube   = 0;
         return;
     }
-    //      tube run come back
-    // Bad zone D1 d2
+    // tube back H1 H2
+    if ( (oldHere1) && (!vTubeHere1) && (!oldHere2) && (!vTubeHere2) )
+    {
+        if (newTube)
+            return;
+        circleOff = 1;
+        return;
+    }
+    // Bad zone H1 h2
     if ( (!oldHere1) && (!vTubeHere1) && (!oldHere2) && (vTubeHere2) )
     {
         circleOff = 1;
         newTube   = 0;
+        count = segmentHero2-1;
         return;
     }
     // **************************************
@@ -303,6 +287,81 @@ void __fastcall TBoxRead::SensorsTubeHere(int sn, int lvl)
     {
         circleOff = 1;
         newTube   = 0;
+        if (EvSensorTubeReset)
+            EvSensorTubeReset();
+        return;
+    }
+}
+
+void __fastcall TBoxRead::SensorsSample(int sn, int lvl)
+{
+    vSampleTriger = vSampleTriger | (!lvl);
+    if (EvSample)
+        EvSample(vSampleTriger, lvl);
+}
+
+void __fastcall TBoxRead::Circle()
+{
+    int sn;
+    sn = massPack[BoxReadMASSPACK_SENSR];
+    if (EvCircleShow)
+        EvCircleShow(sn);
+    if (circleOff)
+        return;
+    if (sn==CIRCLE_FORWARD)
+    {
+        signed char def;
+        // read & reset defect
+        if (vSensorAt)
+            def = -1;
+        else
+            def = summDefect;
+        summDefect = 0;
+        // mode
+        if (defectMassInCircleBuff)
+        { // cirle buff mode
+            //safe
+            if ( (segmentHero2<0) || (segmentHero2>=boxReadMaxLenMassive) )
+                return;
+            // shift buffer
+            for (int i=0; i<segmentHero2; i++)
+                defectMassIn[i] = defectMassIn[i+1];
+            // write defect
+            defectMassIn[segmentHero2] = def;
+            // show
+            if (EvCircleForward)
+                EvCircleForward(defectMassIn, segmentHero2);
+        }
+        else
+        { // normal mode
+            // write
+            if ( (count>=0) && (count<boxReadMaxLenMassive) )
+                defectMassIn[count] = def;
+            // count +1 safe
+            if ( count<(boxReadMaxLenMassive-1) )
+                count++;
+            // show
+            if (EvCircleForward)
+                EvCircleForward(defectMassIn, count);
+        }
+        return;
+    }
+    if (sn==CIRCLE_BACK)
+    {
+        // bad zone in begin way
+        if (defectMassInCircleBuff)
+            return;
+        if (count<=0)
+            return;
+        count--;
+        if (EvCircleBack)
+            EvCircleBack(defectMassIn, count);
+        if (count>=segmentCircle)
+            return;
+        circleOff = 1;
+        newTube = 0;
+        if (EvCircleBackBad)
+            EvCircleBackBad();
         return;
     }
 }

@@ -16,12 +16,11 @@ public:
     __fastcall ~TBoxRead();
 private:
     signed char defectMassIn[boxReadMaxLenMassive];
-    //int         defectMassInPosition;
     int         defectMassInLen;
+    double      lenSegment;
     //
-	int         lenghHero1,  segmentHero1;
-	int         lenghHero2,  segmentHero2;
-	int         lenghCircle, segmentCircle;
+	double      lenghHero1,   lenghHero2,   lenghCircle;
+    int         segmentHero1, segmentHero2, segmentCircle;
     // massive read pack
     unsigned char massPack[boxRead_MassPackLen];
     unsigned char massSensors[boxRead_MassSensorsLen];
@@ -35,6 +34,7 @@ private:
     int         circleOff;
     int         defectMassInCircleBuff;
     int         newTube;
+    int         vSampleTriger;
     signed char summDefect;
     // wild
 
@@ -50,21 +50,31 @@ public:
     signed char defectMass  [boxReadMaxLenMassive];
     int         defectMassLen;
     void __fastcall PushFromCommPort(unsigned char bt);
-public:
-    void __fastcall (__closure *EvAt)(int sn, int lvl);
-    void __fastcall (__closure *EvAtTop)(int lvl);
-    void __fastcall (__closure *EvAtBottom)(int lvl);
-public:
+// ******************************************************************
+//                      Sensors
+    // Other Sensors
+    void __fastcall (__closure *EvSensorsOther)(int sn, int lvl);
+    // Sensor Wild
+    void __fastcall (__closure *EvSensorWild)(int lvl);
+    // Sensors At
+    void __fastcall (__closure *EvSensorAtTop)(int lvl);
+    void __fastcall (__closure *EvSensorAtBottom)(int lvl);
+    void __fastcall (__closure *EvSensorsAtShow)(int n, int lvl);
+    // Sensors Tube here
+    void __fastcall   (__closure *EvSensorsTubeHereShow )(int n, int lvl);
+    double __fastcall (__closure *EvSensorTubeBegin)();
+    void __fastcall   (__closure *EvSensorTubeBeginRecord)();
+    void __fastcall   (__closure *EvSensorTubeLen)(int segments, double lenght);
+    void __fastcall   (__closure *EvSensorTubeEnd)(int len, signed char *massDefect, int flagSample);
+    void __fastcall   (__closure *EvSensorTubeReset)();
+    // Sensor Sample
     void __fastcall (__closure *EvSample)(int trg, int lvl);
-public:
-    void __fastcall   (__closure *EvTubeHere )(int sn, int lvl);
-    double __fastcall (__closure *EvTubeBegin)();
-public:
+    __property int sampleTriger={read=vSampleTriger};
+    // Sensor Circle
     void __fastcall   (__closure *EvCircleShow)(int sn);
-    void __fastcall   (__closure *EvCircleForward)();
-    void __fastcall   (__closure *EvCircleBack)();
-public:
-    void __fastcall   (__closure *EvWild)(int lvl);
+    void __fastcall   (__closure *EvCircleForward)(signed char *massDefect, int curPosition);
+    void __fastcall   (__closure *EvCircleBack)(signed char *massDefect, int curPosition);
+    void __fastcall   (__closure *EvCircleBackBad)();
 };
 
 #endif
