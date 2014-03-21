@@ -275,7 +275,7 @@ void __fastcall ShowSensorSample(TShape *Lamp, int lvl)
     */
 }
 
-void __fastcall WriteFlTreeComp(int p,
+AnsiString __fastcall WriteFlTreeComp(int p,
         AnsiString year, AnsiString mes, AnsiString day,
         AnsiString smena, AnsiString melt,
         int rulon, int tube, AnsiString aTime)
@@ -303,22 +303,9 @@ void __fastcall WriteFlTreeComp(int p,
                     sstring = "\t\t\t\t\t\tТруба № " + IntToStr(tube);
                  break;
     }
-    TFileStream *pFileTree = NULL;
-    AnsiString nam = "Structnew.txt";
-    try
-    {
-        pFileTree = new TFileStream(nam.c_str(), fmOpenWrite + fmShareDenyNone);
-        pFileTree->Seek(pFileTree->Size,1);
-    }
-    catch(...)
-    {
-        pFileTree = new TFileStream(nam.c_str(), fmCreate);
-    }
      sstring = sstring + "\r\n";
     //Form1->Memo2->Lines->Add(sstring);
-    pFileTree->Write(sstring.c_str(), sstring.Length());
-    delete pFileTree;
-    pFileTree = NULL;
+	return sstring;
 }
 void __fastcall WriteFlTree(TADOConnection *connect)
 {
@@ -382,23 +369,51 @@ void __fastcall WriteFlTree(TADOConnection *connect)
     oRoll      = Query->FieldByName("NumberRoll")->AsInteger;
 
     Query->Close();
+    TFileStream *pFileTree = NULL;
+    AnsiString nam = "Structnew.txt";
+    try
+    {
+        pFileTree = new TFileStream(nam.c_str(), fmOpenWrite + fmShareDenyNone);
+        pFileTree->Seek(pFileTree->Size,1);
+    }
+    catch(...)
+    {
+        pFileTree = new TFileStream(nam.c_str(), fmCreate);
+    }
 
     int flg = 0;
+	AnsiString s;
     flg = flg | (nYear!=oYear);
-    if (flg) WriteFlTreeComp(0, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+    if (flg)
+	{	s=WriteFlTreeComp(0, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+		pFileTree->Write(s.c_str(), s.Length()); }
     flg = flg | (nMesiac!=oMesiac);
-    if (flg) WriteFlTreeComp(1, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+    if (flg)
+	{	s=WriteFlTreeComp(0, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+		pFileTree->Write(s.c_str(), s.Length()); }
     flg = flg | (nDay!=oDay);
-    if (flg) WriteFlTreeComp(2, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+    if (flg)
+	{	s=WriteFlTreeComp(0, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+		pFileTree->Write(s.c_str(), s.Length()); }
     flg = flg | (nIdSmena!=oIdSmena);
-    if (flg) WriteFlTreeComp(3, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+    if (flg)
+	{	s=WriteFlTreeComp(0, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+		pFileTree->Write(s.c_str(), s.Length()); }
     flg = flg | (nIdMelt!=oIdMelt);
-    if (flg) WriteFlTreeComp(4, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+    if (flg)
+	{	s=WriteFlTreeComp(0, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+		pFileTree->Write(s.c_str(), s.Length()); }
     flg = flg | (nRoll!=oRoll);
-    if (flg) WriteFlTreeComp(5, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
-             WriteFlTreeComp(6, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+    if (flg)
+	{	s=WriteFlTreeComp(0, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+		pFileTree->Write(s.c_str(), s.Length()); }
+    s=WriteFlTreeComp(6, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+	pFileTree->Write(s.c_str(), s.Length());
 
-        delete Query;
-        Query = NULL;
+	delete pFileTree;
+    pFileTree = NULL;
+
+    delete Query;
+    Query = NULL;
 }
 
