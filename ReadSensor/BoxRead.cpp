@@ -30,10 +30,19 @@
 
 __fastcall TBoxRead::TBoxRead()
 {
-	TBoxRead(720, 340, 800);
+    Init(720, 340, 800);
 }
 
 __fastcall TBoxRead::TBoxRead(int hero1, int hero2, int circle)
+{
+    Init(hero1, hero2, circle);
+}
+
+__fastcall TBoxRead::~TBoxRead()
+{
+}
+
+void __fastcall TBoxRead::Init(int hero1, int hero2, int circle)
 {
     lenghHero1  = hero1;
 	lenghHero2  = hero2;
@@ -43,16 +52,14 @@ __fastcall TBoxRead::TBoxRead(int hero1, int hero2, int circle)
         massSensors[i] = -1;
     // sensorAt top
     vSensorAt = 1;
+    vSensorAtTop = 1;
+    vSensorAtBottom = 1;
     // tube here
     vTubeHere1 = 1;
     vTubeHere2 = 1;
     // circle
     count = 0;
     circleOff = 1;
-}
-
-__fastcall TBoxRead::~TBoxRead()
-{
 }
 
 void __fastcall TBoxRead::PushFromCommPort(unsigned char bt)
@@ -338,9 +345,15 @@ void __fastcall TBoxRead::Circle()
             // write
             if ( (count>=0) && (count<boxReadMaxLenMassive) )
                 defectMassIn[count] = def;
-            // count +1 safe
-            if ( count<(boxReadMaxLenMassive-1) )
-                count++;
+            // check bad tube
+            if ( count>=(boxReadMaxLenMassive-1) )
+            {
+                newTube = 0;
+                // bad tube
+                return;
+            }
+            // count +1
+            count++;
             // show
             if (EvCircleForward)
                 EvCircleForward(defectMassIn, count);

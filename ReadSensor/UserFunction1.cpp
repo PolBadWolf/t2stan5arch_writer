@@ -8,13 +8,13 @@
 #include <math.h>
 #include "Unit1.h"
 #include "wstring.h"
-//#include "BoxRead1.h"
+#include "BoxRead.h"
 
 //---------------------------------------------------------------------------
 
 #pragma package(smart_init)
 
-//extern TNBoxRead *BoxRead;
+extern TBoxRead *BoxRead;
 
 // Diametr tube -> Len Segment
 // Диаметр трубы в длину сегмента
@@ -234,27 +234,31 @@ void __fastcall WriteBD_Datas(TADOConnection *connect, int NumberTube, signed ch
 
 void __fastcall Show_NumberTube(int nTube)
 {
-//    if (!BoxRead) return;
-/*    if (BoxRead->FlModeCalibrovka)
+    if (!BoxRead) return;
+    if (BoxRead->sampleTriger)
         Form1->Label_NumberTube->Caption = "smpl";
     else
     {
         if (nTube==0)
-            Form1->Label_NumberTube->Caption = "N S";
+            Form1->Label_NumberTube->Caption = "NS";
         else
             Form1->Label_NumberTube->Caption = nTube;
     }
-    */
 }
 
-void __fastcall Show_Parametrs(int nTube, double SizeTube, double LenSegmentTube, int otstup, AnsiString CodeMelt)
+void __fastcall Show_Parametrs(int nTube, double SizeTube, double LenSegmentTube, AnsiString CodeMelt)
 {
     Show_NumberTube(nTube);
     // ----------------------------------------------
     Form1->Label_dTube->Caption = SizeTube;
     // ----------------------------------------------
     Form1->Memo1->Lines->Strings[0] = "Длина сегмента : " + FloatToStrF(LenSegmentTube, ffFixed, 6, 3);
-    Form1->Memo1->Lines->Strings[1] = "Отступ от датчика : " + IntToStr(otstup);
+    //Form1->Memo1->Lines->Strings[1] = "Отступ от датчика : " + IntToStr(otstup);
+}
+
+void __fastcall Show_LenTube(double lTube)
+{
+    Form1->Memo1->Lines->Strings[1] = "Длина трубы : " + FloatToStrF(lTube/1000, ffFixed, 6, 3);
 }
 
 void __fastcall ShowSensorSample(TShape *Lamp, int lvl)

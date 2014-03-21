@@ -54,7 +54,7 @@ __fastcall TMShape::TMShape(Classes::TComponent* AOwner)
 __fastcall TForm1::TForm1(TComponent* Owner)
         : TForm(Owner)
 {
-        Caption = "версия от 2014.02.12";
+        Caption = "версия от 2014.03.21";
         ViewKoleso = new TViewKoleso(Shape_Circle);
         FlNewTube = false;
         Img_ClearAll(ImageVisual);
@@ -526,6 +526,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
 // ******************************************************************************************
 // *************************** init BoxRead - Read from controller **************************
         WriteLog->Push("create boxread");
+        //BoxRead = new TBoxRead(720, 340, 800);
         BoxRead = new TBoxRead;
 // ******************************************************************************************
         // Other sensors
@@ -558,37 +559,13 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
 // ******************************************************************************************
         // Sensors Tube Sample
         BoxRead->EvSample = EvaSample;
-
-
-
-
-
-        //BoxRead->EvSensorWild =
-        // въезд в начале, начало дефектоскопии
-        //BoxRead->EvTubeHereBeginUp = TubeBegin;
-        //BoxRead->EvTubeHereBeginDn;
-        //BoxRead->EvTubeHereEndUp;
-        // cъезд в конце, конец дефектоскопии
-        //BoxRead->EvTubeHereEndDn   = TubeEnd;
-        // положение головки дефектоскопа ( lvl : 0 - на трубе, 1 - над трубой )
-        //BoxRead->EvSensorAt        = EvaSensorAt;
-        // событие сработка колеса
-        //BoxRead->EvCircle          = EvaCircle;
-        // общее - изменение состояния датчика
-        //BoxRead->EvSensor          = EvaSensor;
-        // общее - изменение состояния датчика колеса
-        //BoxRead->EvCircleSensor    = EvaCircleSensor;
-        // изменение состояния датчика дефектов
-        //BoxRead->EvWeldDefect      = EvaWeldDefect;
-        // изменение состояния ключа калибровка
-        //BoxRead->EvModeCalibrovka  = EvaModeCalibrovka;
-        // пуск
-        //BoxRead->Resume();
-        //WriteLog->Push("pusk timer sensor");
-        Timer_ShowSensor->Enabled = true;
-        // programm status sensor "sample"
-        //WriteLog->Push("show sensorsample");
-//        ShowSensorSample(LampDat[7], 1);
+// ******************************************************************************************
+        //                         Sensor Circle
+        // Sensor Circle Show flash
+        BoxRead->EvCircleShow = EvaCircleShow;
+        // Sensor Circle move
+        BoxRead->EvCircleForward = EvaCircleMove;
+        BoxRead->EvCircleBack = EvaCircleMove;
 // ******************************************************************************************
     // open com port
     if (Port->Open(PortName, PortBaud, PortParity)>0)
@@ -600,12 +577,6 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
 // ******************************************************************************************
 // *************************** delete starting timer ****************************************
         delete ((TTimer*)Sender);
-}
-//---------------------------------------------------------------------------
-void __fastcall TForm1::Timer_ShowSensorTimer(TObject *Sender)
-{
-    //WriteLog->Push("'ShowSensorTimer': ShowSensorSample");
-    //ShowSensorSample(LampDat[7], BoxRead->BoxReadMassSensorsLevel[7]);
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::PortNewDate(TComPort *cPort, int RdByte)
@@ -695,7 +666,8 @@ double __fastcall TForm1::EvaSensorTubeBegin()
         LenSegmentTube = FnDiametr2LenSegment(SizeTube);
     }
     // ******************
-    //Show_Parametrs(CurentNumberTube, SizeTube, LenSegmentTube, otStep, CodeMelt);
+    CurentNumberTube = ReadFromBDLastNumberTude(ADOQuery1);
+    Show_Parametrs(CurentNumberTube, SizeTube, LenSegmentTube, CodeMelt);
     // ==============================
     WriteLog->Push("'TForm1::TubeBegin': clear picture");
     // очистка имиджа + сетка
@@ -706,12 +678,16 @@ double __fastcall TForm1::EvaSensorTubeBegin()
     eY = ImageVisual->Height -1;
     Img_Clear(ImageVisual, nX, nY, eX, eY, 15);
     Img_Setka(ImageVisual, nX, nY, eX, eY, 15);
+    vLenTubeSegment = D_MaxLenTube/LenSegmentTube;
     return LenSegmentTube;
 }
 //---------------------------------------------------------------------------
 // Sensors Tube here Tube Len
 void __fastcall TForm1::EvaSensorTubeLen(int segments, double lenght)
 {
+    vLenTubeMM = lenght;
+    vLenTubeSegment = segments;
+    Show_LenTube(lenght);
 }
 //---------------------------------------------------------------------------
 // Sensors Tube here End Tube
@@ -774,7 +750,56 @@ void __fastcall TForm1::EvaSample(int trg, int lvl)
         Shape_MODE_SAMPLE->Brush->Color = (trg)?clGreen:clWhite;
 }
 //---------------------------------------------------------------------------
+// Sensor Circle Show flash
+void __fastcall TForm1::EvaCircleShow(int sn)
+{
+    ViewKoleso->Flash(sn, clLime, clGreen);
+}
 //---------------------------------------------------------------------------
+// Sensor Circle move
+void __fastcall TForm1::EvaCircleMove(signed char *massDefect, int curPosition)
+{
+    // рисование
+    // WriteLog->Push("'TForm1::EvaCircle': picture segment");
+    int nX,  nY,  eX,  eY;
+    int nX1, nY1, eX1, eY1;
+    double n, e; // позитция сегмента в мм
+    TColor c;
+    nX = D_ImageOffsetX + 1;
+    nY = D_ImageOffsetY + 1;
+    eX = ImageVisual->Width -1;
+    eY = ImageVisual->Height -1;
+    // очистка верхней части
+    ImageVisual->Canvas->Lock();
+    ImageVisual->Canvas->Brush->Color = clBlack;
+    ImageVisual->Canvas->FillRect(Rect(nX, nY, eX, nY+(eY-nY)/10) );
+    ImageVisual->Canvas->Unlock();
+    ImageVisual->Canvas->Lock();
+    if (curPosition>vLenTubeSegment)
+        curPosition = vLenTubeSegment;
+    for (int pos=0; pos<curPosition; pos++)
+    {
+        // позитция
+        n = LenSegmentTube*(pos+0);
+        e = LenSegmentTube*(pos+1);
+        nY1 = nY;
+        eY1 = eY-(eY-nY)/10;
+        nX1 = ImgV_TubeMaxPix*n/D_MaxLenTube + D_ImageOffsetX;
+        eX1 = ImgV_TubeMaxPix*e/D_MaxLenTube + D_ImageOffsetX;
+        // цвет
+        if (massDefect[pos]==-1)
+            c = clGray;
+        if (massDefect[pos]==0)
+            c = clLime;
+        if (massDefect[pos]==1)
+            c = clRed;
+        ImageVisual->Canvas->Brush->Color = c;
+        ImageVisual->Canvas->FillRect(Rect(nX1, nY1, eX1, eY1) );
+    }
+    ImageVisual->Canvas->Unlock();
+    // сетка
+    Img_Setka(ImageVisual, nX, nY, eX, eY, 15);
+}
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 

@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 207
   Top = 124
   Width = 854
-  Height = 272
+  Height = 258
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
   Caption = 'Form1'
@@ -16,22 +16,6 @@ object Form1: TForm1
   OnCloseQuery = FormCloseQuery
   PixelsPerInch = 96
   TextHeight = 13
-  object Shape_KEY_BACK: TShape
-    Left = 320
-    Top = 360
-    Width = 33
-    Height = 33
-    Brush.Color = clMedGray
-    Shape = stCircle
-  end
-  object Shape_KEY_FORWARD: TShape
-    Left = 360
-    Top = 360
-    Width = 33
-    Height = 33
-    Brush.Color = clMedGray
-    Shape = stCircle
-  end
   object Shape_TUBE_HERE_L: TShape
     Left = 200
     Top = 32
@@ -47,22 +31,6 @@ object Form1: TForm1
     Height = 33
     Brush.Color = clMedGray
     Shape = stRoundRect
-  end
-  object Shape5: TShape
-    Left = 56
-    Top = 392
-    Width = 33
-    Height = 33
-    Brush.Color = clMedGray
-    Shape = stCircle
-  end
-  object Shape6: TShape
-    Left = 96
-    Top = 392
-    Width = 33
-    Height = 33
-    Brush.Color = clMedGray
-    Shape = stCircle
   end
   object Shape_WELD_DEFECT: TShape
     Left = 224
@@ -102,190 +70,11 @@ object Form1: TForm1
     Brush.Color = clMedGray
     Shape = stRoundRect
   end
-  object Label1: TLabel
-    Left = 320
-    Top = 400
-    Width = 33
-    Height = 24
-    Alignment = taCenter
-    AutoSize = False
-    Caption = 'K<'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'MS Sans Serif'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object Label2: TLabel
-    Left = 360
-    Top = 400
-    Width = 33
-    Height = 24
-    Alignment = taCenter
-    AutoSize = False
-    Caption = 'K>'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'MS Sans Serif'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object Label5: TLabel
-    Left = 56
-    Top = 432
-    Width = 33
-    Height = 24
-    Alignment = taCenter
-    AutoSize = False
-    Caption = '--'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'MS Sans Serif'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object Label6: TLabel
-    Left = 96
-    Top = 432
-    Width = 33
-    Height = 24
-    Alignment = taCenter
-    AutoSize = False
-    Caption = '--'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'MS Sans Serif'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object Label9: TLabel
-    Left = 616
-    Top = 376
-    Width = 33
-    Height = 24
-    Alignment = taCenter
-    AutoSize = False
-    Caption = 'Dup'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'MS Sans Serif'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object Label10: TLabel
-    Left = 744
-    Top = 400
-    Width = 33
-    Height = 24
-    Alignment = taCenter
-    AutoSize = False
-    Caption = 'Ddn'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'MS Sans Serif'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object Label13: TLabel
-    Left = 672
-    Top = 392
-    Width = 33
-    Height = 24
-    Alignment = taCenter
-    AutoSize = False
-    Caption = 'K'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'MS Sans Serif'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object Label14: TLabel
-    Left = 560
-    Top = 16
-    Width = 38
-    Height = 13
-    Caption = 'Label14'
-  end
   object ImageVisual: TImage
     Left = 8
     Top = 112
     Width = 817
     Height = 97
-  end
-  object Label17: TLabel
-    Left = 560
-    Top = 48
-    Width = 38
-    Height = 13
-    Caption = 'Label17'
-  end
-  object ShapeCircle1: TShape
-    Left = 176
-    Top = 376
-    Width = 33
-    Height = 33
-    Brush.Color = clMedGray
-    Shape = stCircle
-  end
-  object ShapeCircle2: TShape
-    Left = 224
-    Top = 376
-    Width = 33
-    Height = 33
-    Brush.Color = clMedGray
-    Shape = stCircle
-  end
-  object Label11: TLabel
-    Left = 176
-    Top = 416
-    Width = 33
-    Height = 24
-    Alignment = taCenter
-    AutoSize = False
-    Caption = 'D1'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'MS Sans Serif'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object Label12: TLabel
-    Left = 224
-    Top = 416
-    Width = 33
-    Height = 24
-    Alignment = taCenter
-    AutoSize = False
-    Caption = 'D2'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'MS Sans Serif'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object Label_temp: TLabel
-    Left = 96
-    Top = 368
-    Width = 55
-    Height = 13
-    Caption = 'Label_temp'
-  end
-  object Label15: TLabel
-    Left = 40
-    Top = 368
-    Width = 38
-    Height = 13
-    Caption = 'Label15'
   end
   object Shape_SENSOR_AT: TShape
     Left = 264
@@ -368,7 +157,7 @@ object Form1: TForm1
     Font.Style = []
     Lines.Strings = (
       #1044#1083#1080#1085#1072' '#1089#1077#1075#1084#1077#1085#1090#1072' : '
-      #1054#1090#1089#1090#1091#1087' '#1086#1090' '#1076#1072#1090#1095#1080#1082#1072' : ')
+      #1044#1083#1080#1085#1072' '#1090#1088#1091#1073#1099' : ')
     ParentFont = False
     TabOrder = 2
   end
@@ -378,25 +167,18 @@ object Form1: TForm1
       'n5MyCon'
     LoginPrompt = False
     Provider = 'MSDASQL.1'
-    Left = 528
-    Top = 376
+    Left = 568
+    Top = 16
   end
   object ADOQuery1: TADOQuery
     Connection = ADOConnection1
     Parameters = <>
-    Left = 560
-    Top = 376
+    Left = 600
+    Top = 16
   end
   object TimerStart: TTimer
     OnTimer = TimerStartTimer
-    Left = 8
-    Top = 368
-  end
-  object Timer_ShowSensor: TTimer
-    Enabled = False
-    Interval = 100
-    OnTimer = Timer_ShowSensorTimer
-    Left = 792
-    Top = 384
+    Left = 640
+    Top = 8
   end
 end

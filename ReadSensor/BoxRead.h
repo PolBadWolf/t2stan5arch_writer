@@ -15,6 +15,7 @@ public:
     __fastcall TBoxRead(int hero1, int hero2, int circle);
     __fastcall ~TBoxRead();
 private:
+    void __fastcall Init(int hero1, int hero2, int circle);
     signed char defectMassIn[boxReadMaxLenMassive];
     int         defectMassInLen;
     double      lenSegment;
@@ -74,7 +75,7 @@ public:
     // Sensor Circle
     void __fastcall   (__closure *EvCircleShow)(int sn);
     void __fastcall   (__closure *EvCircleForward)(signed char *massDefect, int curPosition);
-    void __fastcall   (__closure *EvCircleBack)(signed char *massDefect, int curPosition);
+    void __fastcall   (__closure *EvCircleBack)   (signed char *massDefect, int curPosition);
     void __fastcall   (__closure *EvCircleBackBad)();
 };
 

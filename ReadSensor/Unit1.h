@@ -17,48 +17,27 @@
 class TForm1 : public TForm
 {
 __published:	// IDE-managed Components
-        TShape *Shape_KEY_BACK;
-        TShape *Shape_KEY_FORWARD;
         TShape *Shape_TUBE_HERE_L;
         TShape *Shape_TUBE_HERE_R;
-        TShape *Shape5;
-        TShape *Shape6;
         TShape *Shape_WELD_DEFECT;
     TShape *Shape_MODE_SAMPLE;
         TShape *Shape_SENSOR_AT_TOP;
         TShape *Shape_SENSOR_AT_BOTTOM;
         TShape *Shape_Circle;
-        TLabel *Label1;
-        TLabel *Label2;
-        TLabel *Label5;
-        TLabel *Label6;
-        TLabel *Label9;
-        TLabel *Label10;
-        TLabel *Label13;
-        TLabel *Label14;
         TImage *ImageVisual;
-        TLabel *Label17;
         TADOConnection *ADOConnection1;
-        TShape *ShapeCircle1;
-        TShape *ShapeCircle2;
-        TLabel *Label11;
-        TLabel *Label12;
         TADOQuery *ADOQuery1;
         TTimer *TimerStart;
-    TLabel *Label_temp;
-    TLabel *Label15;
     TPanel *Panel1;
     TPanel *Panel2;
     TLabel *Label_NumberTube;
     TPanel *Panel3;
     TPanel *Panel4;
     TLabel *Label_dTube;
-    TTimer *Timer_ShowSensor;
     TMemo *Memo1;
     TShape *Shape_SENSOR_AT;
         void __fastcall FormCloseQuery(TObject *Sender, bool &CanClose);
         void __fastcall TimerStartTimer(TObject *Sender);
-    void __fastcall Timer_ShowSensorTimer(TObject *Sender);
 private:	// User declarations
         bool FlNewTube;
         void __fastcall Img_ClearAll(TImage *Img);
@@ -96,6 +75,8 @@ public:		// User declarations
         // len last tube                                // длина трубы замеренной
         int dTube;
         */
+        double vLenTubeMM;
+        int    vLenTubeSegment;
         // *********************************************************************************
         // Sensor Wild
         void __fastcall EvaSensorWild(int lvl);
@@ -115,8 +96,14 @@ public:		// User declarations
         void __fastcall EvaSensorTubeLen(int segments, double lenght);
         // Sensors Tube here End Tube
         void __fastcall EvaSensorTubeEnd(int len, signed char *massDefect, int flagSample);
+        // *********************************************************************************
         // Sensor Sample
         void __fastcall EvaSample(int trg, int lvl);
+        // *********************************************************************************
+        // Sensor Circle Show flash
+        void __fastcall EvaCircleShow(int sn);
+        // Sensor Circle move
+        void __fastcall EvaCircleMove(signed char *massDefect, int curPosition);
 
 
 
