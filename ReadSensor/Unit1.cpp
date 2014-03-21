@@ -383,6 +383,7 @@ double __fastcall TForm1::EvaSensorTubeBegin()
     // ******************
     CurentNumberTube = ReadFromBDLastNumberTude(ADOQuery1);
     Show_Parametrs(CurentNumberTube, SizeTube, LenSegmentTube, CodeMelt);
+    Show_LenTubeClear();
     // ==============================
     WriteLog->Push("'TForm1::TubeBegin': clear picture");
     // очистка имиджа + сетка
