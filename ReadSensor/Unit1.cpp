@@ -220,7 +220,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
     // read parametrs com port
     PortName   =            ifile->ReadString ("comm", "Name",  "COM2" );
     PortBaud   = (eBaudRate)ifile->ReadInteger("comm", "Baud",   CBR_38400);
-    PortParity = (eParity)  ifile->ReadInteger("comm", "Parity", NO);
+    PortParity = (eParity)  ifile->ReadInteger ("comm", "Parity", NO);
     // write default parametrs
     ifile->WriteString ("comm", "Name",   PortName);
     ifile->WriteInteger("comm", "Baud",   PortBaud);
@@ -357,6 +357,7 @@ double __fastcall TForm1::EvaSensorTubeBegin()
     statusNew  = ReadFromBDNewParametrs (ADOQuery1, &IdParamNew , &IdMeltNew , &CodeMeltNew , &SizeTubeNew );
     // WriteLog->Push("'TForm1::TubeBegin': end ReadFromBD");
     //
+    CurentNumberTube = ReadFromBDLastNumberTude(ADOQuery1);
     // checked load parametrs
     if ( (statusLast && statusNew) || statusNew )
     {   // error read parametrs
@@ -381,7 +382,6 @@ double __fastcall TForm1::EvaSensorTubeBegin()
         LenSegmentTube = FnDiametr2LenSegment(SizeTube);
     }
     // ******************
-    CurentNumberTube = ReadFromBDLastNumberTude(ADOQuery1);
     Show_Parametrs(CurentNumberTube, SizeTube, LenSegmentTube, CodeMelt);
     Show_LenTubeClear();
     // ==============================
@@ -430,7 +430,6 @@ void __fastcall TForm1::EvaSensorTubeEnd(int len, signed char *massDefect, int f
     }
     else
     {   // number tube +1
-        CurentNumberTube = ReadFromBDLastNumberTude(ADOQuery1);
         CurentNumberTube++;
         nTube = CurentNumberTube;
     }
