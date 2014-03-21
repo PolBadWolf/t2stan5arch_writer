@@ -275,3 +275,116 @@ void __fastcall ShowSensorSample(TShape *Lamp, int lvl)
     */
 }
 
+void __fastcall WriteFlTreeComp(int p,
+        AnsiString year, AnsiString mes, AnsiString day,
+        AnsiString smena, AnsiString melt,
+        int rulon, int tube, AnsiString aTime)
+{
+    if (p>6)
+        return;
+    AnsiString sstring = "";
+    switch (p)
+    {
+        case 0 : sstring =                            year;
+                 break;
+        case 1 : sstring = "\t"                      + mes;
+                 break;
+        case 2 : sstring = "\t\t"                    + day;
+                 break;
+        case 3 : sstring = "\t\t\tСмена "            + smena;
+                 break;
+        case 4 : sstring = "\t\t\t\tПлавка№ "        + melt;
+                 break;
+        case 5 : sstring = "\t\t\t\t\tРулон № "      + IntToStr(rulon);
+                 break;
+        case 6 : if (tube==0)
+                    sstring = "\t\t\t\t\t\tК.О. "    + aTime;
+                 else
+                    sstring = "\t\t\t\t\t\tТруба № " + IntToStr(tube);
+                 break;
+    }
+    // sstring = sstring + "\r\n";
+    Form1->Memo2->Lines->Add(sstring);
+}
+void __fastcall WriteFlTree(TADOConnection *connect)
+{
+    TADOQuery *Query = new TADOQuery(connect->Owner);
+    if (!Query)
+        return;
+
+    Query->Connection = connect;
+    Query->Close();
+    Query->SQL->Clear();
+    Query->SQL->Add("SELECT");
+    Query->SQL->Add(" `defectsdata`.`IndexData`");
+    Query->SQL->Add(",`defectsdata`.`DatePr`");
+    Query->SQL->Add(",`defectsdata`.`TimePr`");
+    Query->SQL->Add(",`defectsdata`.`NumberTube`");
+    Query->SQL->Add(",`melts`.`NameMelt`");
+    Query->SQL->Add(",`parameters`.`NumberRoll`");
+    Query->SQL->Add(",`parameters`.`Id_WorkSmen`");
+    Query->SQL->Add(",`worksmens`.`NameSmen`");
+    Query->SQL->Add(",`parameters`.`Id_Melt`");
+    Query->SQL->Add("FROM");
+    Query->SQL->Add("`defectsdata`");
+    Query->SQL->Add("Left Join `parameters` ON `defectsdata`.`Id_Param` = `parameters`.`Id_Param`");
+    Query->SQL->Add("Left Join `melts` ON `parameters`.`Id_Melt` = `melts`.`Id_Melt`");
+    Query->SQL->Add("Left Join `worksmens` ON `parameters`.`Id_WorkSmen` = `worksmens`.`Id_WorkSmen`");
+    Query->SQL->Add("ORDER BY");
+    Query->SQL->Add("`defectsdata`.`IndexData` DESC");
+    Query->SQL->Add("LIMIT 2");
+    Query->Open();
+    // -----------------
+    TDate nDate, nTime;
+    AnsiString nYear, nMesiac, nDay;
+    int nIdSmena, nIdMelt;
+    AnsiString aSmena, aMelt, aTime;
+    int nRoll, numberTube;
+    //
+    TDate oDate;
+    AnsiString oYear, oMesiac, oDay;
+    int oIdSmena, oIdMelt;
+    int oRoll;
+
+    nDate      = Query->FieldByName("DatePr")->AsDateTime;
+    nTime      = Query->FieldByName("TimePr")->AsDateTime;
+    nYear      = FormatDateTime("yyyy", nDate);
+    nMesiac    = FormatDateTime("yyyy-mm", nDate);
+    nDay       = FormatDateTime("yyyy-mm-dd", nDate);
+    nIdSmena   = Query->FieldByName("Id_WorkSmen")->AsInteger;
+    nIdMelt    = Query->FieldByName("Id_Melt")->AsInteger;
+    aSmena     = Query->FieldByName("NameSmen")->AsString;
+    aMelt      = Query->FieldByName("NameMelt")->AsString;
+    aTime      = FormatDateTime("(hh:nn:ss)", nTime);
+    nRoll      = Query->FieldByName("NumberRoll")->AsInteger;
+    numberTube = Query->FieldByName("NumberTube")->AsInteger;
+    Query->Next();
+    oDate      = Query->FieldByName("DatePr")->AsDateTime;
+    oYear      = FormatDateTime("yyyy", oDate);
+    oMesiac    = FormatDateTime("yyyy-mm", oDate);
+    oDay       = FormatDateTime("yyyy-mm-dd", oDate);
+    oIdSmena   = Query->FieldByName("Id_WorkSmen")->AsInteger;
+    oIdMelt    = Query->FieldByName("Id_Melt")->AsInteger;
+    oRoll      = Query->FieldByName("NumberRoll")->AsInteger;
+
+    Query->Close();
+
+    int flg = 0;
+    flg = flg | (nYear!=oYear);
+    if (flg) WriteFlTreeComp(0, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+    flg = flg | (nMesiac!=oMesiac);
+    if (flg) WriteFlTreeComp(1, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+    flg = flg | (nDay!=oDay);
+    if (flg) WriteFlTreeComp(2, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+    flg = flg | (nIdSmena!=oIdSmena);
+    if (flg) WriteFlTreeComp(3, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+    flg = flg | (nIdMelt!=oIdMelt);
+    if (flg) WriteFlTreeComp(4, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+    flg = flg | (nRoll!=oRoll);
+    if (flg) WriteFlTreeComp(5, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+             WriteFlTreeComp(6, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+
+        delete Query;
+        Query = NULL;
+}
+

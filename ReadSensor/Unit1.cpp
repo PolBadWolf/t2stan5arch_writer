@@ -357,7 +357,7 @@ double __fastcall TForm1::EvaSensorTubeBegin()
     statusNew  = ReadFromBDNewParametrs (ADOQuery1, &IdParamNew , &IdMeltNew , &CodeMeltNew , &SizeTubeNew );
     // WriteLog->Push("'TForm1::TubeBegin': end ReadFromBD");
     //
-    CurentNumberTube = ReadFromBDLastNumberTude(ADOQuery1);
+    //CurentNumberTube = ReadFromBDLastNumberTude(ADOQuery1);
     // checked load parametrs
     if ( (statusLast && statusNew) || statusNew )
     {   // error read parametrs
@@ -454,6 +454,7 @@ void __fastcall TForm1::EvaSensorTubeEnd(int len, signed char *massDefect, int f
     WriteBD_Datas(ADOConnection1, nTube, massDefect, len, FlagDefectTube, IdParam);
     //WriteLog->Push("'TForm1::TubeEnd': show numbertube & reset flag new tube");
     Show_NumberTube(nTube);
+    WriteFlTree(ADOConnection1);
 }
 //---------------------------------------------------------------------------
 // Sensor Sample
