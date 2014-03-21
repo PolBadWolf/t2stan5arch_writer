@@ -324,7 +324,7 @@ void __fastcall TBoxRead::Circle()
             def = -1;
         else
             def = summDefect;
-        summDefect = 0;
+        summDefect = !massSensors[WELD_DEFECT];
         // mode
         if (defectMassInCircleBuff)
         { // cirle buff mode
