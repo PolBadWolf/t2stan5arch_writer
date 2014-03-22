@@ -265,16 +265,6 @@ void __fastcall Show_LenTubeClear()
     Form1->Memo1->Lines->Strings[1] = "Длина трубы : ";
 }
 
-void __fastcall ShowSensorSample(TShape *Lamp, int lvl)
-{
-    /*
-    if (BoxRead->FlModeCalibrovka)
-        Lamp->Brush->Color = (lvl)?clGreen:clLime;
-    else
-        Lamp->Brush->Color = clWhite;
-    */
-}
-
 AnsiString __fastcall WriteFlTreeComp(int p,
         AnsiString year, AnsiString mes, AnsiString day,
         AnsiString smena, AnsiString melt,

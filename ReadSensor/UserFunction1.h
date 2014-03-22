@@ -12,7 +12,6 @@ void __fastcall Show_NumberTube(int nTube);
 void __fastcall Show_Parametrs(int nTube, double SizeTube, double LenSegmentTube, AnsiString CodeMelt);
 void __fastcall Show_LenTube(double lTube);
 void __fastcall Show_LenTubeClear();
-void __fastcall ShowSensorSample(TShape *Lamp, int lvl);
 void __fastcall WriteFlTree(TADOConnection *connect);
 //---------------------------------------------------------------------------
 #endif

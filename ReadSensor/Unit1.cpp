@@ -183,8 +183,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         // read last number tube ( no sample )
         WriteLog->Push("read number tube");
         try { CurentNumberTube = ReadFromBDLastNumberTude(ADOQuery1); }
-        catch(...) {
-        CurentNumberTube = -1; }
+        catch(...) { CurentNumberTube = -1; }
         if (CurentNumberTube<0)
         {       // Date Base Error
                 Application->MessageBox("Not found field \"NumberTube\" " , "Date Base Error", 0);
@@ -211,16 +210,6 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
 //        otStep = otLmm/LenSegmentTube;
         WriteLog->Push("show param");
 //        Show_Parametrs(CurentNumberTube, SizeTube, LenSegmentTube, otStep, CodeMelt);
-// ******************************************************************************************
-// *************************** init variable Base Lengh sensors tube ************************
-        // отступ в мм от левого датчика
-//        otLmm = 365;
-        // offset from left sensor tube, unit segment   // расчитанный отступ в шагах
-//        otStep = otLmm/LenSegmentTube;
-        // счетчик окончания замера после отключения левого датчика
-//        otCount = 0;
-        // длина трубы замеренной
-//        dTube = -1;
 // ******************************************************************************************
 // *************************** init Massibe indications *************************************
         WriteLog->Push("init massive shape");
@@ -331,7 +320,7 @@ void __fastcall TForm1::EvaSensorWild(int lvl)
 void __fastcall TForm1::EvaSensorAtTop(int lvl)
 {
     Shape_SENSOR_AT->Brush->Color = clRed;
-    Shape_SENSOR_AT->Top = 8;
+    Shape_SENSOR_AT->Top = 6;
 }
 //---------------------------------------------------------------------------
 // Sensors At Bottom
@@ -374,7 +363,6 @@ double __fastcall TForm1::EvaSensorTubeBegin()
     statusNew  = ReadFromBDNewParametrs (ADOQuery1, &IdParamNew , &IdMeltNew , &CodeMeltNew , &SizeTubeNew );
     // WriteLog->Push("'TForm1::TubeBegin': end ReadFromBD");
     //
-    //CurentNumberTube = ReadFromBDLastNumberTude(ADOQuery1);
     // checked load parametrs
     if ( (statusLast && statusNew) || statusNew )
     {   // error read parametrs
@@ -468,10 +456,12 @@ void __fastcall TForm1::EvaSensorTubeEnd(int len, signed char *massDefect, int f
     AnsiString vDate = FormatDateTime("yyyy-mm-dd", DtTm);
     // write to BD
     //WriteLog->Push("'TForm1::TubeEnd': write tube");
-    WriteBD_Datas(ADOConnection1, nTube, massDefect, len, FlagDefectTube, IdParam);
+    try {
+        WriteBD_Datas(ADOConnection1, nTube, massDefect, len, FlagDefectTube, IdParam);
+        WriteFlTree(ADOConnection1);
+    } catch(...){}
     //WriteLog->Push("'TForm1::TubeEnd': show numbertube & reset flag new tube");
     Show_NumberTube(nTube);
-    WriteFlTree(ADOConnection1);
 }
 //---------------------------------------------------------------------------
 // Sensor Sample
