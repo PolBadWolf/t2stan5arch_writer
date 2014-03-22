@@ -62,9 +62,12 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 //---------------------------------------------------------------------------
 void __fastcall TForm1::FormCloseQuery(TObject *Sender, bool &CanClose)
 {
-        Port->Close();
-        delete Port;
-        Port = NULL;
+        if (Port)
+        {
+            Port->Close();
+            delete Port;
+            Port = NULL;
+        }
         // checked close ADOQuery1
         if ( ADOQuery1->Active )
         {       //ADOQuery1 - no terminated
@@ -136,15 +139,27 @@ void __fastcall TForm1::Img_Clear(TImage *Img, int nX, int nY, int eX, int eY, i
 void __fastcall TForm1::Img_Setka(TImage *Img, int nX, int nY, int eX, int eY, int m)
 {
         ImageVisual->Canvas->Lock();
-        for (int x=0; x<(m+1); x++)
+        int kn, ke, kd;
+        const int c = 5;
+        for (int x=0; x<m; x++)
         {
+            kn = (x+0)*(ImgV_TubeMaxPix/(D_MaxLenTube/1000) );
+            ke = (x+1)*(ImgV_TubeMaxPix/(D_MaxLenTube/1000) );
+            kd = ke - kn;
+            for (int x1=0; x1<c; x1++)
+            {
                 Img->Canvas->Pen->Width = 1;
                 Img->Canvas->Pen->Color = clGreen;
-                Img->Canvas->MoveTo(nX+ x*(ImgV_TubeMaxPix/(D_MaxLenTube/1000) )-1 ,nY);
-                Img->Canvas->LineTo(nX+ x*(ImgV_TubeMaxPix/(D_MaxLenTube/1000) )-1 ,eY);
+                Img->Canvas->MoveTo(nX+ kn+ x1*kd/(c-1) -1 ,nY-10);
+                Img->Canvas->LineTo(nX+ kn+ x1*kd/(c-1) -1 ,eY);
+            }
         }
-        Img->Canvas->MoveTo(nX, nY+(eY-nY)/2 );
-        Img->Canvas->LineTo(eX, nY+(eY-nY)/2 );
+        const int d = 5;
+        for (int y=0; y<d; y++)
+        {
+            Img->Canvas->MoveTo(nX, nY+y*(eY-nY)/(d-1) );
+            Img->Canvas->LineTo(eX, nY+y*(eY-nY)/(d-1) );
+        }
         ImageVisual->Canvas->Unlock();
 }
 //---------------------------------------------------------------------------
@@ -167,7 +182,9 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         // ====================================================
         // read last number tube ( no sample )
         WriteLog->Push("read number tube");
-        CurentNumberTube = ReadFromBDLastNumberTude(ADOQuery1);
+        try { CurentNumberTube = ReadFromBDLastNumberTude(ADOQuery1); }
+        catch(...) {
+        CurentNumberTube = -1; }
         if (CurentNumberTube<0)
         {       // Date Base Error
                 Application->MessageBox("Not found field \"NumberTube\" " , "Date Base Error", 0);

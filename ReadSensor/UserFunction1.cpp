@@ -281,7 +281,7 @@ AnsiString __fastcall WriteFlTreeComp(int p,
         int rulon, int tube, AnsiString aTime)
 {
     if (p>6)
-        return;
+        return "";
     AnsiString sstring = "";
     switch (p)
     {
