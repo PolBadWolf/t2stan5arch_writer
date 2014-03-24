@@ -78,7 +78,7 @@ object Form1: TForm1
   end
   object Shape_SENSOR_AT: TShape
     Left = 264
-    Top = 8
+    Top = 6
     Width = 25
     Height = 25
     Shape = stCircle

@@ -60,6 +60,8 @@ void __fastcall TBoxRead::Init(int hero1, int hero2, int circle)
     // circle
     count = 0;
     circleOff = 1;
+    // sample
+    vSampleTriger = 0;
 }
 
 void __fastcall TBoxRead::PushFromCommPort(unsigned char bt)
@@ -198,7 +200,6 @@ void __fastcall TBoxRead::SensorsTubeHere(int sn, int lvl)
     // Begin tube  H1 h2
     if ( (oldHere1) && (!vTubeHere1) && (oldHere2) && (vTubeHere2) )
     {
-        vSampleTriger = 0;
         // work circle on
         circleOff = 0;
         // clear count
@@ -262,6 +263,9 @@ void __fastcall TBoxRead::SensorsTubeHere(int sn, int lvl)
         newTube   = 0;
         if (EvSensorTubeEnd)
             EvSensorTubeEnd(defectMassLen, defectMass, vSampleTriger);
+        // set status samle
+        vSampleTriger = 0;
+        SensorsSample(MODE_SAMPLE, massSensors[MODE_SAMPLE]);
         return;
     }
     // **************************************
@@ -291,12 +295,15 @@ void __fastcall TBoxRead::SensorsTubeHere(int sn, int lvl)
     }
     // **************************************
     // Reset tube
-    if ( (oldHere1) && (vTubeHere1) )
+    if ( (vTubeHere1) && (vTubeHere2) )
     {
         circleOff = 1;
         newTube   = 0;
         if (EvSensorTubeReset)
             EvSensorTubeReset();
+        // set status samle
+        vSampleTriger = 0;
+        SensorsSample(MODE_SAMPLE, massSensors[MODE_SAMPLE]);
         return;
     }
 }
