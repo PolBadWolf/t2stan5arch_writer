@@ -379,23 +379,23 @@ void __fastcall WriteFlTree(TADOConnection *connect)
 		pFileTree->Write(s.c_str(), s.Length()); }
     flg = flg | (nMesiac!=oMesiac);
     if (flg)
-	{	s=WriteFlTreeComp(0, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+	{	s=WriteFlTreeComp(1, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
 		pFileTree->Write(s.c_str(), s.Length()); }
     flg = flg | (nDay!=oDay);
     if (flg)
-	{	s=WriteFlTreeComp(0, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+	{	s=WriteFlTreeComp(2, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
 		pFileTree->Write(s.c_str(), s.Length()); }
     flg = flg | (nIdSmena!=oIdSmena);
     if (flg)
-	{	s=WriteFlTreeComp(0, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+	{	s=WriteFlTreeComp(3, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
 		pFileTree->Write(s.c_str(), s.Length()); }
     flg = flg | (nIdMelt!=oIdMelt);
     if (flg)
-	{	s=WriteFlTreeComp(0, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+	{	s=WriteFlTreeComp(4, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
 		pFileTree->Write(s.c_str(), s.Length()); }
     flg = flg | (nRoll!=oRoll);
     if (flg)
-	{	s=WriteFlTreeComp(0, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+	{	s=WriteFlTreeComp(5, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
 		pFileTree->Write(s.c_str(), s.Length()); }
     s=WriteFlTreeComp(6, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
 	pFileTree->Write(s.c_str(), s.Length());
