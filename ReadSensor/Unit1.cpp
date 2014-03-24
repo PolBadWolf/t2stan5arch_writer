@@ -171,6 +171,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         AnsiString  CodeMeltLast , CodeMeltNew;
         double      SizeTubeLast , SizeTubeNew;
         int         statusLast   , statusNew;
+        int         fDebugMode;
 // ******************************************************************************************
         WriteLog = new TWriteLog;
 // ******************************************************************************************
@@ -224,13 +225,15 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         return;
     }
     // read parametrs com port
-    PortName   =            ifile->ReadString ("comm", "Name",  "COM2" );
-    PortBaud   = (eBaudRate)ifile->ReadInteger("comm", "Baud",   CBR_38400);
-    PortParity = (eParity)  ifile->ReadInteger ("comm", "Parity", NO);
+    PortName   =            ifile->ReadString ("comm",  "Name",      "COM2" );
+    PortBaud   = (eBaudRate)ifile->ReadInteger("comm",  "Baud",      CBR_38400);
+    PortParity = (eParity)  ifile->ReadInteger("comm",  "Parity",    NO);
+    fDebugMode =            ifile->ReadInteger("system","DebugMode", 0);
     // write default parametrs
-    ifile->WriteString ("comm", "Name",   PortName);
-    ifile->WriteInteger("comm", "Baud",   PortBaud);
-    ifile->WriteInteger("comm", "Parity", PortParity);
+    ifile->WriteString ("comm",  "Name",      PortName);
+    ifile->WriteInteger("comm",  "Baud",      PortBaud);
+    ifile->WriteInteger("comm",  "Parity",    PortParity);
+    ifile->WriteInteger("system","DebugMode", fDebugMode);
     // close ini file
     delete ifile;
     ifile = NULL;
@@ -295,6 +298,12 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         Form1->Close();
         return;
     }
+// ******************************************************************************************
+    if (fDebugMode==0)
+        WriteLog->Push("log off");
+    else
+        WriteLog->Push("log on");
+    WriteLog->debugMode = fDebugMode;
 // ******************************************************************************************
 // *************************** delete starting timer ****************************************
         delete ((TTimer*)Sender);
