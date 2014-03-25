@@ -240,7 +240,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
     ifile->WriteInteger("SensorsTube", "Here2",     lTubeHere2);
     // close ini file
     delete ifile;
-    ifile = NULL;
+    //ifile = NULL;
     // create
     Port = new TComPort;
     if (!Port)
@@ -453,7 +453,7 @@ void __fastcall TForm1::EvaSensorTubeEnd(int len, signed char *massDefect, int f
     }
     // =========================================================
     // set address massive
-    int zn = -1;
+    int zn;//
     for (int i=0;i<len;i++)
     {
         zn = massDefect[i];

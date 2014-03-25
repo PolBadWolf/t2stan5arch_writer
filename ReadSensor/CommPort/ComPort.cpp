@@ -339,12 +339,12 @@ int  __fastcall TComPortRd::ReadBuf(unsigned char *Buf, DWORD *len_zakaz, DWORD 
                 if (stat) stat = 0;
                 else {
                         stat = 2;
-                        len_ok = 0;
+                        *len_ok = 0;
                 }
         }
         else {
                 stat = 1;
-                len_ok = 0;
+                *len_ok = 0;
         }
         FlCallBlock = false;
         return stat;

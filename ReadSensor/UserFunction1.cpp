@@ -35,7 +35,7 @@ double __fastcall FnDiametr2LenSegment(double D_Tube)
 
 int  __fastcall TForm1::ReadFromBDLastNumberTude(TADOQuery *dQuery)
 {
-        TField *Pole = NULL;
+        TField *Pole;
         int  Resultat = -1;
         // ====================================================
         // find last number tube ( no sample )
@@ -71,7 +71,7 @@ int  __fastcall TForm1::ReadFromBDLastNumberTude(TADOQuery *dQuery)
 
 Variant __fastcall ReadField(TADOQuery *fQuery, AnsiString FieldName, int *status)
 {
-    TField *Pole = NULL;
+    TField *Pole;
     Pole = fQuery->FindField(FieldName);
     if ( !Pole )
     {
@@ -122,7 +122,7 @@ int  __fastcall TForm1::ReadFromBDNewParametrs(TADOQuery *dQuery, int *id_parame
 {
     int status = 0;
     TADOQuery *cQuery = new TADOQuery(dQuery->Owner);
-    int cid = 0;
+    int cid;
     cQuery->Connection = dQuery->Connection;
     cQuery->SQL->Clear();
     cQuery->SQL->Add("SELECT");
@@ -171,7 +171,7 @@ int  __fastcall TForm1::ReadFromBDNewParametrs(TADOQuery *dQuery, int *id_parame
     dQuery->SQL->Clear();
     cQuery->SQL->Clear();
     delete cQuery;
-    cQuery = NULL;
+    //cQuery = NULL;
     return status;
 
 }
@@ -228,7 +228,7 @@ void __fastcall WriteBD_Datas(TADOConnection *connect, int NumberTube, signed ch
     Query->ExecSQL();
     MS->Clear();
     delete MS;
-    MS = NULL;
+    //MS = NULL;
     delete Query;
 }
 
@@ -359,7 +359,7 @@ void __fastcall WriteFlTree(TADOConnection *connect)
     oRoll      = Query->FieldByName("NumberRoll")->AsInteger;
 
     Query->Close();
-    TFileStream *pFileTree = NULL;
+    TFileStream *pFileTree;
     AnsiString nam = "Structnew.txt";
     try
     {
@@ -401,7 +401,7 @@ void __fastcall WriteFlTree(TADOConnection *connect)
 	pFileTree->Write(s.c_str(), s.Length());
 
 	delete pFileTree;
-    pFileTree = NULL;
+    //pFileTree = NULL;
 
     delete Query;
     Query = NULL;
