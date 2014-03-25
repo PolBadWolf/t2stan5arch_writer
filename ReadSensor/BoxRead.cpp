@@ -30,23 +30,22 @@
 
 __fastcall TBoxRead::TBoxRead()
 {
-    Init(720, 340, 800);
+    Init(720, 340);
 }
 
-__fastcall TBoxRead::TBoxRead(int hero1, int hero2, int circle)
+__fastcall TBoxRead::TBoxRead(int hero1, int hero2)
 {
-    Init(hero1, hero2, circle);
+    Init(hero1, hero2);
 }
 
 __fastcall TBoxRead::~TBoxRead()
 {
 }
 
-void __fastcall TBoxRead::Init(int hero1, int hero2, int circle)
+void __fastcall TBoxRead::Init(int hero1, int hero2)
 {
     lenghHero1  = hero1;
 	lenghHero2  = hero2;
-	lenghCircle = circle;
 	// clear massvive sensors
     for (int i=0; i<boxRead_MassSensorsLen; i++)
         massSensors[i] = -1;
@@ -221,7 +220,6 @@ void __fastcall TBoxRead::SensorsTubeHere(int sn, int lvl)
         // calculate base lenght
 		segmentHero1  = lenghHero1  / lenSegment;
 		segmentHero2  = lenghHero2  / lenSegment;
-		segmentCircle = lenghCircle / lenSegment;
         return;
     }
     // Begin record H1 H2
@@ -377,12 +375,6 @@ void __fastcall TBoxRead::Circle()
         count--;
         if (EvCircleBack)
             EvCircleBack(defectMassIn, count);
-        if (count>=segmentCircle)
-            return;
-        circleOff = 1;
-        newTube = 0;
-        if (EvCircleBackBad)
-            EvCircleBackBad();
         return;
     }
 }

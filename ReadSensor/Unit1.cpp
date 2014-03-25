@@ -172,6 +172,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         double      SizeTubeLast , SizeTubeNew;
         int         statusLast   , statusNew;
         int         fDebugMode;
+        int         lTubeHere1,    lTubeHere2;     
 // ******************************************************************************************
         WriteLog = new TWriteLog;
 // ******************************************************************************************
@@ -208,7 +209,6 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
             SizeTube  = 0;
             LenSegmentTube = 1000/8;
         }
-//        otStep = otLmm/LenSegmentTube;
         WriteLog->Push("show param");
 //        Show_Parametrs(CurentNumberTube, SizeTube, LenSegmentTube, otStep, CodeMelt);
 // ******************************************************************************************
@@ -225,15 +225,19 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         return;
     }
     // read parametrs com port
-    PortName   =            ifile->ReadString ("comm",  "Name",      "COM2" );
-    PortBaud   = (eBaudRate)ifile->ReadInteger("comm",  "Baud",      CBR_38400);
-    PortParity = (eParity)  ifile->ReadInteger("comm",  "Parity",    NO);
-    fDebugMode =            ifile->ReadInteger("system","DebugMode", 0);
+    PortName   =            ifile->ReadString ("comm",        "Name",      "COM1" );
+    PortBaud   = (eBaudRate)ifile->ReadInteger("comm",        "Baud",      CBR_38400);
+    PortParity = (eParity)  ifile->ReadInteger("comm",        "Parity",    NO);
+    fDebugMode =            ifile->ReadInteger("system",      "DebugMode", 0);
+    lTubeHere1 =            ifile->ReadInteger("SensorsTube", "Here1",     720);
+    lTubeHere2 =            ifile->ReadInteger("SensorsTube", "Here2",     340);
     // write default parametrs
-    ifile->WriteString ("comm",  "Name",      PortName);
-    ifile->WriteInteger("comm",  "Baud",      PortBaud);
-    ifile->WriteInteger("comm",  "Parity",    PortParity);
-    ifile->WriteInteger("system","DebugMode", fDebugMode);
+    ifile->WriteString ("comm",        "Name",      PortName);
+    ifile->WriteInteger("comm",        "Baud",      PortBaud);
+    ifile->WriteInteger("comm",        "Parity",    PortParity);
+    ifile->WriteInteger("system",      "DebugMode", fDebugMode);
+    ifile->WriteInteger("SensorsTube", "Here1",     lTubeHere1);
+    ifile->WriteInteger("SensorsTube", "Here2",     lTubeHere2);
     // close ini file
     delete ifile;
     ifile = NULL;
@@ -250,8 +254,8 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
 // ******************************************************************************************
 // *************************** init BoxRead - Read from controller **************************
         WriteLog->Push("create boxread");
-        //BoxRead = new TBoxRead(720, 340, 800);
-        BoxRead = new TBoxRead;
+        //BoxRead = new TBoxRead;
+        BoxRead = new TBoxRead(lTubeHere1, lTubeHere2);
 // ******************************************************************************************
         // Other sensors
         // BoxRead->EvSensorsOther = // (int sn, int lvl);
