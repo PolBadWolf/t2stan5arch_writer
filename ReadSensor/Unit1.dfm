@@ -1,8 +1,8 @@
 object Form1: TForm1
   Left = 207
   Top = 124
-  Width = 854
-  Height = 256
+  Width = 728
+  Height = 196
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
   Caption = 'Form1'
@@ -18,7 +18,7 @@ object Form1: TForm1
   TextHeight = 13
   object Shape_TUBE_HERE_L: TShape
     Left = 200
-    Top = 32
+    Top = 24
     Width = 17
     Height = 33
     Brush.Color = clMedGray
@@ -26,7 +26,7 @@ object Form1: TForm1
   end
   object Shape_TUBE_HERE_R: TShape
     Left = 264
-    Top = 32
+    Top = 24
     Width = 17
     Height = 33
     Brush.Color = clMedGray
@@ -34,21 +34,22 @@ object Form1: TForm1
   end
   object Shape_WELD_DEFECT: TShape
     Left = 224
-    Top = 32
+    Top = 24
     Width = 33
     Height = 33
     Brush.Color = clMedGray
   end
   object Shape_MODE_SAMPLE: TShape
-    Left = 8
-    Top = 72
-    Width = 89
-    Height = 17
+    Left = 552
+    Top = 8
+    Width = 153
+    Height = 57
     Brush.Color = clMedGray
+    Shape = stRoundRect
   end
   object Shape_SENSOR_AT_TOP: TShape
     Left = 224
-    Top = 8
+    Top = 4
     Width = 33
     Height = 17
     Brush.Color = clMedGray
@@ -56,7 +57,7 @@ object Form1: TForm1
   end
   object Shape_SENSOR_AT_BOTTOM: TShape
     Left = 224
-    Top = 72
+    Top = 60
     Width = 33
     Height = 17
     Brush.Color = clMedGray
@@ -64,7 +65,7 @@ object Form1: TForm1
   end
   object Shape_Circle: TShape
     Left = 224
-    Top = 32
+    Top = 24
     Width = 33
     Height = 33
     Brush.Color = clMedGray
@@ -72,20 +73,36 @@ object Form1: TForm1
   end
   object ImageVisual: TImage
     Left = 8
-    Top = 112
-    Width = 817
-    Height = 97
+    Top = 80
+    Width = 697
+    Height = 73
   end
   object Shape_SENSOR_AT: TShape
     Left = 264
-    Top = 6
+    Top = 0
     Width = 25
     Height = 25
     Shape = stCircle
   end
+  object Label1: TLabel
+    Left = 552
+    Top = 24
+    Width = 153
+    Height = 23
+    Alignment = taCenter
+    AutoSize = False
+    Caption = #1054#1073#1088#1072#1079#1077#1094
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindow
+    Font.Height = -21
+    Font.Name = 'Times New Roman'
+    Font.Style = []
+    ParentFont = False
+    Transparent = True
+  end
   object Panel1: TPanel
     Left = 8
-    Top = 16
+    Top = 8
     Width = 89
     Height = 57
     Caption = 'Panel1'
@@ -116,7 +133,7 @@ object Form1: TForm1
   end
   object Panel3: TPanel
     Left = 104
-    Top = 16
+    Top = 8
     Width = 89
     Height = 57
     Caption = 'Panel1'
@@ -146,8 +163,8 @@ object Form1: TForm1
     end
   end
   object Memo1: TMemo
-    Left = 320
-    Top = 16
+    Left = 304
+    Top = 8
     Width = 233
     Height = 57
     Font.Charset = DEFAULT_CHARSET
@@ -167,18 +184,18 @@ object Form1: TForm1
       'n5MyCon'
     LoginPrompt = False
     Provider = 'MSDASQL.1'
-    Left = 568
-    Top = 16
+    Left = 728
+    Top = 24
   end
   object ADOQuery1: TADOQuery
     Connection = ADOConnection1
     Parameters = <>
-    Left = 600
-    Top = 16
+    Left = 760
+    Top = 24
   end
   object TimerStart: TTimer
     OnTimer = TimerStartTimer
-    Left = 640
-    Top = 8
+    Left = 792
+    Top = 24
   end
 end

@@ -20,9 +20,10 @@ eParity    PortParity;
 TBoxRead  *BoxRead = NULL;
 TWriteLog *WriteLog = NULL;
 
-#define D_MaxLenTube  15000
-#define D_ImageOffsetX 50
-#define D_ImageOffsetY 50
+#define D_MaxLenTube  12000
+#define D_LenRull     6
+#define D_ImageOffsetX 5
+#define D_ImageOffsetY 20
 
 #define TUBE_HERE1              2       // наличие трубы д1 *
 
@@ -54,7 +55,11 @@ __fastcall TMShape::TMShape(Classes::TComponent* AOwner)
 __fastcall TForm1::TForm1(TComponent* Owner)
         : TForm(Owner)
 {
-        Caption = "версия от 2014.03.21";
+        Caption = "версия от 2014.03.25";
+        Form1->Constraints->MaxWidth  = Form1->Width;
+        Form1->Constraints->MinWidth  = Form1->Width;
+        Form1->Constraints->MaxHeight = Form1->Height;
+        Form1->Constraints->MinHeight = Form1->Height;
         ViewKoleso = new TViewKoleso(Shape_Circle);
         FlNewTube = false;
         Img_ClearAll(ImageVisual);
@@ -115,13 +120,20 @@ void __fastcall TForm1::Img_ClearAll(TImage *Img)
         Img->Canvas->Unlock();
         // line
         Img->Canvas->Lock();
-        int m = D_MaxLenTube/1000;
+        int m = D_LenRull;
+        int h;
+        AnsiString sstt;
         for(int x=0;x<(m+1);x++)
         {
                 Img->Canvas->Pen->Width = 3;
                 Img->Canvas->Pen->Color = clGreen;
-                Img->Canvas->MoveTo(D_ImageOffsetX+x*(ImgV_TubeMaxPix/(D_MaxLenTube/1000)) ,D_ImageOffsetY);
-                Img->Canvas->LineTo(D_ImageOffsetX+x*(ImgV_TubeMaxPix/(D_MaxLenTube/1000)) ,D_ImageOffsetY-(D_ImageOffsetY/3));
+                h = D_ImageOffsetX+x*(ImgV_TubeMaxPix/(D_MaxLenTube/1000));
+                Img->Canvas->MoveTo(h, D_ImageOffsetY);
+                Img->Canvas->LineTo(h, D_ImageOffsetY-(D_ImageOffsetY/3));
+                Img->Canvas->Font->Size = 9;
+                Img->Canvas->Font->Color = clYellow;
+                sstt = IntToStr(x);
+                Img->Canvas->TextOutA(h - Img->Canvas->TextWidth(sstt)/2 , D_ImageOffsetY-(D_ImageOffsetY/3)-Img->Canvas->TextHeight(sstt) , sstt);
         }
         Img->Canvas->Unlock();
         Img_Clear(Img, nX, nY, eX, eY, m);
@@ -333,14 +345,14 @@ void __fastcall TForm1::EvaSensorWild(int lvl)
 void __fastcall TForm1::EvaSensorAtTop(int lvl)
 {
     Shape_SENSOR_AT->Brush->Color = clRed;
-    Shape_SENSOR_AT->Top = 6;
+    Shape_SENSOR_AT->Top = 0;
 }
 //---------------------------------------------------------------------------
 // Sensors At Bottom
 void __fastcall TForm1::EvaSensorAtBottom(int lvl)
 {
     Shape_SENSOR_AT->Brush->Color = clLime;
-    Shape_SENSOR_AT->Top = 70;
+    Shape_SENSOR_AT->Top = 56;
 }
 //---------------------------------------------------------------------------
 // Sensors At Show
@@ -410,8 +422,8 @@ double __fastcall TForm1::EvaSensorTubeBegin()
     nY = D_ImageOffsetY + 1;
     eX = ImageVisual->Width -1;
     eY = ImageVisual->Height -1;
-    Img_Clear(ImageVisual, nX, nY, eX, eY, 15);
-    Img_Setka(ImageVisual, nX, nY, eX, eY, 15);
+    Img_Clear(ImageVisual, nX, nY, eX, eY, D_LenRull);
+    Img_Setka(ImageVisual, nX, nY, eX, eY, D_LenRull);
     vLenTubeSegment = D_MaxLenTube/LenSegmentTube;
     return LenSegmentTube;
 }
@@ -463,7 +475,6 @@ void __fastcall TForm1::EvaSensorTubeEnd(int len, signed char *massDefect, int f
         }
     }
     // =========================================================
-    //Label14->Caption = "-//-";
     // set
     TDateTime DtTm = Now();
     AnsiString vDate = FormatDateTime("yyyy-mm-dd", DtTm);
@@ -480,10 +491,20 @@ void __fastcall TForm1::EvaSensorTubeEnd(int len, signed char *massDefect, int f
 // Sensor Sample
 void __fastcall TForm1::EvaSample(int trg, int lvl)
 {
+    TColor clCvet;
     if (!lvl)
         Shape_MODE_SAMPLE->Brush->Color = clLime;
     else
-        Shape_MODE_SAMPLE->Brush->Color = (trg)?clGreen:clWhite;
+        clCvet = (trg)?clGreen:clWhite;
+    Shape_MODE_SAMPLE->Brush->Color = clCvet;
+    int codeCvet = 0;
+    for (int i=0; i<3; i++)
+        codeCvet = codeCvet +((unsigned char *) & clCvet)[i];
+    codeCvet = codeCvet/3;
+    if (codeCvet<110)
+        Label1->Font->Color = clWhite;
+    else
+        Label1->Font->Color = clBlack;
 }
 //---------------------------------------------------------------------------
 // Sensor Circle Show flash
@@ -534,7 +555,7 @@ void __fastcall TForm1::EvaCircleMove(signed char *massDefect, int curPosition)
     }
     ImageVisual->Canvas->Unlock();
     // сетка
-    Img_Setka(ImageVisual, nX, nY, eX, eY, 15);
+    Img_Setka(ImageVisual, nX, nY, eX, eY, D_LenRull);
 }
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
