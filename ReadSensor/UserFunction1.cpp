@@ -268,7 +268,7 @@ void __fastcall Show_LenTubeClear()
 AnsiString __fastcall WriteFlTreeComp(int p,
         AnsiString year, AnsiString mes, AnsiString day,
         AnsiString smena, AnsiString melt,
-        int rulon, int tube, AnsiString aTime)
+        int rulon, int tube, AnsiString aTime, int defTube)
 {
     if (p>6)
         return "";
@@ -291,6 +291,12 @@ AnsiString __fastcall WriteFlTreeComp(int p,
                     sstring = "\t\t\t\t\t\tК.О. "    + aTime;
                  else
                     sstring = "\t\t\t\t\t\tТруба № " + IntToStr(tube);
+                 if (defTube==0)
+                    sstring = sstring;
+                 if (defTube==1)
+                    sstring = sstring + " ";
+                 if (defTube==2)
+                    sstring = sstring + char(9);
                  break;
     }
      sstring = sstring + "\r\n";
@@ -311,11 +317,12 @@ void __fastcall WriteFlTree(TADOConnection *connect)
     Query->SQL->Add(",`defectsdata`.`DatePr`");
     Query->SQL->Add(",`defectsdata`.`TimePr`");
     Query->SQL->Add(",`defectsdata`.`NumberTube`");
+    Query->SQL->Add(",`defectsdata`.`FlDefectTube`");
     Query->SQL->Add(",`melts`.`NameMelt`");
     Query->SQL->Add(",`parameters`.`NumberRoll`");
     Query->SQL->Add(",`parameters`.`Id_WorkSmen`");
-    Query->SQL->Add(",`worksmens`.`NameSmen`");
     Query->SQL->Add(",`parameters`.`Id_Melt`");
+    Query->SQL->Add(",`worksmens`.`NameSmen`");
     Query->SQL->Add("FROM");
     Query->SQL->Add("`defectsdata`");
     Query->SQL->Add("Left Join `parameters` ON `defectsdata`.`Id_Param` = `parameters`.`Id_Param`");
@@ -330,7 +337,7 @@ void __fastcall WriteFlTree(TADOConnection *connect)
     AnsiString nYear, nMesiac, nDay;
     int nIdSmena, nIdMelt;
     AnsiString aSmena, aMelt, aTime;
-    int nRoll, numberTube;
+    int nRoll, numberTube, aDefTube;
     //
     TDate oDate;
     AnsiString oYear, oMesiac, oDay;
@@ -349,6 +356,7 @@ void __fastcall WriteFlTree(TADOConnection *connect)
     aTime      = FormatDateTime("(hh:nn:ss)", nTime);
     nRoll      = Query->FieldByName("NumberRoll")->AsInteger;
     numberTube = Query->FieldByName("NumberTube")->AsInteger;
+    aDefTube   = Query->FieldByName("FlDefectTube")->AsInteger;
     Query->Next();
     oDate      = Query->FieldByName("DatePr")->AsDateTime;
     oYear      = FormatDateTime("yyyy", oDate);
@@ -375,29 +383,29 @@ void __fastcall WriteFlTree(TADOConnection *connect)
 	AnsiString s;
     flg = flg | (nYear!=oYear);
     if (flg)
-	{	s=WriteFlTreeComp(0, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+	{	s=WriteFlTreeComp(0, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime, aDefTube);
 		pFileTree->Write(s.c_str(), s.Length()); }
     flg = flg | (nMesiac!=oMesiac);
     if (flg)
-	{	s=WriteFlTreeComp(1, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+	{	s=WriteFlTreeComp(1, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime, aDefTube);
 		pFileTree->Write(s.c_str(), s.Length()); }
     flg = flg | (nDay!=oDay);
     if (flg)
-	{	s=WriteFlTreeComp(2, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+	{	s=WriteFlTreeComp(2, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime, aDefTube);
 		pFileTree->Write(s.c_str(), s.Length()); }
     flg = flg | (nIdSmena!=oIdSmena);
     if (flg)
-	{	s=WriteFlTreeComp(3, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+	{	s=WriteFlTreeComp(3, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime, aDefTube);
 		pFileTree->Write(s.c_str(), s.Length()); }
     flg = flg | (nIdMelt!=oIdMelt);
     if (flg)
-	{	s=WriteFlTreeComp(4, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+	{	s=WriteFlTreeComp(4, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime, aDefTube);
 		pFileTree->Write(s.c_str(), s.Length()); }
     flg = flg | (nRoll!=oRoll);
     if (flg)
-	{	s=WriteFlTreeComp(5, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+	{	s=WriteFlTreeComp(5, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime, aDefTube);
 		pFileTree->Write(s.c_str(), s.Length()); }
-    s=WriteFlTreeComp(6, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime);
+    s=WriteFlTreeComp(6, nYear, nMesiac, nDay, aSmena, aMelt, nRoll, numberTube, aTime, aDefTube);
 	pFileTree->Write(s.c_str(), s.Length());
 
 	delete pFileTree;

@@ -20,12 +20,11 @@ eParity    PortParity;
 TBoxRead  *BoxRead = NULL;
 TWriteLog *WriteLog = NULL;
 
-#define D_MaxLenTube  12000
-#define D_LenRull     6
+int D_MaxLenTube;
+int D_LenRull;
+int C_Begin, C_End, C_Seg;
 #define D_ImageOffsetX 5
 #define D_ImageOffsetY 20
-
-#define TUBE_HERE1              2       // наличие трубы д1 *
 
 
 bool UnicalFlDefect = false;
@@ -55,14 +54,13 @@ __fastcall TMShape::TMShape(Classes::TComponent* AOwner)
 __fastcall TForm1::TForm1(TComponent* Owner)
         : TForm(Owner)
 {
-        Caption = "версия от 2014.03.25";
+        Caption = "версия от 2014.03.26";
         Form1->Constraints->MaxWidth  = Form1->Width;
         Form1->Constraints->MinWidth  = Form1->Width;
         Form1->Constraints->MaxHeight = Form1->Height;
         Form1->Constraints->MinHeight = Form1->Height;
         ViewKoleso = new TViewKoleso(Shape_Circle);
         FlNewTube = false;
-        Img_ClearAll(ImageVisual);
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::FormCloseQuery(TObject *Sender, bool &CanClose)
@@ -152,7 +150,7 @@ void __fastcall TForm1::Img_Setka(TImage *Img, int nX, int nY, int eX, int eY, i
 {
         ImageVisual->Canvas->Lock();
         int kn, ke, kd;
-        const int c = 5;
+        const int c = C_Seg;
         for (int x=0; x<m; x++)
         {
             kn = (x+0)*(ImgV_TubeMaxPix/(D_MaxLenTube/1000) );
@@ -177,14 +175,63 @@ void __fastcall TForm1::Img_Setka(TImage *Img, int nX, int nY, int eX, int eY, i
 //---------------------------------------------------------------------------
 void __fastcall TForm1::TimerStartTimer(TObject *Sender)
 {
-        ((TTimer*)Sender)->Enabled = false;
+    ((TTimer*)Sender)->Enabled = false;
+    // ===========================================================================
+    TIniFile *ifile = new TIniFile( ChangeFileExt( Application->ExeName, ".ini" ) );
+    // checked open ini file
+    if (!ifile)
+    {
+        ShowMessage("Ошибка открытия ini файла");
+        Form1->Close();
+        return;
+    }
+    int   fDebugMode;
+    int   lTubeHere1,    lTubeHere2;
+    // read parametrs : len rull
+    D_LenRull    =          ifile->ReadInteger("Ruler",       "Len",       15);
+    // read parametrs : com port
+    PortName   =            ifile->ReadString ("comm",        "Name",      "COM1" );
+    PortBaud   = (eBaudRate)ifile->ReadInteger("comm",        "Baud",      CBR_38400);
+    PortParity = (eParity)  ifile->ReadInteger("comm",        "Parity",    NO);
+    // read parametrs : system debug
+    fDebugMode =            ifile->ReadInteger("system",      "DebugMode", 0);
+    // read parametrs : lenght from sensor defectoskop to sensors tube here
+    lTubeHere1 =            ifile->ReadInteger("SensorsTube", "Here1",     720);
+    lTubeHere2 =            ifile->ReadInteger("SensorsTube", "Here2",     340);
+    // read parametrs : no control tube
+    C_Begin =               ifile->ReadInteger("NoControlTube", "Begin",   2);
+    C_End =                 ifile->ReadInteger("NoControlTube", "End",     2);
+    // read parametrs : n lines to metr
+    C_Seg =                 ifile->ReadInteger("LinesMetr",     "n",       5);
+        // ----------------------------------------------------
+    // write parametrs : len rull
+    ifile->WriteInteger("Ruler",       "Len",       D_LenRull);
+    // write parametrs : com port
+    ifile->WriteString ("comm",        "Name",      PortName);
+    ifile->WriteInteger("comm",        "Baud",      PortBaud);
+    ifile->WriteInteger("comm",        "Parity",    PortParity);
+    // write parametrs : system debug
+    ifile->WriteInteger("system",      "DebugMode", fDebugMode);
+    // write parametrs : lenght from sensor defectoskop to sensors tube here
+    ifile->WriteInteger("SensorsTube", "Here1",     lTubeHere1);
+    ifile->WriteInteger("SensorsTube", "Here2",     lTubeHere2);
+    // write parametrs : no control tube
+    ifile->WriteInteger("NoControlTube", "Begin",   C_Begin);
+    ifile->WriteInteger("NoControlTube", "End",     C_End);
+    // read parametrs : n lines to metr
+    ifile->WriteInteger("LinesMetr",     "n",       C_Seg);
+    // close ini file
+    delete ifile;
+    D_MaxLenTube = D_LenRull * 1000;
+    // ===========================================================================
+            Img_ClearAll(ImageVisual);
+    // ===========================================================================
+
         int         IdParamLast  , IdParamNew;
         int         IdMeltLast   , IdMeltNew;
         AnsiString  CodeMeltLast , CodeMeltNew;
         double      SizeTubeLast , SizeTubeNew;
         int         statusLast   , statusNew;
-        int         fDebugMode;
-        int         lTubeHere1,    lTubeHere2;     
 // ******************************************************************************************
         WriteLog = new TWriteLog;
 // ******************************************************************************************
@@ -228,30 +275,6 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
         WriteLog->Push("init massive shape");
 // ******************************************************************************************
 // Initialize com port
-    TIniFile *ifile = new TIniFile( ChangeFileExt( Application->ExeName, ".ini" ) );
-    // checked open ini file
-    if (!ifile)
-    {
-        ShowMessage("Ошибка открытия ini файла");
-        Form1->Close();
-        return;
-    }
-    // read parametrs com port
-    PortName   =            ifile->ReadString ("comm",        "Name",      "COM1" );
-    PortBaud   = (eBaudRate)ifile->ReadInteger("comm",        "Baud",      CBR_38400);
-    PortParity = (eParity)  ifile->ReadInteger("comm",        "Parity",    NO);
-    fDebugMode =            ifile->ReadInteger("system",      "DebugMode", 0);
-    lTubeHere1 =            ifile->ReadInteger("SensorsTube", "Here1",     720);
-    lTubeHere2 =            ifile->ReadInteger("SensorsTube", "Here2",     340);
-    // write default parametrs
-    ifile->WriteString ("comm",        "Name",      PortName);
-    ifile->WriteInteger("comm",        "Baud",      PortBaud);
-    ifile->WriteInteger("comm",        "Parity",    PortParity);
-    ifile->WriteInteger("system",      "DebugMode", fDebugMode);
-    ifile->WriteInteger("SensorsTube", "Here1",     lTubeHere1);
-    ifile->WriteInteger("SensorsTube", "Here2",     lTubeHere2);
-    // close ini file
-    delete ifile;
     //ifile = NULL;
     // create
     Port = new TComPort;
@@ -449,7 +472,8 @@ void __fastcall TForm1::EvaSensorTubeEnd(int len, signed char *massDefect, int f
     }
     // =========================================================
     // flag tube defect
-    bool FlagDefectTube = false;
+    int FlagDefectTube = 0;
+    int FlagNoControlTube = 0;
     int  nTube;
     // =========================================================
     // Number tube +1 if no sample
@@ -470,10 +494,15 @@ void __fastcall TForm1::EvaSensorTubeEnd(int len, signed char *massDefect, int f
     {
         zn = massDefect[i];
         if ( zn>0 )
+            FlagDefectTube = 1;
+        if ( (i>=C_Begin) && (i<(len-C_End)) )
         {
-            FlagDefectTube = FlagDefectTube | true;
+            if (zn<0)
+                FlagNoControlTube = 1;
         }
     }
+    if (FlagNoControlTube!=0)
+        FlagDefectTube = 2;
     // =========================================================
     // set
     TDateTime DtTm = Now();
@@ -492,16 +521,17 @@ void __fastcall TForm1::EvaSensorTubeEnd(int len, signed char *massDefect, int f
 void __fastcall TForm1::EvaSample(int trg, int lvl)
 {
     TColor clCvet;
+    int clCvetF;
     if (!lvl)
-        Shape_MODE_SAMPLE->Brush->Color = clLime;
+        clCvet = clLime;
     else
         clCvet = (trg)?clGreen:clWhite;
     Shape_MODE_SAMPLE->Brush->Color = clCvet;
-    int codeCvet = 0;
+    clCvetF = 0;
     for (int i=0; i<3; i++)
-        codeCvet = codeCvet +((unsigned char *) & clCvet)[i];
-    codeCvet = codeCvet/3;
-    if (codeCvet<110)
+        clCvetF = clCvetF +((unsigned char *) & clCvet)[i];
+    clCvetF = clCvetF/2;
+    if (clCvetF<110)
         Label1->Font->Color = clWhite;
     else
         Label1->Font->Color = clBlack;

@@ -194,6 +194,7 @@ object Form1: TForm1
     Top = 24
   end
   object TimerStart: TTimer
+    Interval = 1
     OnTimer = TimerStartTimer
     Left = 792
     Top = 24
