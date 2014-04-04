@@ -10,6 +10,7 @@
 *.~*
 *.obj
 *.dcu
+*.hpp
 *.tds
 *.exe
 log.txt
