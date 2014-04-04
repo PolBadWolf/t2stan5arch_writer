@@ -28,8 +28,6 @@ int C_Begin, C_End, C_Seg;
 #define D_ImageOffsetY 20
 bool UnicalFlDefect = false;
 
-// chas
-#define Sec_Porog  3600
 TConnSec vSec;
 
 class TMassFields
@@ -622,6 +620,7 @@ void __fastcall TForm1::TimerSecReadTimer(TObject *Sender)
     {
         try
         {
+            WriteLog->Push("'TForm1::SecRead': enter to OBDC reconnect");
             ADOConnRead->Cancel();
             ADOConnRead->Close();
             ADOConnRead->Open();
@@ -631,6 +630,7 @@ void __fastcall TForm1::TimerSecReadTimer(TObject *Sender)
         }
         catch(...)
         {
+            WriteLog->Push("'TForm1::SecRead': fail OBDC reconnect");
             TimerSecRead->Interval = 60000;
         }
     }
@@ -646,6 +646,7 @@ void __fastcall TForm1::TimerSecWriteTimer(TObject *Sender)
     {
         try
         {
+            WriteLog->Push("'TForm1::SecWrite': enter to OBDC reconnect");
             ADOConnWrite->Cancel();
             ADOConnWrite->Close();
             ADOConnWrite->Open();
@@ -655,6 +656,7 @@ void __fastcall TForm1::TimerSecWriteTimer(TObject *Sender)
         }
         catch(...)
         {
+            WriteLog->Push("'TForm1::SecWrite': fail OBDC reconnect");
             TimerSecRead->Interval = 60000;
         }
     }

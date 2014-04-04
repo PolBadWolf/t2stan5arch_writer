@@ -15,6 +15,8 @@
 #include <DB.hpp>
 #include "ColorBtn.hpp"
 //---------------------------------------------------------------------------
+// chas
+#define Sec_Porog  3600
 
 
 class TForm1 : public TForm

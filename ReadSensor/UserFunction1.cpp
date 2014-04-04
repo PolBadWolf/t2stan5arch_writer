@@ -35,58 +35,72 @@ double __fastcall FnDiametr2LenSegment(double D_Tube)
 
 int  __fastcall TForm1::ReadFromBDLastNumberTude(TADOConnection *connect)
 {
-    TField *Pole;
     int  Resultat = -1;
-    TADOQuery *dQuery = new TADOQuery(connect->Owner);
-    if (dQuery==NULL)
-        return Resultat;
-    __try
+    int  zn;
+    if (connect->Connected==false)
     {
-        if (connect->Connected==false)
-            connect->Open();
-        dQuery->Connection = connect;
-        dQuery->CommandTimeout = 1;
-        dQuery->Close();
-        // ====================================================
-        // find last number tube ( no sample )
-        dQuery->SQL->Clear();
-        dQuery->SQL->Add("SELECT *");
-        dQuery->SQL->Add("FROM `defectsdata`");
-        dQuery->SQL->Add("WHERE");
-        dQuery->SQL->Add("   `NumberTube` <>  '0'");
-        dQuery->SQL->Add("ORDER BY");
-        dQuery->SQL->Add("   `IndexData` DESC");
-        dQuery->SQL->Add("LIMIT 1");
-        dQuery->Open();
-        // find field
-        Pole = dQuery->FindField("NumberTube");
-        if (Pole==NULL)
-        {   // Date Base Error
-            Application->MessageBox("Not found field \"NumberTube\" " , "Date Base Error", 0);
-            Form1->Close();
-        } else
-        if ( dQuery->RecordCount==0 )
-        {   // no records - set number 0
-            Resultat = 0;
+        return Resultat;
+    }
+    TField *Pole = NULL;
+    TADOQuery *dQuery;
+    try
+    {
+        dQuery = new TADOQuery(connect->Owner);
+        if (dQuery!=NULL)
+        {
+            dQuery->Connection = connect;
+            dQuery->Close();
+            // ====================================================
+            // find last number tube ( no sample )
+            dQuery->SQL->Clear();
+            dQuery->SQL->Add("SELECT *");
+            dQuery->SQL->Add("FROM `defectsdata`");
+            dQuery->SQL->Add("WHERE");
+            dQuery->SQL->Add("   `NumberTube` <>  '0'");
+            dQuery->SQL->Add("ORDER BY");
+            dQuery->SQL->Add("   `IndexData` DESC");
+            dQuery->SQL->Add("LIMIT 1");
+            dQuery->Open();
+            // find field
+            Pole = dQuery->FindField("NumberTube");
+            zn = dQuery->RecordCount;
+        }
+    }
+    catch(...)
+    {
+        // log error
+        Pole = NULL;
+    }
+    if (Pole!=NULL)
+    {
+        if (zn==0)
+        {
+            Resultat = 0; // base clear
+            vSec.SecRead = 0;
         }
         else
         {
-            // set number tube
-            Resultat = Pole->Value;
-            vSec.SecRead = 0;
+            try
+            {
+                Resultat = Pole->AsInteger;
+                vSec.SecRead = 0;
+            }
+            catch(...)
+            {
+                Resultat = -1;
+                vSec.SecRead = Sec_Porog;
+            }
         }
     }
-    __finally
+    try
     {
-        __try
-        {
-            dQuery->Close();
-        }
-        __finally
-        {
-            return Resultat;
-        }
+        dQuery->Close();
     }
+    catch(...)
+    {
+        // error
+    }
+    return Resultat;
 }
 
 Variant __fastcall ReadField(TADOQuery *fQuery, AnsiString FieldName, int *status)
@@ -113,15 +127,20 @@ Variant __fastcall ReadField(TADOQuery *fQuery, AnsiString FieldName, int *statu
 int  __fastcall TForm1::ReadFromBDLastParametrs(TADOConnection *connect, int *id_parametr, int *id_melt, AnsiString *CodeMelt, double *SizeTube)
 {
     int status = 1;
-    TADOQuery *dQuery = new TADOQuery(connect->Owner);
-    if (dQuery==NULL)
-        return 1;
-    __try
+    if (connect->Connected==false)
     {
-        if (connect->Connected==false)
-            connect->Open();
+        *id_parametr = 0;
+        *id_melt = 0;
+        *CodeMelt = "No Melt";
+        *SizeTube = 0;
+        return status;
+    }
+    TADOQuery *dQuery;
+    int zc;
+    try
+    {
+        dQuery = new TADOQuery(connect->Owner);
         dQuery->Connection = connect;
-        dQuery->CommandTimeout = 1;
         dQuery->Close();
         dQuery->SQL->Clear();
         dQuery->SQL->Add("SELECT");
@@ -138,6 +157,7 @@ int  __fastcall TForm1::ReadFromBDLastParametrs(TADOConnection *connect, int *id
         dQuery->SQL->Add("`defectsdata`.`IndexData` DESC");
         dQuery->SQL->Add("LIMIT 1");
         dQuery->Open();
+        //
         if (dQuery->RecordCount==0)
         { // no records
             status = 1;
@@ -145,9 +165,11 @@ int  __fastcall TForm1::ReadFromBDLastParametrs(TADOConnection *connect, int *id
             *id_melt = 0;
             *CodeMelt = "No Melt";
             *SizeTube = 0;
+            vSec.SecRead = 0;
         }
         else
         {
+            status = 0;
             *id_parametr = ReadField( dQuery, "id_parametr", &status);
             *id_melt     = ReadField( dQuery, "id_melt",     &status);
             *CodeMelt    = ReadField( dQuery, "CodeMelt",    &status);
@@ -155,155 +177,187 @@ int  __fastcall TForm1::ReadFromBDLastParametrs(TADOConnection *connect, int *id
             vSec.SecRead = 0;
         }
     }
-    __finally
+    catch(...)
     {
-        __try
-        {
-            dQuery->Close();
-        }
-        __finally
-        {
-            return status;
-        }
+        status = 1;
+        *id_parametr = 0;
+        *id_melt = 0;
+        *CodeMelt = "No Melt";
+        *SizeTube = 0;
+        vSec.SecRead = Sec_Porog;
     }
+
+    try
+    {
+        dQuery->Close();
+    }
+    catch(...)
+    {
+        //error
+        status = 1;
+    }
+    return status;
 }
 
 int  __fastcall TForm1::ReadFromBDNewParametrs(TADOConnection *connect, int *id_parametr, int *id_melt, AnsiString *CodeMelt, double *SizeTube)
 {
     int status = 1;
-    TADOQuery *dQuery = new TADOQuery(connect->Owner);
-    TADOQuery *cQuery = new TADOQuery(connect->Owner);
-    if (dQuery==NULL)
+    if (connect->Connected==false)
         return status;
-    if (cQuery==NULL)
-        return status;
+    TADOQuery *dQuery = NULL;
+    TADOQuery *cQuery = NULL;
     int cid;
-    __try
+    try
     {
-        if (connect->Connected==false)
-            connect->Open();
-        cQuery->Connection = connect;
-        cQuery->CommandTimeout = 1;
-        cQuery->SQL->Clear();
-        cQuery->SQL->Add("SELECT");
-        cQuery->SQL->Add(" `parameters`.`Id_Param` AS `id_parametr`");
-        cQuery->SQL->Add("FROM");
-        cQuery->SQL->Add("`parameters`");
-        cQuery->SQL->Add("ORDER BY");
-        cQuery->SQL->Add("`parameters`.`Id_Param` DESC");
-        cQuery->SQL->Add("LIMIT 1");
-
-        dQuery->Connection = connect;
-        dQuery->CommandTimeout = 1;
-        dQuery->SQL->Clear();
-        dQuery->SQL->Add("SELECT");
-        dQuery->SQL->Add(" `parameters`.`Id_Param` AS `id_parametr`");
-        dQuery->SQL->Add(",`parameters`.`Id_Melt` AS `id_melt`");
-        dQuery->SQL->Add(",`melts`.`NameMelt` AS `CodeMelt`");
-        dQuery->SQL->Add(",`sizetube`.`SizeTube` AS `SizeTube`");
-        dQuery->SQL->Add("FROM");
-        dQuery->SQL->Add("`parameters`");
-        dQuery->SQL->Add("Inner Join `melts` ON `parameters`.`Id_Melt` = `melts`.`Id_Melt`");
-        dQuery->SQL->Add("Inner Join `sizetube` ON `melts`.`Id_SizeTube` = `sizetube`.`Id_SizeTube`");
-        dQuery->SQL->Add("ORDER BY");
-        dQuery->SQL->Add("`parameters`.`Id_Param` DESC");
-        dQuery->SQL->Add("LIMIT 1");
-
-        dQuery->Open();
-        cQuery->Open();
-        if (dQuery->RecordCount==0)
-        { // no records
-            *id_parametr = 0;
-            *id_melt = 0;
-            *CodeMelt = "No Melt";
-            *SizeTube = 0;
+        dQuery = new TADOQuery(connect->Owner);
+        cQuery = new TADOQuery(connect->Owner);
+        if ( (dQuery==NULL) || (cQuery==NULL) )
+        {
+            status = 1;
         }
         else
         {
-            status = 0;
-            cid          = ReadField( cQuery, "id_parametr", &status);
-            *id_parametr = ReadField( dQuery, "id_parametr", &status);
-            *id_melt     = ReadField( dQuery, "id_melt",     &status);
-            *CodeMelt    = ReadField( dQuery, "CodeMelt",    &status);
-            *SizeTube    = ReadField( dQuery, "SizeTube",    &status);
-            if ( (*id_parametr)!=cid )
-                status = -1; // ошибка BD
-            vSec.SecRead = 0;
+            try
+            {
+                cQuery->Connection = connect;
+                cQuery->CommandTimeout = 1;
+                cQuery->SQL->Clear();
+                cQuery->SQL->Add("SELECT");
+                cQuery->SQL->Add(" `parameters`.`Id_Param` AS `id_parametr`");
+                cQuery->SQL->Add("FROM");
+                cQuery->SQL->Add("`parameters`");
+                cQuery->SQL->Add("ORDER BY");
+                cQuery->SQL->Add("`parameters`.`Id_Param` DESC");
+                cQuery->SQL->Add("LIMIT 1");
+                //
+                dQuery->Connection = connect;
+                dQuery->CommandTimeout = 1;
+                dQuery->SQL->Clear();
+                dQuery->SQL->Add("SELECT");
+                dQuery->SQL->Add(" `parameters`.`Id_Param` AS `id_parametr`");
+                dQuery->SQL->Add(",`parameters`.`Id_Melt` AS `id_melt`");
+                dQuery->SQL->Add(",`melts`.`NameMelt` AS `CodeMelt`");
+                dQuery->SQL->Add(",`sizetube`.`SizeTube` AS `SizeTube`");
+                dQuery->SQL->Add("FROM");
+                dQuery->SQL->Add("`parameters`");
+                dQuery->SQL->Add("Inner Join `melts` ON `parameters`.`Id_Melt` = `melts`.`Id_Melt`");
+                dQuery->SQL->Add("Inner Join `sizetube` ON `melts`.`Id_SizeTube` = `sizetube`.`Id_SizeTube`");
+                dQuery->SQL->Add("ORDER BY");
+                dQuery->SQL->Add("`parameters`.`Id_Param` DESC");
+                dQuery->SQL->Add("LIMIT 1");
+                //
+                dQuery->Open();
+                cQuery->Open();
+                //
+                if (dQuery->RecordCount==0)
+                { // no records
+                    status = 1; // ??????
+                    *id_parametr = 0;
+                    *id_melt = 0;
+                    *CodeMelt = "No Melt";
+                    *SizeTube = 0;
+                }
+                else
+                {
+                    status = 0;
+                    cid          = ReadField( cQuery, "id_parametr", &status);
+                    *id_parametr = ReadField( dQuery, "id_parametr", &status);
+                    *id_melt     = ReadField( dQuery, "id_melt",     &status);
+                    *CodeMelt    = ReadField( dQuery, "CodeMelt",    &status);
+                    *SizeTube    = ReadField( dQuery, "SizeTube",    &status);
+                    if ( (*id_parametr)!=cid )
+                        status = -1; // ошибка BD
+                    vSec.SecRead = 0;
+                }
+            }
+            catch(...)
+            {
+                status = 1;
+                vSec.SecRead = Sec_Porog;
+            }
         }
     }
-    __finally
+    catch(...)
     {
-        __try
-        {
-    dQuery->Close();
-    cQuery->Close();
-        }
-        __finally
-        {
-            dQuery->SQL->Clear();
-            cQuery->SQL->Clear();
-            delete cQuery;
-        }
+        status = 1;
     }
+    //
+    try { cQuery->Close(); }
+    catch(...) { status = 1; }
+    try { dQuery->Close(); }
+    catch(...) { status = 1; }
+    //
+    try { delete cQuery; }
+    catch(...) { status = 1; }
+    try { delete dQuery; }
+    catch(...) { status = 1; }
+    //
     return status;
 }
 
 void __fastcall WriteBD_Datas(TADOConnection *connect, int NumberTube, signed char *Massive, int Len, int GlagDefect, int IdParametr)
 {
-    TADOQuery *Query = new TADOQuery(connect->Owner);
-    if (Query==NULL)
+    if (connect->Connected==false)
+    {
+        vSec.SecWrite = Sec_Porog;
         return;
-    TDateTime DT = Now();
+    }
+    TADOQuery *Query;
     TMemoryStream *MS = new TMemoryStream;
+    try
+    {
+        Query = new TADOQuery(connect->Owner);
+        if (Query!=NULL)
+        {
+            TDateTime DT = Now();
+            MS->Clear();
+            MS->WriteBuffer(Massive, Len);
+            Query->Connection = connect;
+            Query->Close();
+            Query->Parameters->Clear();
+            Query->SQL->Clear();
+            Query->SQL->Add("INSERT INTO");
+            Query->SQL->Add("`defectsdata`");
+            Query->SQL->Add("(");
+            Query->SQL->Add(" `DatePr`");
+            Query->SQL->Add(",`TimePr`");
+            Query->SQL->Add(",`NumberTube`");
+            Query->SQL->Add(",`CountSegments`");
+            Query->SQL->Add(",`DataSensors`");
+            Query->SQL->Add(",`FlDefectTube`");
+            Query->SQL->Add(",`Id_Param`");
+            Query->SQL->Add(")");
+            Query->SQL->Add("values");
+            Query->SQL->Add("(");
+            Query->SQL->Add(" :IDATE");
+            Query->SQL->Add(",:ITIME");
+            Query->SQL->Add(", :INUMBERTUBE ");
+            Query->SQL->Add(", :ILEN ");
+            Query->SQL->Add(", :IMASS ");
+            Query->SQL->Add(", :IFLAG ");
+            Query->SQL->Add(", :IPARAM ");
+            Query->SQL->Add(")");
+            Query->Parameters->ParamByName("IDATE")      ->Value = FormatDateTime("yyyy-mm-dd", DT);
+            Query->Parameters->ParamByName("ITIME")      ->Value = FormatDateTime("hh:nn:ss"  , DT);
+            //
+            Query->Parameters->ParamByName("INUMBERTUBE")->Value = NumberTube;
+            Query->Parameters->ParamByName("ILEN")       ->Value = Len;
+            Query->Parameters->ParamByName("IMASS")      ->LoadFromStream(MS, ftBlob);
+            Query->Parameters->ParamByName("IFLAG")      ->Value = GlagDefect;
+            Query->Parameters->ParamByName("IPARAM")     ->Value = IdParametr;
+            Query->ExecSQL();
+            vSec.SecWrite = 0;
+        }
+    }
+    catch(...)
+    {
+        vSec.SecWrite = Sec_Porog;
+    }
+    //
     MS->Clear();
-    MS->WriteBuffer(Massive, Len);
-        if (connect->Connected==false)
-            connect->Open();
-    Query->Connection = connect;
-    Query->Close();
-    Query->Parameters->Clear();
-    Query->SQL->Clear();
-    Query->SQL->Add("INSERT INTO");
-    Query->SQL->Add("`defectsdata`");
-    Query->SQL->Add("(");
-    Query->SQL->Add(" `DatePr`");
-    Query->SQL->Add(",`TimePr`");
-    Query->SQL->Add(",`NumberTube`");
-    Query->SQL->Add(",`CountSegments`");
-    Query->SQL->Add(",`DataSensors`");
-    Query->SQL->Add(",`FlDefectTube`");
-    Query->SQL->Add(",`Id_Param`");
-    Query->SQL->Add(")");
-    Query->SQL->Add("values");
-    Query->SQL->Add("(");
-    Query->SQL->Add(" :IDATE");
-    Query->SQL->Add(",:ITIME");
-    Query->SQL->Add(", :INUMBERTUBE ");
-    Query->SQL->Add(", :ILEN ");
-    Query->SQL->Add(", :IMASS ");
-    Query->SQL->Add(", :IFLAG ");
-    Query->SQL->Add(", :IPARAM ");
-    Query->SQL->Add(")");
-    Query->Parameters->ParamByName("IDATE")      ->Value = FormatDateTime("yyyy-mm-dd", DT);
-    Query->Parameters->ParamByName("ITIME")      ->Value = FormatDateTime("hh:nn:ss"  , DT);
-
-    Query->Parameters->ParamByName("INUMBERTUBE")->Value = NumberTube;
-    Query->Parameters->ParamByName("ILEN")       ->Value = Len;
-    Query->Parameters->ParamByName("IMASS")      ->LoadFromStream(MS, ftBlob);
-    Query->Parameters->ParamByName("IFLAG")      ->Value = GlagDefect;
-    Query->Parameters->ParamByName("IPARAM")     ->Value = IdParametr;
-    __try
-    {
-        Query->ExecSQL();
-        vSec.SecWrite = 0;
-    }
-    __finally
-    {
-        MS->Clear();
-        delete MS;
-        delete Query;
-    }
-    // connect->Close();
+    delete MS;
+    try { Query->Close(); delete Query; }
+    catch(...) { vSec.SecWrite = Sec_Porog; }
 }
 
 void __fastcall Show_NumberTube(int nTube)
