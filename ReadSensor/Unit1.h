@@ -13,6 +13,9 @@
 #include "MShape.h"
 #include <ADODB.hpp>
 #include <DB.hpp>
+#include "ColorBtn.hpp"
+//---------------------------------------------------------------------------
+
 
 class TForm1 : public TForm
 {
@@ -25,8 +28,7 @@ __published:	// IDE-managed Components
         TShape *Shape_SENSOR_AT_BOTTOM;
         TShape *Shape_Circle;
         TImage *ImageVisual;
-        TADOConnection *ADOConnection1;
-        TADOQuery *ADOQuery1;
+    TADOConnection *ADOConnRead;
         TTimer *TimerStart;
     TPanel *Panel1;
     TPanel *Panel2;
@@ -37,8 +39,17 @@ __published:	// IDE-managed Components
     TMemo *Memo1;
     TShape *Shape_SENSOR_AT;
     TLabel *Label1;
+    TADOConnection *ADOConnWrite;
+    TButton *Button1;
+    TTimer *TimerSecRead;
+    TTimer *TimerSecWrite;
+    TLabel *Label2;
+    TLabel *Label3;
         void __fastcall FormCloseQuery(TObject *Sender, bool &CanClose);
         void __fastcall TimerStartTimer(TObject *Sender);
+    void __fastcall Button1Click(TObject *Sender);
+    void __fastcall TimerSecReadTimer(TObject *Sender);
+    void __fastcall TimerSecWriteTimer(TObject *Sender);
 private:	// User declarations
         bool FlNewTube;
         void __fastcall Img_ClearAll(TImage *Img);
@@ -47,35 +58,7 @@ private:	// User declarations
         int  ImgV_TubeMaxPix;
 public:		// User declarations
         __fastcall TForm1(TComponent* Owner);
-        /*
-        TShape *LampDat[16];
-        // === события ===
-        // изменение состояния датчиков
-        void __fastcall EvaSensor(int sn, int lvl);
-        // изменение состояния датчиков колеса
-        void __fastcall EvaCircleSensor(int sn);
-        // изменение положения датчика дефектоскопа
-        void __fastcall EvaSensorAt(int lvl);
-        // изменение состояние датчика дефект
-        void __fastcall EvaWeldDefect(int lvl);
-        // изменение состояние датчика калибровки
-        // 1 - калибровка, 0 - работа
-        void __fastcall EvaModeCalibrovka(int lvl, int fl_mod);
-        // сработка колеса
-        void __fastcall EvaCircle(int Napravl, int Dlina, int Position, int *MassDefect);
-        // завершение дефектоскопии
-        void __fastcall TubeEnd();
-        void __fastcall TubeBegin();
-        void __fastcall ShowSensorSample(TShape *Lamp, int lvl);
-        // offset from left sensor tube, unit mm        // отступ в мм от левого датчика
-        double otLmm;
-        // offset from left sensor tube, unit segment   // расчитанный отступ в шагах
-        int otStep;
-        // count segment for hold find defect in tube   // счетчик окончания замера после отключения левого датчика
-        int otCount;
-        // len last tube                                // длина трубы замеренной
-        int dTube;
-        */
+    TColorBtn *Butt2;
         double vLenTubeMM;
         int    vLenTubeSegment;
         // *********************************************************************************
@@ -112,10 +95,10 @@ public:		// User declarations
 
         // curent number tube
         int     CurentNumberTube;
-        int  __fastcall ReadFromBDLastNumberTude(TADOQuery *dQuery);
+        int  __fastcall ReadFromBDLastNumberTude(TADOConnection *connect);
         // **********
-        int  __fastcall ReadFromBDLastParametrs(TADOQuery *dQuery, int *id_parametr, int *id_melt, AnsiString *CodeMelt, double *SizeTube);
-        int  __fastcall ReadFromBDNewParametrs (TADOQuery *dQuery, int *id_parametr, int *id_melt, AnsiString *CodeMelt, double *SizeTube);
+        int  __fastcall ReadFromBDLastParametrs(TADOConnection *connect, int *id_parametr, int *id_melt, AnsiString *CodeMelt, double *SizeTube);
+        int  __fastcall ReadFromBDNewParametrs (TADOConnection *connect, int *id_parametr, int *id_melt, AnsiString *CodeMelt, double *SizeTube);
         // curent diametr tube
         double CurentDiametrTube;
         // id last melt
@@ -126,6 +109,58 @@ public:		// User declarations
         void __fastcall PortNewDate(TComPort *cPort, int RdByte);
 };
 //---------------------------------------------------------------------------
+class TConnSec
+{
+private:
+    int vSecRead;
+    int vSecWrite;
+    CRITICAL_SECTION secR;
+    CRITICAL_SECTION secW;
+    int __fastcall FrSecRead()
+    {
+        int x;
+        EnterCriticalSection(&secR);
+        x = vSecRead;
+        LeaveCriticalSection(&secR);
+        return x;
+    }
+    int __fastcall FrSecWrite()
+    {
+        int x;
+        EnterCriticalSection(&secW);
+        x = vSecWrite;
+        LeaveCriticalSection(&secW);
+        return x;
+    }
+    void __fastcall FwSecRead(int x)
+    {
+        EnterCriticalSection(&secR);
+        vSecRead = x;
+        LeaveCriticalSection(&secR);
+    }
+    void __fastcall FwSecWrite(int x)
+    {
+        EnterCriticalSection(&secW);
+        vSecWrite = x;
+        LeaveCriticalSection(&secW);
+    }
+public:
+    __fastcall TConnSec()
+    {
+        InitializeCriticalSection(&secR);
+        InitializeCriticalSection(&secW);
+        vSecRead = 0;
+        vSecWrite = 0;
+    }
+    __fastcall ~TConnSec()
+    {
+        DeleteCriticalSection(&secW);
+        DeleteCriticalSection(&secR);
+    }
+    __property int SecRead ={read=FrSecRead,  write=FwSecRead};
+    __property int SecWrite={read=FrSecWrite, write=FwSecWrite};
+};
+extern TConnSec vSec;
 extern PACKAGE TForm1 *Form1;
 extern bool UnicalFlDefect;
 //---------------------------------------------------------------------------

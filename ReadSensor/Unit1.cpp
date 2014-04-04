@@ -10,6 +10,7 @@
 #include "inifiles.hpp"
 #include "BoxRead.h"
 //---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 TForm1 *Form1;
@@ -19,29 +20,31 @@ eBaudRate  PortBaud;
 eParity    PortParity;
 TBoxRead  *BoxRead = NULL;
 TWriteLog *WriteLog = NULL;
-
+TColor  ButtonColorDefault;
 int D_MaxLenTube;
 int D_LenRull;
 int C_Begin, C_End, C_Seg;
 #define D_ImageOffsetX 5
 #define D_ImageOffsetY 20
-
-
 bool UnicalFlDefect = false;
+
+// chas
+#define Sec_Porog  3600
+TConnSec vSec;
 
 class TMassFields
 {
 public:
-        static int n;
-        AnsiString Name;
-        TFieldType Type;
-        Variant    Value;
-        __fastcall TMassFields()
-        {
-                Name  = "";
-                Type  = ftUnknown;
-                Value = NULL;
-        }
+    static int n;
+    AnsiString Name;
+    TFieldType Type;
+    Variant    Value;
+    __fastcall TMassFields()
+    {
+        Name  = "";
+        Type  = ftUnknown;
+        Value = NULL;
+    }
 };
 int TMassFields::n = 0;
 TMassFields MassFields[64];
@@ -54,129 +57,135 @@ __fastcall TMShape::TMShape(Classes::TComponent* AOwner)
 __fastcall TForm1::TForm1(TComponent* Owner)
         : TForm(Owner)
 {
-        Caption = "версия от 2014.03.26";
-        Form1->Constraints->MaxWidth  = Form1->Width;
-        Form1->Constraints->MinWidth  = Form1->Width;
-        Form1->Constraints->MaxHeight = Form1->Height;
-        Form1->Constraints->MinHeight = Form1->Height;
-        ViewKoleso = new TViewKoleso(Shape_Circle);
-        FlNewTube = false;
+    Form1->DoubleBuffered = true;
+    Caption = "версия от 2014.04.03";
+    Form1->Constraints->MaxWidth  = Form1->Width;
+    Form1->Constraints->MinWidth  = Form1->Width;
+    Form1->Constraints->MaxHeight = Form1->Height;
+    Form1->Constraints->MinHeight = Form1->Height;
+    ViewKoleso = new TViewKoleso(Shape_Circle);
+    FlNewTube = false;
+    //
+    Butt2 = new TColorBtn(Form1);
+    Butt2->Parent = Button1->Parent;
+    Butt2->Top = Button1->Top;
+    Butt2->Width = Button1->Width;
+    Butt2->Left = Button1->Left;
+    Butt2->Height = Button1->Height;
+    Butt2->Caption = Button1->Caption;
+    Butt2->OnClick = Button1->OnClick;
+    ButtonColorDefault = Butt2->ButtonColor;
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::FormCloseQuery(TObject *Sender, bool &CanClose)
 {
-        if (Port)
-        {
-            Port->Close();
-            delete Port;
-            Port = NULL;
-        }
-        // checked close ADOQuery1
-        if ( ADOQuery1->Active )
-        {       //ADOQuery1 - no terminated
-                ADOQuery1->Close();
-        }
-        // checked close ADOConnection1
-        if ( ADOConnection1->Connected )
-        {
-                ADOConnection1->Close();
-        }
-        if (BoxRead)
-        {
-                delete BoxRead;
-                BoxRead = NULL;
-        }
-        delete ViewKoleso;
-        if (WriteLog)
-        {
-            delete WriteLog;
-            WriteLog = NULL;
-        }
+    if (Port)
+    {
+        Port->Close();
+        delete Port;
+        Port = NULL;
+    }
+    // checked close ADOConnection1
+    if ( ADOConnRead->Connected )
+            ADOConnRead->Close();
+    if ( ADOConnWrite->Connected )
+            ADOConnWrite->Close();
+    if (BoxRead)
+    {
+        delete BoxRead;
+        BoxRead = NULL;
+    }
+    delete ViewKoleso;
+    if (WriteLog)
+    {
+        delete WriteLog;
+        WriteLog = NULL;
+    }
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Img_ClearAll(TImage *Img)
 {
-        ImgV_TubeMaxPix = Img->Width - D_ImageOffsetX;
-        //
-        int nX, nY, eX, eY;
-        nX = D_ImageOffsetX + 1;
-        nY = D_ImageOffsetY + 1;
-        eX = ImageVisual->Width -1;
-        eY = ImageVisual->Height -1;
-        // clear
-        Img->Canvas->Lock();
-        Img->Canvas->Brush->Color = clBlack;
-        Img->Canvas->FillRect(Rect(0,0,ImageVisual->Width,ImageVisual->Height));
-        Img->Canvas->Unlock();
-        // line
-        Img->Canvas->Lock();
+    ImgV_TubeMaxPix = Img->Width - D_ImageOffsetX;
+    int nX, nY, eX, eY;
+    nX = D_ImageOffsetX + 1;
+    nY = D_ImageOffsetY + 1;
+    eX = ImageVisual->Width -1;
+    eY = ImageVisual->Height -1;
+    // clear
+    Img->Canvas->Lock();
+    Img->Canvas->Brush->Color = clBlack;
+    Img->Canvas->FillRect(Rect(0,0,ImageVisual->Width,ImageVisual->Height));
+    Img->Canvas->Unlock();
+    // line
+    Img->Canvas->Lock();
+    Img->Canvas->Pen->Width = 3;
+    Img->Canvas->Pen->Color = clGreen;
+    Img->Canvas->MoveTo(D_ImageOffsetX    ,ImageVisual->Height);
+    Img->Canvas->LineTo(D_ImageOffsetX    ,D_ImageOffsetY);
+    Img->Canvas->LineTo(ImageVisual->Width,D_ImageOffsetY);
+    Img->Canvas->Unlock();
+    // line
+    Img->Canvas->Lock();
+    int m = D_LenRull;
+    int h;
+    AnsiString sstt;
+    for(int x=0;x<(m+1);x++)
+    {
         Img->Canvas->Pen->Width = 3;
         Img->Canvas->Pen->Color = clGreen;
-        Img->Canvas->MoveTo(D_ImageOffsetX    ,ImageVisual->Height);
-        Img->Canvas->LineTo(D_ImageOffsetX    ,D_ImageOffsetY);
-        Img->Canvas->LineTo(ImageVisual->Width,D_ImageOffsetY);
-        Img->Canvas->Unlock();
-        // line
-        Img->Canvas->Lock();
-        int m = D_LenRull;
-        int h;
-        AnsiString sstt;
-        for(int x=0;x<(m+1);x++)
-        {
-                Img->Canvas->Pen->Width = 3;
-                Img->Canvas->Pen->Color = clGreen;
-                h = D_ImageOffsetX+x*(ImgV_TubeMaxPix/(D_MaxLenTube/1000));
-                Img->Canvas->MoveTo(h, D_ImageOffsetY);
-                Img->Canvas->LineTo(h, D_ImageOffsetY-(D_ImageOffsetY/3));
-                Img->Canvas->Font->Size = 9;
-                Img->Canvas->Font->Color = clYellow;
-                sstt = IntToStr(x);
-                Img->Canvas->TextOutA(h - Img->Canvas->TextWidth(sstt)/2 , D_ImageOffsetY-(D_ImageOffsetY/3)-Img->Canvas->TextHeight(sstt) , sstt);
-        }
-        Img->Canvas->Unlock();
-        Img_Clear(Img, nX, nY, eX, eY, m);
-        Img_Setka(Img, nX, nY, eX, eY, m);
+        h = D_ImageOffsetX+x*(ImgV_TubeMaxPix/(D_MaxLenTube/1000));
+        Img->Canvas->MoveTo(h, D_ImageOffsetY);
+        Img->Canvas->LineTo(h, D_ImageOffsetY-(D_ImageOffsetY/3));
+        Img->Canvas->Font->Size = 9;
+        Img->Canvas->Font->Color = clYellow;
+        sstt = IntToStr(x);
+        Img->Canvas->TextOutA(h - Img->Canvas->TextWidth(sstt)/2 , D_ImageOffsetY-(D_ImageOffsetY/3)-Img->Canvas->TextHeight(sstt) , sstt);
+    }
+    Img->Canvas->Unlock();
+    Img_Clear(Img, nX, nY, eX, eY, m);
+    Img_Setka(Img, nX, nY, eX, eY, m);
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Img_Clear(TImage *Img, int nX, int nY, int eX, int eY, int m)
 {
-        ImageVisual->Canvas->Lock();
-        ImageVisual->Canvas->Brush->Color = clBlack;
-        ImageVisual->Canvas->FillRect(Rect(nX, nY, eX, eY) );
-        ImageVisual->Canvas->Unlock();
+    ImageVisual->Canvas->Lock();
+    ImageVisual->Canvas->Brush->Color = clBlack;
+    ImageVisual->Canvas->FillRect(Rect(nX, nY, eX, eY) );
+    ImageVisual->Canvas->Unlock();
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Img_Setka(TImage *Img, int nX, int nY, int eX, int eY, int m)
 {
-        ImageVisual->Canvas->Lock();
-        int kn, ke, kd;
-        const int c = C_Seg;
-        for (int x=0; x<m; x++)
+    ImageVisual->Canvas->Lock();
+    int kn, ke, kd;
+    const int c = C_Seg;
+    for (int x=0; x<m; x++)
+    {
+        kn = (x+0)*(ImgV_TubeMaxPix/(D_MaxLenTube/1000) );
+        ke = (x+1)*(ImgV_TubeMaxPix/(D_MaxLenTube/1000) );
+        kd = ke - kn;
+        for (int x1=0; x1<c; x1++)
         {
-            kn = (x+0)*(ImgV_TubeMaxPix/(D_MaxLenTube/1000) );
-            ke = (x+1)*(ImgV_TubeMaxPix/(D_MaxLenTube/1000) );
-            kd = ke - kn;
-            for (int x1=0; x1<c; x1++)
-            {
-                Img->Canvas->Pen->Width = 1;
-                Img->Canvas->Pen->Color = clGreen;
-                Img->Canvas->MoveTo(nX+ kn+ x1*kd/(c-1) -1 ,nY-10);
-                Img->Canvas->LineTo(nX+ kn+ x1*kd/(c-1) -1 ,eY);
-            }
+            Img->Canvas->Pen->Width = 1;
+            Img->Canvas->Pen->Color = clGreen;
+            Img->Canvas->MoveTo(nX+ kn+ x1*kd/(c-1) -1 ,nY-10);
+            Img->Canvas->LineTo(nX+ kn+ x1*kd/(c-1) -1 ,eY);
         }
-        const int d = 5;
-        for (int y=0; y<d; y++)
-        {
-            Img->Canvas->MoveTo(nX, nY+y*(eY-nY)/(d-1) );
-            Img->Canvas->LineTo(eX, nY+y*(eY-nY)/(d-1) );
-        }
-        ImageVisual->Canvas->Unlock();
+    }
+    const int d = 6;
+    for (int y=0; y<d; y++)
+    {
+        Img->Canvas->MoveTo(nX, nY+y*(eY-nY)/(d-1) );
+        Img->Canvas->LineTo(eX, nY+y*(eY-nY)/(d-1) );
+    }
+    ImageVisual->Canvas->Unlock();
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::TimerStartTimer(TObject *Sender)
 {
     ((TTimer*)Sender)->Enabled = false;
     // ===========================================================================
+    // Provider=MSDASQL.1;Persist Security Info=False;Data Source=T2Stan5MyCon
     TIniFile *ifile = new TIniFile( ChangeFileExt( Application->ExeName, ".ini" ) );
     // checked open ini file
     if (!ifile)
@@ -187,6 +196,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
     }
     int   fDebugMode;
     int   lTubeHere1,    lTubeHere2;
+    AnsiString bdSource;
     // read parametrs : len rull
     D_LenRull    =          ifile->ReadInteger("Ruler",       "Len",       15);
     // read parametrs : com port
@@ -195,9 +205,10 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
     PortParity = (eParity)  ifile->ReadInteger("comm",        "Parity",    NO);
     // read parametrs : system debug
     fDebugMode =            ifile->ReadInteger("system",      "DebugMode", 0);
+    bdSource =              ifile->ReadString("system",       "NameOBDC",  "T2Stan5MyCon");
     // read parametrs : lenght from sensor defectoskop to sensors tube here
     lTubeHere1 =            ifile->ReadInteger("SensorsTube", "Here1",     720);
-    lTubeHere2 =            ifile->ReadInteger("SensorsTube", "Here2",     340);
+    lTubeHere2 =            ifile->ReadInteger("SensorsTube", "Here2",     1000);
     // read parametrs : no control tube
     C_Begin =               ifile->ReadInteger("NoControlTube", "Begin",   2);
     C_End =                 ifile->ReadInteger("NoControlTube", "End",     2);
@@ -212,6 +223,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
     ifile->WriteInteger("comm",        "Parity",    PortParity);
     // write parametrs : system debug
     ifile->WriteInteger("system",      "DebugMode", fDebugMode);
+    ifile->WriteString ("system",      "NameOBDC",  bdSource);
     // write parametrs : lenght from sensor defectoskop to sensors tube here
     ifile->WriteInteger("SensorsTube", "Here1",     lTubeHere1);
     ifile->WriteInteger("SensorsTube", "Here2",     lTubeHere2);
@@ -222,57 +234,57 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
     ifile->WriteInteger("LinesMetr",     "n",       C_Seg);
     // close ini file
     delete ifile;
+    ADOConnRead->ConnectionString = "Provider=MSDASQL.1;Persist Security Info=False;Data Source=" + bdSource;
+    ADOConnWrite->ConnectionString = ADOConnRead->ConnectionString;
     D_MaxLenTube = D_LenRull * 1000;
     // ===========================================================================
             Img_ClearAll(ImageVisual);
     // ===========================================================================
-
-        int         IdParamLast  , IdParamNew;
-        int         IdMeltLast   , IdMeltNew;
-        AnsiString  CodeMeltLast , CodeMeltNew;
-        double      SizeTubeLast , SizeTubeNew;
-        int         statusLast   , statusNew;
+    int         IdParamLast  , IdParamNew;
+    int         IdMeltLast   , IdMeltNew;
+    AnsiString  CodeMeltLast , CodeMeltNew;
+    double      SizeTubeLast , SizeTubeNew;
+    int         statusLast   , statusNew;
 // ******************************************************************************************
-        WriteLog = new TWriteLog;
+    WriteLog = new TWriteLog;
 // ******************************************************************************************
 // *************************** init variable from Data Base *********************************
-        WriteLog->Push("Init programm :");
-        WriteLog->Push("close query1");
-        // close ado
-        ADOQuery1->Close();
-        // ====================================================
-        // read last number tube ( no sample )
-        WriteLog->Push("read number tube");
-        try { CurentNumberTube = ReadFromBDLastNumberTude(ADOQuery1); }
-        catch(...) { CurentNumberTube = -1; }
-        if (CurentNumberTube<0)
-        {       // Date Base Error
-                Application->MessageBox("Not found field \"NumberTube\" " , "Date Base Error", 0);
-                Form1->Close();
-                return;
-        }
-        // ====================================================
-        // read last parametrs
-        WriteLog->Push("read Last param BD");
-        if ( !ReadFromBDLastParametrs(ADOQuery1, &IdParamLast, &IdMeltLast, &CodeMeltLast, &SizeTubeLast) )
-        {   // ok
-            IdParam   = IdParamLast;
-            CodeMelt  = CodeMeltLast;
-            SizeTube  = SizeTubeLast;
-            LenSegmentTube = FnDiametr2LenSegment(SizeTube);
-        }
-        else
-        {   // no param
-            IdParam   = 0;
-            CodeMelt  = "no melt tube";
-            SizeTube  = 0;
-            LenSegmentTube = 1000/8;
-        }
-        WriteLog->Push("show param");
-//        Show_Parametrs(CurentNumberTube, SizeTube, LenSegmentTube, otStep, CodeMelt);
+    WriteLog->Push("Init programm :");
+    WriteLog->Push("close query1");
+    // close ado
+    //ADOQuery1->Close();
+    // ====================================================
+    // read last number tube ( no sample )
+    WriteLog->Push("read number tube");
+    CurentNumberTube = ReadFromBDLastNumberTude(ADOConnRead);
+    if (CurentNumberTube<0)
+    {   // Date Base Error
+        Application->MessageBox("Not found field \"NumberTube\" " , "Date Base Error", 0);
+        Form1->Close();
+        return;
+    }
+    // ====================================================
+    // read last parametrs
+    WriteLog->Push("read Last param BD");
+    if ( !ReadFromBDLastParametrs(ADOConnRead, &IdParamLast, &IdMeltLast, &CodeMeltLast, &SizeTubeLast) )
+    {   // ok
+        IdParam   = IdParamLast;
+        CodeMelt  = CodeMeltLast;
+        SizeTube  = SizeTubeLast;
+        LenSegmentTube = FnDiametr2LenSegment(SizeTube);
+    }
+    else
+    {   // no param
+        IdParam   = 0;
+        CodeMelt  = "no melt tube";
+        SizeTube  = 0;
+        LenSegmentTube = 1000/8;
+    }
+    WriteLog->Push("show param");
+    // Show_Parametrs(CurentNumberTube, SizeTube, LenSegmentTube, otStep, CodeMelt);
 // ******************************************************************************************
 // *************************** init Massibe indications *************************************
-        WriteLog->Push("init massive shape");
+    WriteLog->Push("init massive shape");
 // ******************************************************************************************
 // Initialize com port
     //ifile = NULL;
@@ -288,47 +300,47 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
     Port->EventNewDate = PortNewDate;
 // ******************************************************************************************
 // *************************** init BoxRead - Read from controller **************************
-        WriteLog->Push("create boxread");
-        //BoxRead = new TBoxRead;
-        BoxRead = new TBoxRead(lTubeHere1, lTubeHere2);
+    WriteLog->Push("create boxread");
+    //BoxRead = new TBoxRead;
+    BoxRead = new TBoxRead(lTubeHere1, lTubeHere2);
 // ******************************************************************************************
-        // Other sensors
-        // BoxRead->EvSensorsOther = // (int sn, int lvl);
+    // Other sensors
+    // BoxRead->EvSensorsOther = // (int sn, int lvl);
 // ******************************************************************************************
-        // Sensor Wild
-        BoxRead->EvSensorWild = EvaSensorWild; // (int lvl);
+    // Sensor Wild
+    BoxRead->EvSensorWild = EvaSensorWild; // (int lvl);
 // ******************************************************************************************
-        //                             Sensors At
-        // Sensors At Top
-        BoxRead->EvSensorAtTop = EvaSensorAtTop;
-        // Sensors At Bottom
-        BoxRead->EvSensorAtBottom = EvaSensorAtBottom;
-        // Sensors At
-        BoxRead->EvSensorsAtShow = EvaSensorsAtShow;
+    //                             Sensors At
+    // Sensors At Top
+    BoxRead->EvSensorAtTop = EvaSensorAtTop;
+    // Sensors At Bottom
+    BoxRead->EvSensorAtBottom = EvaSensorAtBottom;
+    // Sensors At
+    BoxRead->EvSensorsAtShow = EvaSensorsAtShow;
 // ******************************************************************************************
-        //                         Sensors Tube here
-        // Sensors Tube here Show
-        BoxRead->EvSensorsTubeHereShow = EvaSensorsTubeHereShow;
-        // Sensors Tube here Tube begin
-        BoxRead->EvSensorTubeBegin = EvaSensorTubeBegin;
-        // Sensors Tube here Begin Record
-        //BoxRead->EvSensorTubeBeginRecord =
-        // Sensors Tube here Len Tube
-        BoxRead->EvSensorTubeLen = EvaSensorTubeLen;
-        // Sensors Tube here End Tube
-        BoxRead->EvSensorTubeEnd = EvaSensorTubeEnd;
-        // Sensors Tube Reset tube
-        // BoxRead->EvSensorTubeReset =
+    //                         Sensors Tube here
+    // Sensors Tube here Show
+    BoxRead->EvSensorsTubeHereShow = EvaSensorsTubeHereShow;
+    // Sensors Tube here Tube begin
+    BoxRead->EvSensorTubeBegin = EvaSensorTubeBegin;
+    // Sensors Tube here Begin Record
+    //BoxRead->EvSensorTubeBeginRecord =
+    // Sensors Tube here Len Tube
+    BoxRead->EvSensorTubeLen = EvaSensorTubeLen;
+    // Sensors Tube here End Tube
+    BoxRead->EvSensorTubeEnd = EvaSensorTubeEnd;
+    // Sensors Tube Reset tube
+    // BoxRead->EvSensorTubeReset =
 // ******************************************************************************************
-        // Sensors Tube Sample
-        BoxRead->EvSample = EvaSample;
+    // Sensors Tube Sample
+    BoxRead->EvSample = EvaSample;
 // ******************************************************************************************
-        //                         Sensor Circle
-        // Sensor Circle Show flash
-        BoxRead->EvCircleShow = EvaCircleShow;
-        // Sensor Circle move
-        BoxRead->EvCircleForward = EvaCircleMove;
-        BoxRead->EvCircleBack = EvaCircleMove;
+    //                         Sensor Circle
+    // Sensor Circle Show flash
+    BoxRead->EvCircleShow = EvaCircleShow;
+    // Sensor Circle move
+    BoxRead->EvCircleForward = EvaCircleMove;
+    BoxRead->EvCircleBack = EvaCircleMove;
 // ******************************************************************************************
     // open com port
     if (Port->Open(PortName, PortBaud, PortParity)>0)
@@ -345,7 +357,9 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
     WriteLog->debugMode = fDebugMode;
 // ******************************************************************************************
 // *************************** delete starting timer ****************************************
-        delete ((TTimer*)Sender);
+    delete ((TTimer*)Sender);
+    TimerSecRead->Enabled = true;
+    TimerSecWrite->Enabled = true;
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::PortNewDate(TComPort *cPort, int RdByte)
@@ -405,17 +419,18 @@ double __fastcall TForm1::EvaSensorTubeBegin()
     AnsiString  CodeMeltLast , CodeMeltNew;
     double      SizeTubeLast , SizeTubeNew;
     int         statusLast   , statusNew;
-    // WriteLog->Push("'TForm1::TubeBegin': ReadFromBDLastParametrs");
-    statusLast = ReadFromBDLastParametrs(ADOQuery1, &IdParamLast, &IdMeltLast, &CodeMeltLast, &SizeTubeLast);
-    // WriteLog->Push("'TForm1::TubeBegin': ReadFromBDNewParametrs");
-    statusNew  = ReadFromBDNewParametrs (ADOQuery1, &IdParamNew , &IdMeltNew , &CodeMeltNew , &SizeTubeNew );
-    // WriteLog->Push("'TForm1::TubeBegin': end ReadFromBD");
+    WriteLog->Push("'TForm1::TubeBegin': ReadFromBDLastParametrs");
+    statusLast = ReadFromBDLastParametrs(ADOConnRead, &IdParamLast, &IdMeltLast, &CodeMeltLast, &SizeTubeLast);
+    WriteLog->Push("'TForm1::TubeBegin': ReadFromBDNewParametrs");
+    statusNew  = ReadFromBDNewParametrs (ADOConnRead, &IdParamNew , &IdMeltNew , &CodeMeltNew , &SizeTubeNew );
+    WriteLog->Push("'TForm1::TubeBegin': end ReadFromBD");
     //
     // checked load parametrs
     if ( (statusLast && statusNew) || statusNew )
     {   // error read parametrs
         if ( statusNew==-1 )
         {   // show error BD
+            Butt2->ButtonColor = clRed;
         }
         IdParam  = 0;
         CodeMelt = "No melt";
@@ -462,24 +477,25 @@ void __fastcall TForm1::EvaSensorTubeLen(int segments, double lenght)
 // Sensors Tube here End Tube
 void __fastcall TForm1::EvaSensorTubeEnd(int len, signed char *massDefect, int flagSample)
 {
-    //WriteLog->Push("'TForm1::TubeEnd': event");
+    WriteLog->Push("'TForm1::TubeEnd': event");
     // =========================================================
     // no parametrs - no record
     if (!IdParam)
     {
-        //WriteLog->Push("'TForm1::TubeEnd': BD clear - no write tube");
+        WriteLog->Push("'TForm1::TubeEnd': BD clear - no write tube");
+        Butt2->ButtonColor = clRed;
         return;
     }
     // =========================================================
     // flag tube defect
-    int FlagDefectTube = 0;
-    int FlagNoControlTube = 0;
+    int  FlagDefectTube = 0;
+    int  FlagNoControlTube = 0;
     int  nTube;
     // =========================================================
     // Number tube +1 if no sample
     if ( flagSample )
     {   // sample mark number 0
-        //WriteLog->Push("'TForm1::TubeEnd': this tube sample");
+        WriteLog->Push("'TForm1::TubeEnd': this tube sample");
         nTube = 0;
     }
     else
@@ -508,12 +524,16 @@ void __fastcall TForm1::EvaSensorTubeEnd(int len, signed char *massDefect, int f
     TDateTime DtTm = Now();
     AnsiString vDate = FormatDateTime("yyyy-mm-dd", DtTm);
     // write to BD
-    //WriteLog->Push("'TForm1::TubeEnd': write tube");
+    WriteLog->Push("'TForm1::TubeEnd': write tube");
     try {
-        WriteBD_Datas(ADOConnection1, nTube, massDefect, len, FlagDefectTube, IdParam);
-        WriteFlTree(ADOConnection1);
-    } catch(...){}
-    //WriteLog->Push("'TForm1::TubeEnd': show numbertube & reset flag new tube");
+        //WriteBD_Datas(ADOConnWrite, nTube, massDefect, len, FlagDefectTube, IdParam);
+        WriteBD_Datas(ADOConnRead, nTube, massDefect, len, FlagDefectTube, IdParam);
+        WriteFlTree(ADOConnRead);
+    } catch(...)
+    {
+        Butt2->ButtonColor = clYellow;
+    }
+    WriteLog->Push("'TForm1::TubeEnd': show numbertube & reset flag new tube");
     Show_NumberTube(nTube);
 }
 //---------------------------------------------------------------------------
@@ -589,5 +609,58 @@ void __fastcall TForm1::EvaCircleMove(signed char *massDefect, int curPosition)
 }
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{
+    ((TColorBtn*)Sender)->ButtonColor = ButtonColorDefault;
+}
+//---------------------------------------------------------------------------
 
+void __fastcall TForm1::TimerSecReadTimer(TObject *Sender)
+{
+    int x = vSec.SecRead+1;
+    if ( x>=Sec_Porog )
+    {
+        try
+        {
+            ADOConnRead->Cancel();
+            ADOConnRead->Close();
+            ADOConnRead->Open();
+            vSec.SecRead = 0;
+            TimerSecRead->Interval = 1000;
+            WriteLog->Push("'TForm1::SecRead': OBDC reconnect");
+        }
+        catch(...)
+        {
+            TimerSecRead->Interval = 60000;
+        }
+    }
+    else
+        vSec.SecRead = x;
+    //Label2->Caption = vSec.SecRead;
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::TimerSecWriteTimer(TObject *Sender)
+{
+    int x = vSec.SecWrite+1;
+    if ( x>=Sec_Porog )
+    {
+        try
+        {
+            ADOConnWrite->Cancel();
+            ADOConnWrite->Close();
+            ADOConnWrite->Open();
+            vSec.SecWrite = 0;
+            TimerSecRead->Interval = 1000;
+            WriteLog->Push("'TForm1::SecWrite': OBDC reconnect");
+        }
+        catch(...)
+        {
+            TimerSecRead->Interval = 60000;
+        }
+    }
+    else
+        vSec.SecWrite = x;
+    //Label3->Caption = vSec.SecWrite;
+}
+//---------------------------------------------------------------------------
 

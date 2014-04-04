@@ -5,15 +5,24 @@
     <VERSION value="BCB.06.00"/>
     <PROJECT value="ReadSensor.exe"/>
     <OBJFILES value="ReadSensor.obj Unit1.obj CommPort\ComPort.obj crc\crc8.obj ShablBuff.obj 
-      MShape.obj ViewKoleso.obj UserFunction1.obj WriteLog.obj BoxRead.obj"/>
+      MShape.obj ViewKoleso.obj UserFunction1.obj WriteLog.obj BoxRead.obj 
+      ColorBtn.obj"/>
     <RESFILES value="ReadSensor.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
     <DEFFILE value=""/>
     <RESDEPEN value="$(RESFILES) Unit1.dfm"/>
     <LIBFILES value=""/>
-    <LIBRARIES value="adortl.lib dbrtl.lib rtl.lib vcl.lib"/>
-    <SPARELIBS value="vcl.lib rtl.lib dbrtl.lib adortl.lib"/>
+    <LIBRARIES value="Iocomp65.lib bcb2kaxserver.lib indy.lib dbxcds.lib dclocx.lib soaprtl.lib 
+      bcbie.lib nmfast.lib dbexpress.lib inetdbxpress.lib inetdbbde.lib 
+      bcbsmp.lib dsnapcon.lib dsnapcrba.lib visualdbclx.lib teeqr.lib dss.lib 
+      tee.lib teedb.lib teeui.lib qrpt.lib bdecds.lib cds.lib ibxpress.lib 
+      vcldbx.lib bdertl.lib vcldb.lib adortl.lib dbrtl.lib rtl.lib vcl.lib"/>
+    <SPARELIBS value="vcl.lib rtl.lib dbrtl.lib adortl.lib vcldb.lib bdertl.lib vcldbx.lib 
+      ibxpress.lib cds.lib bdecds.lib qrpt.lib teeui.lib teedb.lib tee.lib 
+      dss.lib teeqr.lib visualdbclx.lib dsnapcrba.lib dsnapcon.lib bcbsmp.lib 
+      inetdbbde.lib inetdbxpress.lib dbexpress.lib nmfast.lib bcbie.lib 
+      soaprtl.lib dclocx.lib dbxcds.lib indy.lib bcb2kaxserver.lib Iocomp65.lib"/>
     <PACKAGES value="vcl.bpi rtl.bpi dbrtl.bpi adortl.bpi vcldb.bpi vclx.bpi bdertl.bpi 
       vcldbx.bpi ibxpress.bpi dsnap.bpi cds.bpi bdecds.bpi qrpt.bpi teeui.bpi 
       teedb.bpi tee.bpi dss.bpi teeqr.bpi visualclx.bpi visualdbclx.bpi 
@@ -28,7 +37,7 @@
     <DEBUGLIBPATH value="$(BCB)\lib\debug"/>
     <RELEASELIBPATH value="$(BCB)\lib\release"/>
     <LINKER value="ilink32"/>
-    <USERDEFINES value="_DEBUG"/>
+    <USERDEFINES value=""/>
     <SYSDEFINES value="NO_STRICT"/>
     <MAINSOURCE value="ReadSensor.cpp"/>
     <INCLUDEPATH value="crc;CommPort;&quot;C:\Program Files\Borland\CBuilder6\Projects&quot;;D:\prj\T2\5_stan\учет_дефектоскопии\bc6;$(BCB)\include;$(BCB)\include\vcl"/>
@@ -39,13 +48,12 @@
   <OPTIONS>
     <IDLCFLAGS value="-Icrc -ICommPort -I&quot;C:\Program Files\Borland\CBuilder6\Projects&quot; 
       -ID:\prj\T2\5_stan\учет_дефектоскопии\bc6 -I$(BCB)\include 
-      -I$(BCB)\include\vcl -src_suffix cpp -D_DEBUG -boa"/>
-    <CFLAG1 value="-Od -H=$(BCB)\lib\vcl60.csm -Hc -Vx -Ve -X- -r- -a8 -b- -k -y -v -vi- -c 
-      -tW -tWM"/>
-    <PFLAGS value="-$Y+ -$W -$O- -$A8 -v -JPHNE -M"/>
+      -I$(BCB)\include\vcl -src_suffix cpp -boa"/>
+    <CFLAG1 value="-O2 -H=$(BCB)\lib\vcl60.csm -Hc -Vx -Ve -X- -a8 -b- -k- -y -vi- -c -tW -tWM"/>
+    <PFLAGS value="-$Y- -$L- -$D- -$A8 -v -JPHNE -M"/>
     <RFLAGS value=""/>
-    <AFLAGS value="/mx /w2 /zi"/>
-    <LFLAGS value="-D&quot;&quot; -aa -Tpe -x -Gn -v"/>
+    <AFLAGS value="/mx /w2 /zn"/>
+    <LFLAGS value="-D&quot;&quot; -aa -Tpe -x -Gn"/>
     <OTHERFILES value=""/>
   </OPTIONS>
   <LINKER>
@@ -66,6 +74,7 @@
       <FILE FILENAME="UserFunction1.cpp" FORMNAME="" UNITNAME="UserFunction1" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="WriteLog.cpp" FORMNAME="" UNITNAME="WriteLog" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="BoxRead.cpp" FORMNAME="" UNITNAME="BoxRead" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="ColorBtn.pas" FORMNAME="" UNITNAME="ColorBtn" CONTAINERID="PascalCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
   </BUILDTOOLS>

@@ -320,9 +320,13 @@ void __fastcall TComPortRd::Execute()
 //---------------------------------------------------------------------------
 void __fastcall TComPortRd::EventNewDateSynhr()
 {
+    try
+    {
         if (EventNewDate) {
                 EventNewDate(btr);
         }
+    }
+    catch(...) {}
 }
 //---------------------------------------------------------------------------
 int  __fastcall TComPortRd::ReadBuf(unsigned char *Buf, DWORD *len_zakaz, DWORD *len_ok)

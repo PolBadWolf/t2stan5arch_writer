@@ -56,7 +56,7 @@ void __fastcall TViewKoleso::Flash(int zn, TColor cl_set, TColor cl_res)
         MShape->Nap = 1-zn;
         MShape->Brush->Color = cl_set;
         TimerFl->Enabled = false;
-        TimerFl->Interval = 20;
+        TimerFl->Interval = 120;
         TimerFl->Enabled = true;
 }
 //---------------------------------------------------------------------------

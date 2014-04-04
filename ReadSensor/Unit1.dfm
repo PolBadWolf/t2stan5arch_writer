@@ -1,8 +1,8 @@
 object Form1: TForm1
-  Left = 207
-  Top = 124
-  Width = 728
-  Height = 196
+  Left = 202
+  Top = 123
+  Width = 757
+  Height = 201
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
   Caption = 'Form1'
@@ -74,7 +74,7 @@ object Form1: TForm1
   object ImageVisual: TImage
     Left = 8
     Top = 80
-    Width = 697
+    Width = 729
     Height = 73
   end
   object Shape_SENSOR_AT: TShape
@@ -99,6 +99,20 @@ object Form1: TForm1
     Font.Style = []
     ParentFont = False
     Transparent = True
+  end
+  object Label2: TLabel
+    Left = 808
+    Top = 16
+    Width = 32
+    Height = 13
+    Caption = 'Label2'
+  end
+  object Label3: TLabel
+    Left = 808
+    Top = 40
+    Width = 32
+    Height = 13
+    Caption = 'Label3'
   end
   object Panel1: TPanel
     Left = 8
@@ -178,25 +192,49 @@ object Form1: TForm1
     ParentFont = False
     TabOrder = 2
   end
-  object ADOConnection1: TADOConnection
-    ConnectionString = 
-      'Provider=MSDASQL.1;Persist Security Info=False;Data Source=T2Sta' +
-      'n5MyCon'
-    LoginPrompt = False
-    Provider = 'MSDASQL.1'
-    Left = 728
-    Top = 24
+  object Button1: TButton
+    Left = 712
+    Top = 8
+    Width = 25
+    Height = 65
+    Caption = 'E'
+    Enabled = False
+    TabOrder = 3
+    Visible = False
+    OnClick = Button1Click
   end
-  object ADOQuery1: TADOQuery
-    Connection = ADOConnection1
-    Parameters = <>
-    Left = 760
-    Top = 24
+  object ADOConnRead: TADOConnection
+    ConnectionString = 'Provider=MSDASQL.1;Persist Security Info=False;Data Source=loc5'
+    ConnectOptions = coAsyncConnect
+    LoginPrompt = False
+    Mode = cmRead
+    Provider = 'MSDASQL.1'
+    Left = 744
+    Top = 72
   end
   object TimerStart: TTimer
     Interval = 1
     OnTimer = TimerStartTimer
-    Left = 792
-    Top = 24
+    Left = 744
+    Top = 8
+  end
+  object ADOConnWrite: TADOConnection
+    ConnectOptions = coAsyncConnect
+    LoginPrompt = False
+    Mode = cmShareDenyWrite
+    Left = 744
+    Top = 104
+  end
+  object TimerSecRead: TTimer
+    Enabled = False
+    OnTimer = TimerSecReadTimer
+    Left = 776
+    Top = 72
+  end
+  object TimerSecWrite: TTimer
+    Enabled = False
+    OnTimer = TimerSecWriteTimer
+    Left = 776
+    Top = 104
   end
 end
