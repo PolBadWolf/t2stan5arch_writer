@@ -84,10 +84,16 @@ void __fastcall TForm1::FormCloseQuery(TObject *Sender, bool &CanClose)
         Port = NULL;
     }
     // checked close ADOConnection1
+    try
+    {
     if ( ADOConnRead->Connected )
             ADOConnRead->Close();
+    } catch(...) {}
+    try
+    {
     if ( ADOConnWrite->Connected )
             ADOConnWrite->Close();
+    } catch(...) { }
     if (BoxRead)
     {
         delete BoxRead;
@@ -183,7 +189,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
 {
     ((TTimer*)Sender)->Enabled = false;
     // ===========================================================================
-    // Provider=MSDASQL.1;Persist Security Info=False;Data Source=T2Stan5MyCon
+    // Provider=MSDASQL.1;Persist Security Info=False;Data Source=loc6;Initial Catalog=t2stan5
     TIniFile *ifile = new TIniFile( ChangeFileExt( Application->ExeName, ".ini" ) );
     // checked open ini file
     if (!ifile)
@@ -194,7 +200,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
     }
     int   fDebugMode;
     int   lTubeHere1,    lTubeHere2;
-    AnsiString bdSource;
+    AnsiString bdSource, bdName;
     // read parametrs : len rull
     D_LenRull    =          ifile->ReadInteger("Ruler",       "Len",       15);
     // read parametrs : com port
@@ -203,7 +209,8 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
     PortParity = (eParity)  ifile->ReadInteger("comm",        "Parity",    NO);
     // read parametrs : system debug
     fDebugMode =            ifile->ReadInteger("system",      "DebugMode", 0);
-    bdSource =              ifile->ReadString("system",       "NameOBDC",  "T2Stan5MyCon");
+    bdSource =              ifile->ReadString ("system",      "NameOBDC",  "T2Stan5MyCon");
+    bdName =                ifile->ReadString ("system",      "NameBase",  "t2stan5");
     // read parametrs : lenght from sensor defectoskop to sensors tube here
     lTubeHere1 =            ifile->ReadInteger("SensorsTube", "Here1",     720);
     lTubeHere2 =            ifile->ReadInteger("SensorsTube", "Here2",     1000);
@@ -222,6 +229,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
     // write parametrs : system debug
     ifile->WriteInteger("system",      "DebugMode", fDebugMode);
     ifile->WriteString ("system",      "NameOBDC",  bdSource);
+    ifile->WriteString ("system",      "NameBase",  bdName);
     // write parametrs : lenght from sensor defectoskop to sensors tube here
     ifile->WriteInteger("SensorsTube", "Here1",     lTubeHere1);
     ifile->WriteInteger("SensorsTube", "Here2",     lTubeHere2);
@@ -232,8 +240,43 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
     ifile->WriteInteger("LinesMetr",     "n",       C_Seg);
     // close ini file
     delete ifile;
-    ADOConnRead->ConnectionString = "Provider=MSDASQL.1;Persist Security Info=False;Data Source=" + bdSource;
+    // Provider=MSDASQL.1;Persist Security Info=False;Data Source=loc6;Initial Catalog=t2stan5
+    ADOConnRead->ConnectionString = "Provider=MSDASQL.1;Persist Security Info=False;Data Source=" + bdSource +
+                                    ";Initial Catalog=" + bdName;
+    bool adocon;
+    try
+    {
+        ADOConnRead->Open();
+        adocon = ADOConnRead->Connected;
+    }
+    catch(...)
+    {
+        adocon = false;
+    }
+    if (adocon==false)
+    {
+        Application->MessageBox("Failed to connet Base Date" , "Date Base Error", 0);
+        Form1->Close();
+        return;
+    }
     ADOConnWrite->ConnectionString = ADOConnRead->ConnectionString;
+    try
+    {
+        ADOConnWrite->Open();
+        adocon = ADOConnWrite->Connected;
+    }
+    catch(...)
+    {
+        adocon = false;
+    }
+
+    if (adocon==false)
+    {
+        Application->MessageBox("Failed to connet Base Date" , "Date Base Error", 0);
+        Form1->Close();
+        return;
+    }
+
     D_MaxLenTube = D_LenRull * 1000;
     // ===========================================================================
             Img_ClearAll(ImageVisual);

@@ -1,7 +1,7 @@
 object Form1: TForm1
   Left = 202
   Top = 123
-  Width = 757
+  Width = 762
   Height = 201
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
@@ -204,7 +204,7 @@ object Form1: TForm1
     OnClick = Button1Click
   end
   object ADOConnRead: TADOConnection
-    ConnectionString = 'Provider=MSDASQL.1;Persist Security Info=False;Data Source=loc5'
+    ConnectionString = 'Provider=MSDASQL.1;Persist Security Info=False;Data Source=loc2'
     ConnectOptions = coAsyncConnect
     LoginPrompt = False
     Mode = cmRead
