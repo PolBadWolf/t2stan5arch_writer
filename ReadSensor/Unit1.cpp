@@ -200,7 +200,7 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
     }
     int   fDebugMode;
     int   lTubeHere1,    lTubeHere2;
-    AnsiString bdSource, bdName;
+    AnsiString bdSource;
     // read parametrs : len rull
     D_LenRull    =          ifile->ReadInteger("Ruler",       "Len",       15);
     // read parametrs : com port
@@ -241,13 +241,23 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
     // close ini file
     delete ifile;
     // Provider=MSDASQL.1;Persist Security Info=False;Data Source=loc6;Initial Catalog=t2stan5
-    ADOConnRead->ConnectionString = "Provider=MSDASQL.1;Persist Security Info=False;Data Source=" + bdSource +
-                                    ";Initial Catalog=" + bdName;
+    ADOConnRead->ConnectionString = "Provider=MSDASQL.1;Persist Security Info=False;Data Source=" + bdSource;
+    if (bdName.Length()>0)
+        bdName = "`"+bdName+"`.";
     bool adocon;
     try
     {
         ADOConnRead->Open();
         adocon = ADOConnRead->Connected;
+        // test base
+        ADOQuery1->SQL->Clear();
+        ADOQuery1->SQL->Add("select *");
+        ADOQuery1->SQL->Add("from");
+        ADOQuery1->SQL->Add(Form1->bdName+"`defectsdata`");
+        ADOQuery1->SQL->Add("limit 1");
+        ADOQuery1->Connection = ADOConnRead;
+        ADOQuery1->Open();
+        ADOQuery1->Close();
     }
     catch(...)
     {
@@ -264,6 +274,15 @@ void __fastcall TForm1::TimerStartTimer(TObject *Sender)
     {
         ADOConnWrite->Open();
         adocon = ADOConnWrite->Connected;
+        ADOQuery1->SQL->Clear();
+        ADOQuery1->SQL->Add("select *");
+        ADOQuery1->SQL->Add("from");
+        ADOQuery1->SQL->Add(Form1->bdName+"`defectsdata`");
+        ADOQuery1->SQL->Add("limit 1");
+        ADOQuery1->Connection = ADOConnWrite;
+        ADOQuery1->Open();
+        ADOQuery1->Close();
+        ADOQuery1->SQL->Clear();
     }
     catch(...)
     {

@@ -237,4 +237,11 @@ object Form1: TForm1
     Left = 776
     Top = 104
   end
+  object ADOQuery1: TADOQuery
+    CursorType = ctStatic
+    ParamCheck = False
+    Parameters = <>
+    Left = 520
+    Top = 72
+  end
 end

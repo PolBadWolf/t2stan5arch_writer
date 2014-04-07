@@ -54,7 +54,7 @@ int  __fastcall TForm1::ReadFromBDLastNumberTude(TADOConnection *connect)
             // find last number tube ( no sample )
             dQuery->SQL->Clear();
             dQuery->SQL->Add("SELECT *");
-            dQuery->SQL->Add("FROM `defectsdata`");
+            dQuery->SQL->Add("FROM "+Form1->bdName+"`defectsdata`");
             dQuery->SQL->Add("WHERE");
             dQuery->SQL->Add("   `NumberTube` <>  '0'");
             dQuery->SQL->Add("ORDER BY");
@@ -149,10 +149,10 @@ int  __fastcall TForm1::ReadFromBDLastParametrs(TADOConnection *connect, int *id
         dQuery->SQL->Add(",`melts`.`NameMelt` AS `CodeMelt`");
         dQuery->SQL->Add(",`sizetube`.`SizeTube` AS `SizeTube`");
         dQuery->SQL->Add("FROM");
-        dQuery->SQL->Add("`defectsdata`");
-        dQuery->SQL->Add("Inner Join `parameters` ON `defectsdata`.`Id_Param` = `parameters`.`Id_Param`");
-        dQuery->SQL->Add("Inner Join `melts` ON `parameters`.`Id_Melt` = `melts`.`Id_Melt`");
-        dQuery->SQL->Add("Inner Join `sizetube` ON `melts`.`Id_SizeTube` = `sizetube`.`Id_SizeTube`");
+        dQuery->SQL->Add(Form1->bdName+"`defectsdata`");
+        dQuery->SQL->Add("Inner Join "+Form1->bdName+"`parameters` ON `defectsdata`.`Id_Param` = `parameters`.`Id_Param`");
+        dQuery->SQL->Add("Inner Join "+Form1->bdName+"`melts` ON `parameters`.`Id_Melt` = `melts`.`Id_Melt`");
+        dQuery->SQL->Add("Inner Join "+Form1->bdName+"`sizetube` ON `melts`.`Id_SizeTube` = `sizetube`.`Id_SizeTube`");
         dQuery->SQL->Add("ORDER BY");
         dQuery->SQL->Add("`defectsdata`.`IndexData` DESC");
         dQuery->SQL->Add("LIMIT 1");
@@ -225,7 +225,7 @@ int  __fastcall TForm1::ReadFromBDNewParametrs(TADOConnection *connect, int *id_
                 cQuery->SQL->Add("SELECT");
                 cQuery->SQL->Add(" `parameters`.`Id_Param` AS `id_parametr`");
                 cQuery->SQL->Add("FROM");
-                cQuery->SQL->Add("`parameters`");
+                cQuery->SQL->Add(Form1->bdName+"`parameters`");
                 cQuery->SQL->Add("ORDER BY");
                 cQuery->SQL->Add("`parameters`.`Id_Param` DESC");
                 cQuery->SQL->Add("LIMIT 1");
@@ -239,9 +239,9 @@ int  __fastcall TForm1::ReadFromBDNewParametrs(TADOConnection *connect, int *id_
                 dQuery->SQL->Add(",`melts`.`NameMelt` AS `CodeMelt`");
                 dQuery->SQL->Add(",`sizetube`.`SizeTube` AS `SizeTube`");
                 dQuery->SQL->Add("FROM");
-                dQuery->SQL->Add("`parameters`");
-                dQuery->SQL->Add("Inner Join `melts` ON `parameters`.`Id_Melt` = `melts`.`Id_Melt`");
-                dQuery->SQL->Add("Inner Join `sizetube` ON `melts`.`Id_SizeTube` = `sizetube`.`Id_SizeTube`");
+                dQuery->SQL->Add(Form1->bdName+"`parameters`");
+                dQuery->SQL->Add("Inner Join "+Form1->bdName+"`melts` ON `parameters`.`Id_Melt` = `melts`.`Id_Melt`");
+                dQuery->SQL->Add("Inner Join "+Form1->bdName+"`sizetube` ON `melts`.`Id_SizeTube` = `sizetube`.`Id_SizeTube`");
                 dQuery->SQL->Add("ORDER BY");
                 dQuery->SQL->Add("`parameters`.`Id_Param` DESC");
                 dQuery->SQL->Add("LIMIT 1");
@@ -317,7 +317,7 @@ void __fastcall WriteBD_Datas(TADOConnection *connect, int NumberTube, signed ch
             Query->Parameters->Clear();
             Query->SQL->Clear();
             Query->SQL->Add("INSERT INTO");
-            Query->SQL->Add("`defectsdata`");
+            Query->SQL->Add(Form1->bdName+"`defectsdata`");
             Query->SQL->Add("(");
             Query->SQL->Add(" `DatePr`");
             Query->SQL->Add(",`TimePr`");

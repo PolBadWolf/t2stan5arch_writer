@@ -47,6 +47,7 @@ __published:	// IDE-managed Components
     TTimer *TimerSecWrite;
     TLabel *Label2;
     TLabel *Label3;
+    TADOQuery *ADOQuery1;
         void __fastcall FormCloseQuery(TObject *Sender, bool &CanClose);
         void __fastcall TimerStartTimer(TObject *Sender);
     void __fastcall Button1Click(TObject *Sender);
@@ -109,6 +110,7 @@ public:		// User declarations
         double SizeTube;
         double LenSegmentTube;
         void __fastcall PortNewDate(TComPort *cPort, int RdByte);
+        AnsiString bdName;
 };
 //---------------------------------------------------------------------------
 class TConnSec
